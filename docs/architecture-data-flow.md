@@ -398,7 +398,129 @@ Output: Task list with:
   - ...
 ```
 
-### 6. Git Commit Flow
+### 6. Task Implementation Flow
+
+```mermaid
+flowchart TD
+    Start[/buddy:implement] --> DiscoverTasks[Scan specs/ for tasks.md]
+
+    DiscoverTasks --> CheckFound{Tasks Found?}
+    CheckFound -->|No| Error1[Error: No tasks found]
+    CheckFound -->|Multiple| AskUser[List Options & Ask User]
+    CheckFound -->|One| LoadTaskDoc[Load tasks.md]
+
+    AskUser --> LoadTaskDoc
+
+    LoadTaskDoc --> CheckFoundation{foundation.md exists?}
+    CheckFoundation -->|No| Error2[Error: Run /buddy:foundation]
+    CheckFoundation -->|Yes| LoadFoundation[Load Foundation]
+
+    LoadFoundation --> LoadAllDocs[Load ALL Feature Documents]
+
+    LoadAllDocs --> LoadRequired[Load spec.md, plan.md, tasks.md]
+    LoadAllDocs --> LoadOptional[Load data-model.md, contracts/, research.md, etc.]
+
+    LoadRequired --> ParseTasks[Parse Task Structure]
+    LoadOptional --> ParseTasks
+
+    ParseTasks --> ExtractPhases[Extract Phases: Setup, Tests, Core, Integration, Polish]
+    ExtractPhases --> IdentifyDeps[Identify Dependencies & Parallel Tasks]
+    IdentifyDeps --> BuildExecPlan[Build Execution Plan]
+
+    BuildExecPlan --> Phase1[Phase 3.1: Setup]
+    Phase1 --> SetupTasks[Execute Setup Tasks]
+    SetupTasks --> UpdateTasksMd1[Update tasks.md with [X]]
+    UpdateTasksMd1 --> CheckPhase1{All Setup Complete?}
+
+    CheckPhase1 -->|No| Error3[Halt: Setup Failed]
+    CheckPhase1 -->|Yes| Phase2[Phase 3.2: Tests TDD Red]
+
+    Phase2 --> WriteTests[Write Failing Tests]
+    WriteTests --> UpdateTasksMd2[Update tasks.md with [X]]
+    UpdateTasksMd2 --> CheckPhase2{All Tests Written?}
+
+    CheckPhase2 -->|No| Error4[Halt: Test Creation Failed]
+    CheckPhase2 -->|Yes| Phase3[Phase 3.3: Core TDD Green]
+
+    Phase3 --> ImplementCore[Implement Features to Pass Tests]
+    ImplementCore --> UpdateTasksMd3[Update tasks.md with [X]]
+    UpdateTasksMd3 --> CheckPhase3{All Core Complete?}
+
+    CheckPhase3 -->|No| Error5[Halt: Implementation Failed]
+    CheckPhase3 -->|Yes| Phase4[Phase 3.4: Integration]
+
+    Phase4 --> IntegrateSystems[Connect Components & Services]
+    IntegrateSystems --> UpdateTasksMd4[Update tasks.md with [X]]
+    UpdateTasksMd4 --> CheckPhase4{All Integration Complete?}
+
+    CheckPhase4 -->|No| Error6[Halt: Integration Failed]
+    CheckPhase4 -->|Yes| Phase5[Phase 3.5: Polish]
+
+    Phase5 --> PolishCode[Optimize, Refactor, Document]
+    PolishCode --> UpdateTasksMd5[Update tasks.md with [X]]
+    UpdateTasksMd5 --> CheckPhase5{All Polish Complete?}
+
+    CheckPhase5 -->|No| Error7[Halt: Polish Failed]
+    CheckPhase5 -->|Yes| ValidateImpl[Validate Implementation]
+
+    ValidateImpl --> RunTests[Run Test Suite]
+    RunTests --> TestsPass{Tests Pass?}
+    TestsPass -->|No| ReportFailure[Report Test Failures]
+    TestsPass -->|Yes| VerifySpec[Verify Matches Spec]
+
+    VerifySpec --> SpecMatch{Matches Requirements?}
+    SpecMatch -->|No| ReportGaps[Report Implementation Gaps]
+    SpecMatch -->|Yes| UpdateStatus[Update tasks.md Status to Completed]
+
+    UpdateStatus --> ReportSuccess[Report Success Summary]
+
+    Error1 --> End[End]
+    Error2 --> End
+    Error3 --> End
+    Error4 --> End
+    Error5 --> End
+    Error6 --> End
+    Error7 --> End
+    ReportFailure --> End
+    ReportGaps --> End
+    ReportSuccess --> End
+```
+
+**Data Transformation - Tasks to Implementation**:
+
+**Input (tasks.md)**:
+```markdown
+## Phase 3.2: Tests (TDD Red Phase)
+- [ ] [TASK-005] Write user model unit tests
+- [ ] [TASK-006] Write auth controller integration tests
+
+## Phase 3.3: Core Implementation (TDD Green Phase)
+- [ ] [TASK-007] Implement User model with bcrypt
+- [ ] [TASK-008] Implement auth controller endpoints
+```
+
+**Execution Process**:
+1. **Phase 3.2 Execution**: Write tests that fail (red phase)
+2. **Update Progress**: `- [X] [TASK-005] Write user model unit tests`
+3. **Phase 3.3 Execution**: Implement code to make tests pass (green phase)
+4. **Update Progress**: `- [X] [TASK-007] Implement User model with bcrypt`
+
+**Output (tasks.md after execution)**:
+```markdown
+## Phase 3.2: Tests (TDD Red Phase)
+- [X] [TASK-005] Write user model unit tests
+- [X] [TASK-006] Write auth controller integration tests
+
+## Phase 3.3: Core Implementation (TDD Green Phase)
+- [X] [TASK-007] Implement User model with bcrypt
+- [X] [TASK-008] Implement auth controller endpoints
+
+**Status**: Completed
+**Tests**: 24/24 passing
+**Implementation**: Matches specification requirements
+```
+
+### 7. Git Commit Flow
 
 ```mermaid
 flowchart TD

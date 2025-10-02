@@ -112,19 +112,47 @@ npm install passport passport-jwt bcrypt jsonwebtoken express-rate-limit redis
 ...
 ```
 
-**Step 4: Implement and Commit**
+**Step 4: Execute Implementation**
 ```bash
-# After implementing TASK-001 and TASK-002
-git add .
+/buddy:implement
+
+# Execution flow:
+# 1. Discovery: Found tasks.md in specs/20251002-user-authentication/
+# 2. Analysis: Loading spec.md, plan.md, tasks.md
+# 3. Foundation check: Verified directive/foundation.md exists
+# 4. Phase 3.1 (Setup): Installing dependencies...
+#    [X] TASK-001: Setup Dependencies - COMPLETED
+# 5. Phase 3.2 (Tests): Writing test files...
+#    [X] TASK-002: Create user model tests - COMPLETED
+#    [X] TASK-003: Create auth controller tests - COMPLETED
+# 6. Phase 3.3 (Core): Implementing features...
+#    [X] TASK-004: Implement User model - COMPLETED
+#    [X] TASK-005: Implement Auth controller - COMPLETED
+#    [X] TASK-006: Implement JWT service - COMPLETED
+# 7. Phase 3.4 (Integration): Connecting components...
+#    [X] TASK-007: Integrate rate limiting - COMPLETED
+#    [X] TASK-008: Add auth middleware - COMPLETED
+# 8. Phase 3.5 (Polish): Finalizing...
+#    [X] TASK-009: Run test suite - COMPLETED
+#    [X] TASK-010: Update API documentation - COMPLETED
+#
+# ✓ All 10 tasks completed successfully
+# ✓ Tests passing: 24/24
+# ✓ Implementation matches specification
+```
+
+**Step 5: Commit Changes**
+```bash
 /buddy:commit
 
 # Generated commit message:
-# feat: add user model and authentication dependencies
+# feat: implement user authentication with JWT tokens
 #
-# - Install passport, passport-jwt, bcrypt, and jsonwebtoken
-# - Create User model with email and password fields
-# - Add database migration for users table
-# - Configure Sequelize connection
+# - Add User model with bcrypt password hashing
+# - Implement registration, login, logout, and token refresh endpoints
+# - Add JWT token generation and validation service
+# - Integrate rate limiting on authentication endpoints
+# - Add comprehensive test coverage for auth flows
 ```
 
 ### Example 2: Optimizing Performance

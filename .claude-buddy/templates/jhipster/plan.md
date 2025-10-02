@@ -1,8 +1,5 @@
 ---
 description: "JHipster implementation plan template for full-stack web applications and microservices"
-scripts:
-  sh: scripts/bash/update-agent-context.sh __AGENT__
-  ps: scripts/powershell/update-agent-context.ps1 -AgentType __AGENT__
 ---
 
 # JHipster Implementation Plan: [FEATURE]

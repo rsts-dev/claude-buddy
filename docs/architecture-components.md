@@ -105,6 +105,22 @@ Slash commands provide the primary user interface to Claude Buddy functionality.
 - Estimated effort
 - Technical notes
 
+#### `/buddy:implement`
+**Purpose**: Execute implementation tasks from existing task breakdown
+
+**Location**: `.claude/commands/buddy/implement.md`
+
+**Prerequisites**: Existing `tasks.md` from `/buddy:tasks`
+
+**Output**: Working implementation with updated task checkboxes
+
+**Execution Features**:
+- Phase-by-phase task execution
+- Test-Driven Development (TDD) approach
+- Dependency-aware sequencing
+- Progress tracking in tasks.md
+- Comprehensive document analysis
+
 #### `/buddy:docs`
 **Purpose**: Generate comprehensive technical documentation
 
@@ -279,6 +295,47 @@ def calculate_persona_score(request, persona):
 - Development: setup, coding-standards, testing, debugging
 - Deployment: prerequisites, configuration, deployment, monitoring
 - Troubleshooting: common-issues, performance, faq
+
+#### task-executor
+**File**: `.claude/agents/task-executor.md` (13KB)
+
+**Responsibilities**:
+- Discover and locate task documents in `specs/` directory
+- Verify foundation document existence
+- Comprehensively analyze ALL feature documents:
+  - Required: tasks.md, plan.md, spec.md
+  - Optional: data-model.md, contracts/, research.md, quickstart.md
+  - Stack-specific: api-specification.raml, jdl-model.jdl, etc.
+- Parse task structure: phases, dependencies, parallel markers [P]
+- Execute tasks following TDD principles
+- Update tasks.md with completion checkboxes [X]
+- Validate implementation against specifications
+
+**Execution Phases**:
+1. **Phase 3.1 - Setup**: Project structure, dependencies, configuration
+2. **Phase 3.2 - Tests**: Write failing tests first (TDD red phase)
+3. **Phase 3.3 - Core**: Implement features to pass tests (TDD green phase)
+4. **Phase 3.4 - Integration**: Connect components, middleware, services
+5. **Phase 3.5 - Polish**: Optimize, refactor, documentation
+
+**Task Execution Rules**:
+- Complete phases sequentially (3.1 → 3.2 → 3.3 → 3.4 → 3.5)
+- Respect task dependencies (sequential vs parallel [P])
+- Follow TDD approach (tests before implementation)
+- Update progress after each task completion
+- Halt on failures in sequential tasks
+- Continue with successful parallel tasks
+
+**Progress Tracking**:
+```markdown
+# Before execution
+- [ ] Implement user service
+- [ ] Write user service tests
+
+# After execution
+- [X] Implement user service
+- [X] Write user service tests
+```
 
 #### git-workflow
 **File**: `.claude/agents/git-workflow.md` (15KB)

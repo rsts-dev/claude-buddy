@@ -190,6 +190,64 @@ My project is a customer relationship management system built with React and Nod
 
 ---
 
+### /buddy:implement
+
+**Purpose**: Execute implementation tasks from existing task breakdown
+
+**Syntax**:
+```
+/buddy:implement [task-identifier]
+/buddy:implement  # Uses most recent tasks
+```
+
+**Parameters**:
+- `task-identifier` (optional): Folder identifier or date to locate specific tasks
+
+**Prerequisites**: Existing `tasks.md` file from `/buddy:tasks`
+
+**Examples**:
+```bash
+/buddy:implement
+# Executes most recent task breakdown
+
+/buddy:implement 20251002-user-auth
+# Executes specific task set by folder name
+
+/buddy:implement installation-script
+# Executes tasks for installation-script feature
+```
+
+**Execution Flow**:
+1. **Discovery**: Locates tasks.md in specs/ directory
+2. **Analysis**: Reads all related documents (spec, plan, contracts, data-model)
+3. **Planning**: Parses task dependencies and execution order
+4. **Execution**: Implements tasks phase-by-phase following TDD
+5. **Tracking**: Updates tasks.md with completion checkboxes
+6. **Validation**: Verifies implementation matches specifications
+
+**Task Execution Phases**:
+- **Phase 3.1: Setup** - Project structure, dependencies, configuration
+- **Phase 3.2: Tests** - Write failing tests first (TDD red phase)
+- **Phase 3.3: Core** - Implement features to pass tests (TDD green phase)
+- **Phase 3.4: Integration** - Connect components, middleware, services
+- **Phase 3.5: Polish** - Optimize, refactor, documentation
+
+**Output**:
+- Working implementation following the task plan
+- Updated `tasks.md` with completed checkboxes `[X]`
+- Test files with passing test suites
+- Implementation matching specification requirements
+
+**Progress Tracking**:
+```markdown
+Before: - [ ] Implement user authentication service
+After:  - [X] Implement user authentication service
+```
+
+**Execution Time**: Varies by task complexity (typically 10-60 minutes)
+
+---
+
 ### /buddy:docs
 
 **Purpose**: Generate comprehensive technical documentation
@@ -277,7 +335,7 @@ My project is a customer relationship management system built with React and Nod
 flowchart LR
     Spec[/buddy:spec] --> Plan[/buddy:plan]
     Plan --> Tasks[/buddy:tasks]
-    Tasks --> Implement[Implement Code]
+    Tasks --> Implement[/buddy:implement]
     Implement --> Commit[/buddy:commit]
     Commit --> Done[Feature Complete]
 ```
@@ -286,7 +344,7 @@ flowchart LR
 1. `/buddy:spec Add user authentication` - Define requirements
 2. `/buddy:plan` - Create implementation strategy
 3. `/buddy:tasks` - Break down into tasks
-4. Implement the code following tasks
+4. `/buddy:implement` - Execute implementation following TDD
 5. `/buddy:commit` - Commit with professional message
 
 ### Project Setup Workflow
@@ -374,6 +432,7 @@ Please run /buddy:spec first to create a specification
 | `/buddy:spec` | 30-90 seconds | Foundation |
 | `/buddy:plan` | 1-2 minutes | Spec, foundation |
 | `/buddy:tasks` | 30-90 seconds | Plan, spec |
+| `/buddy:implement` | 10-60 minutes | Tasks, plan, spec |
 | `/buddy:docs` | 3-5 minutes | Foundation, codebase |
 | `/buddy:commit` | 10-30 seconds | Git history |
 

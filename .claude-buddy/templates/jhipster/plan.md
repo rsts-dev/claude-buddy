@@ -14,7 +14,7 @@ scripts:
 **Application Type**: [Monolith/Microservices/Gateway] | **Stack**: [Reactive/Imperative]
 **Input**: Feature specification from `/specs/[###-feature-name]/spec.md`
 
-## Execution Flow (/plan command scope)
+## Execution Flow (/buddy:plan command scope)
 ```
 1. Load feature spec from Input path
    → If not found: ERROR "No feature spec at {path}"
@@ -34,11 +34,11 @@ scripts:
    → If new violations: Refactor design, return to Phase 1
    → Update Progress Tracking: Post-Design Foundation Check
 8. Plan Phase 2 → Describe task generation approach (DO NOT create tasks.md)
-9. STOP - Ready for /tasks command
+9. STOP - Ready for /buddy:tasks command
 ```
 
-**IMPORTANT**: The /plan command STOPS at step 8. Phases 2-4 are executed by other commands:
-- Phase 2: /tasks command creates tasks.md
+**IMPORTANT**: The /buddy:plan command STOPS at step 8. Phases 2-4 are executed by other commands:
+- Phase 2: /buddy:tasks command creates tasks.md
 - Phase 3-4: Implementation execution (manual or via tools)
 
 ## Summary
@@ -104,13 +104,13 @@ Based on `/.claude-buddy/foundation.md` v1.0.0, verify compliance with:
 ### Documentation (this feature)
 ```
 specs/[###-feature]/
-├── plan.md              # This file (/plan command output)
-├── research.md          # Phase 0 output (/plan command)
-├── jdl-model.jdl        # Phase 1 output (/plan command) - JHipster Domain Language
-├── api-contracts/       # Phase 1 output (/plan command) - OpenAPI/REST specs
-├── frontend-design.md   # Phase 1 output (/plan command) - UI mockups/wireframes
-├── test-scenarios.md    # Phase 1 output (/plan command) - Test cases
-└── tasks.md             # Phase 2 output (/tasks command - NOT created by /plan)
+├── plan.md              # This file (/buddy:plan command output)
+├── research.md          # Phase 0 output (/buddy:plan command)
+├── jdl-model.jdl        # Phase 1 output (/buddy:plan command) - JHipster Domain Language
+├── api-contracts/       # Phase 1 output (/buddy:plan command) - OpenAPI/REST specs
+├── frontend-design.md   # Phase 1 output (/buddy:plan command) - UI mockups/wireframes
+├── test-scenarios.md    # Phase 1 output (/buddy:plan command) - Test cases
+└── tasks.md             # Phase 2 output (/buddy:tasks command - NOT created by /buddy:plan)
 ```
 
 ### Source Code (JHipster project root)
@@ -282,7 +282,7 @@ directories captured above. Specify monolith vs microservices rationale.]
 **Output**: jdl-model.jdl, /api-contracts/*, frontend-design.md, test-scenarios.md (with failing tests), agent-specific file
 
 ## Phase 2: Task Planning Approach
-*This section describes what the /tasks command will do - DO NOT execute during /plan*
+*This section describes what the /buddy:tasks command will do - DO NOT execute during /buddy:plan*
 
 **Task Generation Strategy**:
 - Load `.specify/templates/tasks-template.md` as base
@@ -301,12 +301,12 @@ directories captured above. Specify monolith vs microservices rationale.]
 
 **Estimated Output**: 30-40 numbered, ordered tasks in tasks.md
 
-**IMPORTANT**: This phase is executed by the /tasks command, NOT by /plan
+**IMPORTANT**: This phase is executed by the /buddy:tasks command, NOT by /buddy:plan
 
 ## Phase 3+: Future Implementation
-*These phases are beyond the scope of the /plan command*
+*These phases are beyond the scope of the /buddy:plan command*
 
-**Phase 3**: Task execution (/tasks command creates tasks.md)
+**Phase 3**: Task execution (/buddy:tasks command creates tasks.md)
 **Phase 4**: Implementation (execute tasks.md following foundational principles)
 **Phase 5**: Validation
   - Run backend tests (JUnit, Spring tests)
@@ -328,10 +328,10 @@ directories captured above. Specify monolith vs microservices rationale.]
 *This checklist is updated during execution flow*
 
 **Phase Status**:
-- [ ] Phase 0: Research complete (/plan command)
-- [ ] Phase 1: Design complete (/plan command)
-- [ ] Phase 2: Task planning complete (/plan command - describe approach only)
-- [ ] Phase 3: Tasks generated (/tasks command)
+- [ ] Phase 0: Research complete (/buddy:plan command)
+- [ ] Phase 1: Design complete (/buddy:plan command)
+- [ ] Phase 2: Task planning complete (/buddy:plan command - describe approach only)
+- [ ] Phase 3: Tasks generated (/buddy:tasks command)
 - [ ] Phase 4: Implementation complete
 - [ ] Phase 5: Validation passed
 

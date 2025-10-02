@@ -7,7 +7,7 @@
 **API Layer**: [System/Process/Experience] | **Deployment**: [CloudHub/RTF/Hybrid]
 **Input**: API specification from `/specs/[###-api-name]/spec.md`
 
-## Execution Flow (/plan command scope)
+## Execution Flow (/buddy:plan command scope)
 ```
 1. Load API spec from Input path
    → If not found: ERROR "No API spec at {path}"
@@ -27,11 +27,11 @@
    → If new violations: Refactor design, return to Phase 1
    → Update Progress Tracking: Post-Design Foundation Check
 8. Plan Phase 2 → Describe task generation approach (DO NOT create tasks.md)
-9. STOP - Ready for /tasks command
+9. STOP - Ready for /buddy:tasks command
 ```
 
-**IMPORTANT**: The /plan command STOPS at step 8. Phases 2-4 are executed by other commands:
-- Phase 2: /tasks command creates tasks.md
+**IMPORTANT**: The /buddy:plan command STOPS at step 8. Phases 2-4 are executed by other commands:
+- Phase 2: /buddy:tasks command creates tasks.md
 - Phase 3-4: Implementation execution (manual or via tools)
 
 ## Summary
@@ -100,16 +100,16 @@ Based on `/.claude-buddy/foundation.md` v1.0.0, verify compliance with:
 ### Documentation (this API)
 ```
 specs/[###-api-name]/
-├── plan.md                    # This file (/plan command output)
-├── research.md                # Phase 0 output (/plan command)
-├── api-specification.raml     # Phase 1 output (/plan command) - RAML or OAS
-├── dataweave/                 # Phase 1 output (/plan command)
+├── plan.md                    # This file (/buddy:plan command output)
+├── research.md                # Phase 0 output (/buddy:plan command)
+├── api-specification.raml     # Phase 1 output (/buddy:plan command) - RAML or OAS
+├── dataweave/                 # Phase 1 output (/buddy:plan command)
 │   └── mappings.md           # DataWeave transformation designs
-├── error-handlers.md          # Phase 1 output (/plan command)
-├── policies.json              # Phase 1 output (/plan command)
-├── munit/                     # Phase 1 output (/plan command)
+├── error-handlers.md          # Phase 1 output (/buddy:plan command)
+├── policies.json              # Phase 1 output (/buddy:plan command)
+├── munit/                     # Phase 1 output (/buddy:plan command)
 │   └── test-plan.md          # MUnit test scenarios
-└── tasks.md                   # Phase 2 output (/tasks command - NOT created by /plan)
+└── tasks.md                   # Phase 2 output (/buddy:tasks command - NOT created by /buddy:plan)
 ```
 
 ### Source Code (MuleSoft project root)
@@ -228,7 +228,7 @@ specs/[###-api-name]/
 **Output**: api-specification.raml, dataweave/mappings.md, error-handlers.md, policies.json, munit/test-plan.md, failing MUnit tests, agent-specific file
 
 ## Phase 2: Task Planning Approach
-*This section describes what the /tasks command will do - DO NOT execute during /plan*
+*This section describes what the /buddy:tasks command will do - DO NOT execute during /buddy:plan*
 
 **Task Generation Strategy**:
 - Load `.specify/templates/tasks-template.md` as base
@@ -252,12 +252,12 @@ specs/[###-api-name]/
 
 **Estimated Output**: 20-35 numbered, ordered tasks in tasks.md
 
-**IMPORTANT**: This phase is executed by the /tasks command, NOT by /plan
+**IMPORTANT**: This phase is executed by the /buddy:tasks command, NOT by /buddy:plan
 
 ## Phase 3+: Future Implementation
-*These phases are beyond the scope of the /plan command*
+*These phases are beyond the scope of the /buddy:plan command*
 
-**Phase 3**: Task execution (/tasks command creates tasks.md)
+**Phase 3**: Task execution (/buddy:tasks command creates tasks.md)
 **Phase 4**: Implementation (execute tasks.md following foundational principles)
 **Phase 5**: Validation
   - Run MUnit tests (>80% coverage)
@@ -279,10 +279,10 @@ specs/[###-api-name]/
 *This checklist is updated during execution flow*
 
 **Phase Status**:
-- [ ] Phase 0: Research complete (/plan command)
-- [ ] Phase 1: Design complete (/plan command)
-- [ ] Phase 2: Task planning complete (/plan command - describe approach only)
-- [ ] Phase 3: Tasks generated (/tasks command)
+- [ ] Phase 0: Research complete (/buddy:plan command)
+- [ ] Phase 1: Design complete (/buddy:plan command)
+- [ ] Phase 2: Task planning complete (/buddy:plan command - describe approach only)
+- [ ] Phase 3: Tasks generated (/buddy:tasks command)
 - [ ] Phase 4: Implementation complete
 - [ ] Phase 5: Validation passed
 

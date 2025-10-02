@@ -1,6 +1,6 @@
-# API Specification: [API NAME]
+# MuleSoft API Specification: [API NAME]
 
-**API Branch**: `[###-api-name]`
+**Branch**: `[###-api-name]`
 **Created**: [DATE]
 **Status**: Draft
 **Input**: User description: "$ARGUMENTS"

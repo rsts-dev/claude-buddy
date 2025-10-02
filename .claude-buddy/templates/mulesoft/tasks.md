@@ -1,6 +1,11 @@
-# Tasks: [API NAME]
+# MuleSoft API Implementation Tasks: [API NAME]
 
-**Input**: Design documents from `/specs/[###-api-name]/`
+**Branch**: `[###-api-name]`
+**Spec**: [link]
+**Plan**: [link]
+**Created**: [DATE]
+**Status**: Draft
+**Input**: API specification from `/specs/[###-api-name]/spec.md` and plan from `/specs/[###-api-name]/plan.md`
 **Prerequisites**: plan.md (required), research.md, api-specification.raml, dataweave/mappings.md, munit/test-plan.md
 
 ## Execution Flow (main)

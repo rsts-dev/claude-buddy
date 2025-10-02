@@ -1,13 +1,9 @@
----
-description: "MuleSoft API implementation plan template for API-Led architecture"
-scripts:
-  sh: scripts/bash/update-agent-context.sh __AGENT__
-  ps: scripts/powershell/update-agent-context.ps1 -AgentType __AGENT__
----
-
 # MuleSoft API Implementation Plan: [API NAME]
 
-**Branch**: `[###-api-name]` | **Date**: [DATE] | **Spec**: [link]
+**Branch**: `[###-api-name]`
+**Spec**: [link]
+**Created**: [DATE]
+**Status**: Draft
 **API Layer**: [System/Process/Experience] | **Deployment**: [CloudHub/RTF/Hybrid]
 **Input**: API specification from `/specs/[###-api-name]/spec.md`
 

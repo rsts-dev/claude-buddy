@@ -7,7 +7,10 @@ scripts:
 
 # JHipster Implementation Plan: [FEATURE]
 
-**Branch**: `[###-feature-name]` | **Date**: [DATE] | **Spec**: [link]
+**Branch**: `[###-feature-name]`
+**Spec**: [link]
+**Created**: [DATE]
+**Status**: Draft
 **Application Type**: [Monolith/Microservices/Gateway] | **Stack**: [Reactive/Imperative]
 **Input**: Feature specification from `/specs/[###-feature-name]/spec.md`
 

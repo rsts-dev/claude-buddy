@@ -1,6 +1,11 @@
 # Tasks: [FEATURE NAME]
 
-**Input**: Design documents from `/specs/[###-feature-name]/`
+**Branch**: `[###-feature-name]`
+**Spec**: [link]
+**Plan**: [link]
+**Created**: [DATE]
+**Status**: Draft
+**Input**: Feature specification from `/specs/[###-feature-name]/spec.md` and plan from `/specs/[###-feature-name]/plan.md`
 **Prerequisites**: plan.md (required), research.md, jdl-model.jdl, api-contracts/, frontend-design.md, test-scenarios.md
 
 ## Execution Flow (main)

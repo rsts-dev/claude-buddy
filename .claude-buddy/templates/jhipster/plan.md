@@ -64,38 +64,32 @@ scripts:
 ## Foundation Check
 *GATE: Must pass before Phase 0 research. Re-check after Phase 1 design.*
 
-Based on `/.claude-buddy/foundation.md` v1.0.0, verify compliance with:
+Based on `/directive/foundation.md` v1.0.0, verify compliance with:
 
-### Principle 1: Template-Driven Architecture
-- [ ] This plan follows the template structure with explicit phases
-- [ ] All file paths are absolute (not relative)
-- [ ] Execution flow is numbered and sequential
+### Principle 1: Modular Extensibility
+- [ ] Feature components are designed as independent modules
+- [ ] New functionality extends without modifying core framework
+- [ ] Templates and configurations are properly isolated
 
-### Principle 2: Agent Specialization
-- [ ] Agent updates follow incremental pattern (O(1) operation)
-- [ ] No cross-domain responsibilities mixed in this feature
+### Principle 2: Safety-First Automation
+- [ ] All automated operations include validation steps
+- [ ] Destructive operations are explicitly protected
+- [ ] Error handling prevents unintended consequences
 
-### Principle 3: Phase-Gated Execution
-- [ ] Each phase has clear validation gates
-- [ ] Prerequisites are explicitly checked before progression
-- [ ] Outputs are documented for downstream phases
+### Principle 3: Contextual Intelligence
+- [ ] Design leverages foundation document principles
+- [ ] Context from previous phases propagates forward
+- [ ] Templates maintain consistency with project patterns
 
-### Principle 4: Test-First Development
-- [ ] Tasks will be ordered: setup → tests → implementation → polish
-- [ ] Backend tests (Spring tests) precede implementation
-- [ ] Frontend tests precede component implementation
-- [ ] Integration tests validate end-to-end flows
+### Principle 4: Developer Experience Excellence
+- [ ] Clear documentation for all new components
+- [ ] Error messages provide actionable guidance
+- [ ] Progressive disclosure of advanced features
 
-### Principle 5: Explicit Error Handling
-- [ ] Research phase addresses error scenarios
-- [ ] Test scenarios include failure modes
-- [ ] Implementation will include backend error handling (exceptions, @ControllerAdvice)
-- [ ] Implementation will include frontend error handling (error boundaries, user feedback)
-
-### Principle 6: Semantic Versioning
-- [ ] Feature branch follows naming convention
-- [ ] Artifacts will be versioned appropriately
-- [ ] Changes will be documented in commit messages
+### Principle 5: Transparent Collaboration
+- [ ] Changes maintain clear attribution trails
+- [ ] Automated operations are logged appropriately
+- [ ] Human review points are explicitly defined
 
 **Violations Requiring Justification**: [List any principle violations and provide rationale in Complexity Tracking section]
 
@@ -351,4 +345,4 @@ directories captured above. Specify monolith vs microservices rationale.]
 - [ ] Application builds without errors
 
 ---
-*Based on Foundation v1.0.0 - See `/.claude-buddy/foundation.md` for complete principles and governance*
+*Based on Foundation v1.0.0 - See `/directive/foundation.md` for complete principles and governance*

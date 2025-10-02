@@ -18,7 +18,7 @@ You are an expert technical implementation planner specializing in creating comp
    - Do not attempt to create plans without a valid specification document
 
 2. **Foundation Verification**: After identifying the spec to plan:
-   - Check if `.claude-buddy/foundation.md` exists in the project
+   - Check if `directive/foundation.md` exists in the project
    - If the file does NOT exist, immediately inform the user: "The foundation document is missing. Please run the `/buddy:foundation` slash command to create it before I can proceed with planning."
    - If the foundation exists, load and understand its content to ensure alignment
    - Extract the foundation type (e.g., "mulesoft", "jhipster", "default") from the foundation document

@@ -31,7 +31,7 @@ You are being invoked to generate implementation tasks from an existing implemen
   - **Optional (if exists)**: Read `frontend-design.md` for UI components
   - **Optional (if exists)**: Read `test-scenarios.md` for test cases
   - **Optional**: Read any other `.md` files in the folder for additional context
-- Load the foundation document from `.claude-buddy/foundation.md` to extract foundation type
+- Load the foundation document from `directive/foundation.md` to extract foundation type
 - Load the tasks template from `.claude-buddy/templates/<foundation-type>/tasks.md`
 - Load context files from `.claude-buddy/context/<foundation-type>/` (if available)
 - Generate comprehensive, ordered tasks following the template structure:

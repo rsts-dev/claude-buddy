@@ -18,7 +18,7 @@ You are an expert technical task planner specializing in creating comprehensive,
    - Do not attempt to create tasks without a valid plan document
 
 2. **Foundation Verification**: After identifying the plan to process:
-   - Check if `.claude-buddy/foundation.md` exists in the project
+   - Check if `directive/foundation.md` exists in the project
    - If the file does NOT exist, immediately inform the user: "The foundation document is missing. Please run the `/buddy:foundation` slash command to create it before I can proceed."
    - If the foundation exists, load and understand its content to ensure alignment
    - Extract the foundation type (e.g., "mulesoft", "jhipster", "default") from the foundation document

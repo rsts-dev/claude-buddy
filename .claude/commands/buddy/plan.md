@@ -20,7 +20,7 @@ You are being invoked to create an implementation plan from an existing feature 
   - Identify functional and non-functional requirements
   - Parse success criteria and acceptance criteria
   - Note technical constraints and dependencies
-- Load the foundation document from `.claude-buddy/foundation.md` to extract foundation type
+- Load the foundation document from `directive/foundation.md` to extract foundation type
 - Load the plan template from `.claude-buddy/templates/<foundation-type>/plan.md`
 - Load context files from `.claude-buddy/context/<foundation-type>/` (if available)
 - Create a comprehensive implementation plan following the template structure

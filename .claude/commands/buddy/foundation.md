@@ -6,7 +6,7 @@ Use the Task tool to launch the foundation agent with the following prompt:
 
 **Prompt for foundation agent**:
 
-You are being invoked to create or update the project foundation at `/.claude-buddy/foundation.md`.
+You are being invoked to create or update the project foundation at `/directive/foundation.md`.
 
 **User provided input**: $ARGUMENTS
 

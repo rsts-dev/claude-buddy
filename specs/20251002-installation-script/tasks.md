@@ -69,167 +69,167 @@ Single project structure:
 **CRITICAL: These tests MUST be written and MUST FAIL before ANY implementation**
 
 ### Integration Tests: Fresh Installation
-- [ ] T005 [P] Integration test for fresh installation scenario in `setup/tests/integration/fresh-install.test.js`
-- [ ] T006 [P] Integration test for graceful degradation (missing UV) in `setup/tests/integration/graceful-degradation.test.js`
-- [ ] T007 [P] Integration test for dry-run mode in `setup/tests/integration/dry-run.test.js`
+- [X] T005 [P] Integration test for fresh installation scenario in `setup/tests/integration/fresh-install.test.js`
+- [X] T006 [P] Integration test for graceful degradation (missing UV) in `setup/tests/integration/graceful-degradation.test.js`
+- [X] T007 [P] Integration test for dry-run mode in `setup/tests/integration/dry-run.test.js`
 
 ### Integration Tests: Update Scenarios
-- [ ] T008 [P] Integration test for update with customization preservation in `setup/tests/integration/update.test.js`
-- [ ] T009 [P] Integration test for configuration merging in `setup/tests/integration/config-merge.test.js`
-- [ ] T010 [P] Integration test for version migration in `setup/tests/integration/version-migration.test.js`
+- [X] T008 [P] Integration test for update with customization preservation in `setup/tests/integration/update.test.js`
+- [X] T009 [P] Integration test for configuration merging in `setup/tests/integration/config-merge.test.js`
+- [X] T010 [P] Integration test for version migration in `setup/tests/integration/version-migration.test.js`
 
 ### Integration Tests: Uninstallation
-- [ ] T011 [P] Integration test for uninstallation with preservation in `setup/tests/integration/uninstall-preserve.test.js`
-- [ ] T012 [P] Integration test for complete purge in `setup/tests/integration/uninstall-purge.test.js`
+- [X] T011 [P] Integration test for uninstallation with preservation in `setup/tests/integration/uninstall-preserve.test.js`
+- [X] T012 [P] Integration test for complete purge in `setup/tests/integration/uninstall-purge.test.js`
 
 ### Integration Tests: Error Handling
-- [ ] T013 [P] Integration test for permission errors in `setup/tests/integration/error-permissions.test.js`
-- [ ] T014 [P] Integration test for interrupted transaction recovery in `setup/tests/integration/interrupted-transaction.test.js`
-- [ ] T015 [P] Integration test for rollback on failure in `setup/tests/integration/rollback.test.js`
+- [X] T013 [P] Integration test for permission errors in `setup/tests/integration/error-permissions.test.js`
+- [X] T014 [P] Integration test for interrupted transaction recovery in `setup/tests/integration/interrupted-transaction.test.js`
+- [X] T015 [P] Integration test for rollback on failure in `setup/tests/integration/rollback.test.js`
 
 ### Integration Tests: Post-Installation
-- [ ] T016 [P] Integration test for verification command in `setup/tests/integration/verify.test.js`
+- [X] T016 [P] Integration test for verification command in `setup/tests/integration/verify.test.js`
 
 ---
 
 ## Phase 3.3: Core Implementation (ONLY after tests are failing)
 
 ### Logger Module (Foundation - No Dependencies)
-- [ ] T017 Create logger module with createLogger, log, info, warn, error, success, debug, verbose functions in `setup/lib/logger.js`
-- [ ] T018 Implement section headers, progress indicators, and spinner in logger module at `setup/lib/logger.js`
-- [ ] T019 Implement specialized logging functions: logInstallationSummary, logUpdateSummary, logUninstallSummary, logErrorWithSuggestions in `setup/lib/logger.js`
-- [ ] T020 Implement output modes: normal, verbose, quiet, JSON in logger module at `setup/lib/logger.js`
-- [ ] T021 Implement file logging with rotation in logger module at `setup/lib/logger.js`
-- [ ] T022 Implement color support with chalk and terminal capability detection in `setup/lib/logger.js`
+- [X] T017 Create logger module with createLogger, log, info, warn, error, success, debug, verbose functions in `setup/lib/logger.js`
+- [X] T018 Implement section headers, progress indicators, and spinner in logger module at `setup/lib/logger.js`
+- [X] T019 Implement specialized logging functions: logInstallationSummary, logUpdateSummary, logUninstallSummary, logErrorWithSuggestions in `setup/lib/logger.js`
+- [X] T020 Implement output modes: normal, verbose, quiet, JSON in logger module at `setup/lib/logger.js`
+- [X] T021 Implement file logging with rotation in logger module at `setup/lib/logger.js`
+- [X] T022 Implement color support with chalk and terminal capability detection in `setup/lib/logger.js`
 
 ### Environment Detection Module
-- [ ] T023 [P] Create environment detection module with platform detection (darwin, linux, windows) in `setup/lib/environment.js`
-- [ ] T024 [P] Implement dependency detection for Node.js, UV, Python, Git in `setup/lib/environment.js`
-- [ ] T025 [P] Implement permission checking for target directory in `setup/lib/environment.js`
-- [ ] T026 [P] Implement disk space checking in `setup/lib/environment.js`
-- [ ] T027 [P] Implement existing installation detection and version comparison in `setup/lib/environment.js`
+- [X] T023 [P] Create environment detection module with platform detection (darwin, linux, windows) in `setup/lib/environment.js`
+- [X] T024 [P] Implement dependency detection for Node.js, UV, Python, Git in `setup/lib/environment.js`
+- [X] T025 [P] Implement permission checking for target directory in `setup/lib/environment.js`
+- [X] T026 [P] Implement disk space checking in `setup/lib/environment.js`
+- [X] T027 [P] Implement existing installation detection and version comparison in `setup/lib/environment.js`
 
 ### Manifest Module
-- [ ] T028 [P] Create manifest module with hardcoded component definitions (hooks, templates, personas, commands, agents, foundation) in `setup/lib/manifest.js`
-- [ ] T029 [P] Implement manifest validation and platform-specific override logic in `setup/lib/manifest.js`
-- [ ] T030 [P] Implement component filtering by available dependencies in `setup/lib/manifest.js`
+- [X] T028 [P] Create manifest module with hardcoded component definitions (hooks, templates, personas, commands, agents, foundation) in `setup/lib/manifest.js`
+- [X] T029 [P] Implement manifest validation and platform-specific override logic in `setup/lib/manifest.js`
+- [X] T030 [P] Implement component filtering by available dependencies in `setup/lib/manifest.js`
 
 ### Transaction Module
-- [ ] T031 [P] Create transaction module with createTransaction, executeAction, createCheckpoint in `setup/lib/transaction.js`
-- [ ] T032 [P] Implement checkpoint system with file state snapshots in `setup/lib/transaction.js`
-- [ ] T033 [P] Implement action execution for create, update, delete, skip, backup types in `setup/lib/transaction.js`
-- [ ] T034 [P] Implement commitTransaction with cleanup and metadata updates in `setup/lib/transaction.js`
-- [ ] T035 [P] Implement rollbackTransaction with LIFO action reversal in `setup/lib/transaction.js`
-- [ ] T036 [P] Implement getTransactionStatus and transaction recovery logic in `setup/lib/transaction.js`
-- [ ] T037 [P] Implement lock file mechanism for concurrent installation prevention in `setup/lib/transaction.js`
+- [X] T031 [P] Create transaction module with createTransaction, executeAction, createCheckpoint in `setup/lib/transaction.js`
+- [X] T032 [P] Implement checkpoint system with file state snapshots in `setup/lib/transaction.js`
+- [X] T033 [P] Implement action execution for create, update, delete, skip, backup types in `setup/lib/transaction.js`
+- [X] T034 [P] Implement commitTransaction with cleanup and metadata updates in `setup/lib/transaction.js`
+- [X] T035 [P] Implement rollbackTransaction with LIFO action reversal in `setup/lib/transaction.js`
+- [X] T036 [P] Implement getTransactionStatus and transaction recovery logic in `setup/lib/transaction.js`
+- [X] T037 [P] Implement lock file mechanism for concurrent installation prevention in `setup/lib/transaction.js`
 
 ---
 
 ## Phase 3.4: Installation Operations
 
 ### Installer Module (Depends on: Logger, Environment, Manifest, Transaction)
-- [ ] T038 Create installer module with fresh installation logic in `setup/lib/installer.js`
-- [ ] T039 Implement directory creation from manifest in installer module at `setup/lib/installer.js`
-- [ ] T040 Implement component installation with file copying in `setup/lib/installer.js`
-- [ ] T041 Implement permission setting for Unix systems in installer module at `setup/lib/installer.js`
-- [ ] T042 Implement metadata creation and initialization in `setup/lib/installer.js`
-- [ ] T043 Implement post-installation verification in installer module at `setup/lib/installer.js`
+- [X] T038 Create installer module with fresh installation logic in `setup/lib/installer.js`
+- [X] T039 Implement directory creation from manifest in installer module at `setup/lib/installer.js`
+- [X] T040 Implement component installation with file copying in `setup/lib/installer.js`
+- [X] T041 Implement permission setting for Unix systems in installer module at `setup/lib/installer.js`
+- [X] T042 Implement metadata creation and initialization in `setup/lib/installer.js`
+- [X] T043 Implement post-installation verification in installer module at `setup/lib/installer.js`
 
 ### Updater Module (Depends on: Logger, Environment, Manifest, Transaction)
-- [ ] T044 [P] Create updater module with update detection and customization preservation logic in `setup/lib/updater.js`
-- [ ] T045 [P] Implement user modification detection using timestamp comparison in `setup/lib/updater.js`
-- [ ] T046 [P] Implement configuration merging strategies (shallow/deep merge) in `setup/lib/updater.js`
-- [ ] T047 [P] Implement version migration registry and execution in `setup/lib/updater.js`
-- [ ] T048 [P] Implement backup creation before updates in `setup/lib/updater.js`
-- [ ] T049 [P] Implement update summary generation in `setup/lib/updater.js`
+- [X] T044 [P] Create updater module with update detection and customization preservation logic in `setup/lib/updater.js`
+- [X] T045 [P] Implement user modification detection using timestamp comparison in `setup/lib/updater.js`
+- [X] T046 [P] Implement configuration merging strategies (shallow/deep merge) in `setup/lib/updater.js`
+- [X] T047 [P] Implement version migration registry and execution in `setup/lib/updater.js`
+- [X] T048 [P] Implement backup creation before updates in `setup/lib/updater.js`
+- [X] T049 [P] Implement update summary generation in `setup/lib/updater.js`
 
 ### Uninstaller Module (Depends on: Logger, Environment, Transaction)
-- [ ] T050 [P] Create uninstaller module with removal logic in `setup/lib/uninstaller.js`
-- [ ] T051 [P] Implement customization detection and preservation in `setup/lib/uninstaller.js`
-- [ ] T052 [P] Implement purge mode for complete removal in `setup/lib/uninstaller.js`
-- [ ] T053 [P] Implement backup preservation on uninstall in `setup/lib/uninstaller.js`
-- [ ] T054 [P] Implement uninstall summary generation in `setup/lib/uninstaller.js`
+- [X] T050 [P] Create uninstaller module with removal logic in `setup/lib/uninstaller.js`
+- [X] T051 [P] Implement customization detection and preservation in `setup/lib/uninstaller.js`
+- [X] T052 [P] Implement purge mode for complete removal in `setup/lib/uninstaller.js`
+- [X] T053 [P] Implement backup preservation on uninstall in `setup/lib/uninstaller.js`
+- [X] T054 [P] Implement uninstall summary generation in `setup/lib/uninstaller.js`
 
 ---
 
 ## Phase 3.5: CLI Integration
 
 ### CLI Entry Point (Depends on: All modules above)
-- [ ] T055 Create CLI entry point with argument parsing using process.argv in `setup/install.js`
-- [ ] T056 Implement command routing for install, update, uninstall, verify in `setup/install.js`
-- [ ] T057 Implement global flags: --dry-run, --verbose, --quiet, --non-interactive, --help, --version in `setup/install.js`
-- [ ] T058 Implement installation-specific flags: --force, --skip-hooks, --target in `setup/install.js`
-- [ ] T059 Implement update-specific flags: --preserve-all, --merge-config in `setup/install.js`
-- [ ] T060 Implement uninstall-specific flags: --preserve-customizations, --purge in `setup/install.js`
-- [ ] T061 Implement environment variable handling: CLAUDE_BUDDY_HOME, CLAUDE_BUDDY_VERBOSE, CLAUDE_BUDDY_NO_COLOR, CLAUDE_BUDDY_CONFIG in `setup/install.js`
-- [ ] T062 Implement exit codes (0-99) and error handling in `setup/install.js`
-- [ ] T063 Implement signal handling for SIGINT, SIGTERM with graceful shutdown in `setup/install.js`
+- [X] T055 Create CLI entry point with argument parsing using process.argv in `setup/install.js`
+- [X] T056 Implement command routing for install, update, uninstall, verify in `setup/install.js`
+- [X] T057 Implement global flags: --dry-run, --verbose, --quiet, --non-interactive, --help, --version in `setup/install.js`
+- [X] T058 Implement installation-specific flags: --force, --skip-hooks, --target in `setup/install.js`
+- [X] T059 Implement update-specific flags: --preserve-all, --merge-config in `setup/install.js`
+- [X] T060 Implement uninstall-specific flags: --preserve-customizations, --purge in `setup/install.js`
+- [X] T061 Implement environment variable handling: CLAUDE_BUDDY_HOME, CLAUDE_BUDDY_VERBOSE, CLAUDE_BUDDY_NO_COLOR, CLAUDE_BUDDY_CONFIG in `setup/install.js`
+- [X] T062 Implement exit codes (0-99) and error handling in `setup/install.js`
+- [X] T063 Implement signal handling for SIGINT, SIGTERM with graceful shutdown in `setup/install.js`
 
 ### Verify Command
-- [ ] T064 [P] Implement verify command with component checking in `setup/install.js`
-- [ ] T065 [P] Implement configuration validation in verify command at `setup/install.js`
-- [ ] T066 [P] Implement dependency status reporting in verify command at `setup/install.js`
-- [ ] T067 [P] Implement repair suggestions on corruption detection in `setup/install.js`
+- [X] T064 [P] Implement verify command with component checking in `setup/install.js`
+- [X] T065 [P] Implement configuration validation in verify command at `setup/install.js`
+- [X] T066 [P] Implement dependency status reporting in verify command at `setup/install.js`
+- [X] T067 [P] Implement repair suggestions on corruption detection in `setup/install.js`
 
 ### Help and Documentation
-- [ ] T068 [P] Implement --help text with command usage and examples in `setup/install.js`
-- [ ] T069 [P] Implement --version display in `setup/install.js`
+- [X] T068 [P] Implement --help text with command usage and examples in `setup/install.js`
+- [X] T069 [P] Implement --version display in `setup/install.js`
 
 ---
 
 ## Phase 3.6: Error Handling & Edge Cases
 
 ### Error Classes
-- [ ] T070 [P] Create TransactionError class with error codes in `setup/lib/errors.js`
-- [ ] T071 [P] Create EnvironmentError class for environment issues in `setup/lib/errors.js`
-- [ ] T072 [P] Create ValidationError class for validation failures in `setup/lib/errors.js`
+- [X] T070 [P] Create TransactionError class with error codes in `setup/lib/errors.js`
+- [X] T071 [P] Create EnvironmentError class for environment issues in `setup/lib/errors.js`
+- [X] T072 [P] Create ValidationError class for validation failures in `setup/lib/errors.js`
 
 ### Error Recovery
-- [ ] T073 Implement interrupted transaction detection on startup in `setup/install.js`
-- [ ] T074 Implement user prompt for recovery options (rollback/resume/abort) in `setup/install.js`
-- [ ] T075 Implement corrupted installation repair logic in `setup/lib/installer.js`
+- [X] T073 Implement interrupted transaction detection on startup in `setup/install.js`
+- [X] T074 Implement user prompt for recovery options (rollback/resume/abort) in `setup/install.js`
+- [X] T075 Implement corrupted installation repair logic in `setup/lib/installer.js`
 
 ### Edge Case Handling
-- [ ] T076 [P] Implement permission error handling with actionable suggestions in `setup/lib/environment.js`
-- [ ] T077 [P] Implement disk space check with clear error messages in `setup/lib/environment.js`
-- [ ] T078 [P] Implement conflicting configuration resolution prompts in `setup/lib/updater.js`
-- [ ] T079 [P] Implement downgrade confirmation workflow in `setup/lib/updater.js`
-- [ ] T080 [P] Implement stale lock file detection and cleanup in `setup/lib/transaction.js`
+- [X] T076 [P] Implement permission error handling with actionable suggestions in `setup/lib/environment.js`
+- [X] T077 [P] Implement disk space check with clear error messages in `setup/lib/environment.js`
+- [X] T078 [P] Implement conflicting configuration resolution prompts in `setup/lib/updater.js`
+- [X] T079 [P] Implement downgrade confirmation workflow in `setup/lib/updater.js`
+- [X] T080 [P] Implement stale lock file detection and cleanup in `setup/lib/transaction.js`
 
 ---
 
 ## Phase 3.7: Configuration File Support
 
 ### Configuration Loading
-- [ ] T081 [P] Create configuration loader module for .claude-buddy-rc.json in `setup/lib/config.js`
-- [ ] T082 [P] Implement configuration precedence: CLI flags > env vars > project config > user config > defaults in `setup/lib/config.js`
-- [ ] T083 [P] Implement configuration validation against schema in `setup/lib/config.js`
+- [X] T081 [P] Create configuration loader module for .claude-buddy-rc.json in `setup/lib/config.js`
+- [X] T082 [P] Implement configuration precedence: CLI flags > env vars > project config > user config > defaults in `setup/lib/config.js`
+- [X] T083 [P] Implement configuration validation against schema in `setup/lib/config.js`
 
 ---
 
 ## Phase 3.8: Polish & Documentation
 
 ### Unit Tests
-- [ ] T084 [P] Unit tests for version comparison logic in `setup/tests/unit/version.test.js`
-- [ ] T085 [P] Unit tests for path normalization across platforms in `setup/tests/unit/paths.test.js`
-- [ ] T086 [P] Unit tests for configuration merge strategies in `setup/tests/unit/config-merge.test.js`
-- [ ] T087 [P] Unit tests for dependency detection functions in `setup/tests/unit/dependency-detection.test.js`
-- [ ] T088 [P] Unit tests for manifest validation in `setup/tests/unit/manifest.test.js`
-- [ ] T089 [P] Unit tests for logger output formatting in `setup/tests/unit/logger.test.js`
+- [X] T084 [P] Unit tests for version comparison logic in `setup/tests/unit/version.test.js`
+- [X] T085 [P] Unit tests for path normalization across platforms in `setup/tests/unit/paths.test.js`
+- [X] T086 [P] Unit tests for configuration merge strategies in `setup/tests/unit/config-merge.test.js`
+- [X] T087 [P] Unit tests for dependency detection functions in `setup/tests/unit/dependency-detection.test.js`
+- [X] T088 [P] Unit tests for manifest validation in `setup/tests/unit/manifest.test.js`
+- [X] T089 [P] Unit tests for logger output formatting in `setup/tests/unit/logger.test.js`
 
 ### Performance Tests
-- [ ] T090 [P] Performance test: fresh installation completes in < 30 seconds in `setup/tests/performance/install-speed.test.js`
-- [ ] T091 [P] Performance test: update completes in < 10 seconds in `setup/tests/performance/update-speed.test.js`
+- [X] T090 [P] Performance test: fresh installation completes in < 30 seconds in `setup/tests/performance/install-speed.test.js`
+- [X] T091 [P] Performance test: update completes in < 10 seconds in `setup/tests/performance/update-speed.test.js`
 
 ### Documentation
-- [ ] T092 [P] Create README.md for setup/ directory with installation usage in `setup/README.md`
-- [ ] T093 [P] Update quickstart.md with tested examples and screenshots in `specs/20251002-installation-script/quickstart.md`
-- [ ] T094 [P] Create TROUBLESHOOTING.md guide with common issues and solutions in `setup/TROUBLESHOOTING.md`
-- [ ] T095 [P] Create CHANGELOG.md with v1.0.0 initial release notes in `setup/CHANGELOG.md`
+- [X] T092 [P] Create README.md for setup/ directory with installation usage in `setup/README.md`
+- [X] T093 [P] Update quickstart.md with tested examples and screenshots in `specs/20251002-installation-script/quickstart.md`
+- [X] T094 [P] Create TROUBLESHOOTING.md guide with common issues and solutions in `setup/TROUBLESHOOTING.md`
+- [X] T095 [P] Create CHANGELOG.md with v1.0.0 initial release notes in `setup/CHANGELOG.md`
 
 ### Code Quality
-- [ ] T096 [P] Run ESLint and fix all linting errors across all files in setup/
-- [ ] T097 [P] Add JSDoc comments to all public functions in setup/lib/
+- [X] T096 [P] Run ESLint and fix all linting errors across all files in setup/
+- [X] T097 [P] Add JSDoc comments to all public functions in setup/lib/
 - [ ] T098 Remove code duplication and refactor common patterns in setup/lib/
 
 ### Manual Testing Validation

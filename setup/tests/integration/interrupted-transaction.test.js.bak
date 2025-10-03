@@ -1,0 +1,156 @@
+/**
+ * Integration Test: Interrupted Transaction Recovery
+ *
+ * Tests recovery from interrupted installations:
+ * - Detect incomplete transactions
+ * - Offer resume or rollback options
+ * - Recover from checkpoints
+ * - Prevent corruption
+ */
+
+const fs = require('fs').promises;
+const path = require('path');
+const os = require('os');
+
+describe('Interrupted Transaction Recovery', () => {
+  let testProjectDir;
+
+  beforeEach(async () => {
+    testProjectDir = path.join(os.tmpdir(), `test-interrupt-${Date.now()}`);
+    await fs.mkdir(testProjectDir, { recursive: true });
+  });
+
+  afterEach(async () => {
+    await fs.rm(testProjectDir, { recursive: true, force: true });
+  });
+
+  describe('Interruption Detection', () => {
+    it('should detect interrupted transaction on next run', async () => {
+      // Given: Transaction log with status 'in_progress'
+      // When: Start new installation
+      // Then: Interrupted transaction detected
+
+      expect(true).toBe(false); // TDD red phase
+    });
+
+    it('should read transaction state from log file', async () => {
+      // Given: Interrupted transaction log
+      // When: Load transaction state
+      // Then: Transaction ID, phase, and actions loaded
+
+      expect(true).toBe(false); // TDD red phase
+    });
+
+    it('should identify which checkpoint was last completed', async () => {
+      // Given: Transaction interrupted mid-phase
+      // When: Analyze checkpoints
+      // Then: Last successful checkpoint identified
+
+      expect(true).toBe(false); // TDD red phase
+    });
+  });
+
+  describe('Recovery Options', () => {
+    it('should prompt user with recovery choices', async () => {
+      // Given: Interrupted transaction detected
+      // When: Interactive mode
+      // Then: User chooses: rollback, resume, or abort
+
+      expect(true).toBe(false); // TDD red phase
+    });
+
+    it('should support resume from last checkpoint', async () => {
+      // Given: User chooses resume
+      // When: Continue installation
+      // Then: Starts from next incomplete action
+
+      expect(true).toBe(false); // TDD red phase
+    });
+
+    it('should support rollback to clean state', async () => {
+      // Given: User chooses rollback
+      // When: Execute rollback
+      // Then: System restored to pre-installation snapshot
+
+      expect(true).toBe(false); // TDD red phase
+    });
+
+    it('should support abort (leave as-is)', async () => {
+      // Given: User chooses abort
+      // When: Exit
+      // Then: Files remain in current state, transaction log preserved
+
+      expect(true).toBe(false); // TDD red phase
+    });
+  });
+
+  describe('Checkpoint Resume', () => {
+    it('should skip already-completed actions', async () => {
+      // Given: Resume from checkpoint
+      // When: Process actions
+      // Then: Completed actions are skipped
+
+      expect(true).toBe(false); // TDD red phase
+    });
+
+    it('should continue with pending actions', async () => {
+      // Given: Actions after checkpoint
+      // When: Resume
+      // Then: Pending actions executed in order
+
+      expect(true).toBe(false); // TDD red phase
+    });
+
+    it('should complete transaction after resume', async () => {
+      // Given: Resume successful
+      // When: All actions complete
+      // Then: Transaction marked completed
+
+      expect(true).toBe(false); // TDD red phase
+    });
+  });
+
+  describe('Transaction Lock Handling', () => {
+    it('should detect stale lock files', async () => {
+      // Given: Lock file older than timeout threshold
+      // When: Check lock
+      // Then: Lock identified as stale
+
+      expect(true).toBe(false); // TDD red phase
+    });
+
+    it('should clean up stale locks', async () => {
+      // Given: Stale lock detected
+      // When: Proceed with installation
+      // Then: Old lock removed, new lock created
+
+      expect(true).toBe(false); // TDD red phase
+    });
+
+    it('should prevent concurrent installations', async () => {
+      // Given: Active lock file (not stale)
+      // When: Try second installation
+      // Then: Error: another installation in progress
+
+      expect(true).toBe(false); // TDD red phase
+    });
+  });
+
+  describe('Data Integrity', () => {
+    it('should not corrupt existing installation on rollback', async () => {
+      // Given: Update interrupted
+      // When: Rollback
+      // Then: Previous version fully restored
+
+      expect(true).toBe(false); // TDD red phase
+    });
+
+    it('should maintain transaction log integrity', async () => {
+      // Given: Complex interrupted transaction
+      // When: Load and process
+      // Then: All actions correctly recorded and recoverable
+
+      expect(true).toBe(false); // TDD red phase
+    });
+  });
+});

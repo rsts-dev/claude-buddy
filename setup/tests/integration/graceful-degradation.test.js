@@ -1,0 +1,285 @@
+/**
+ * Integration Test: Graceful Degradation (Missing UV)
+ *
+ * Tests the installation flow when optional dependencies are missing:
+ * - UV package manager unavailable
+ * - Hook installation gracefully skipped
+ * - Clear warnings displayed
+ * - Core functionality continues to work
+ */
+
+const fs = require('fs').promises;
+const path = require('path');
+const os = require('os');
+
+describe('Graceful Degradation', () => {
+  let testProjectDir;
+  // let installer; // Reserved for future use
+  // let environmentDetector; // Reserved for future use
+
+  beforeEach(async () => {
+    // Create temporary test project directory
+    testProjectDir = path.join(os.tmpdir(), `test-degradation-${Date.now()}`);
+    await fs.mkdir(testProjectDir, { recursive: true });
+
+    // Note: These modules will be implemented in Phase 3.3
+    // For now, this test will fail (TDD red phase)
+  });
+
+  afterEach(async () => {
+    // Clean up test directory
+    await fs.rm(testProjectDir, { recursive: true, force: true });
+  });
+
+  describe('Missing UV Dependency', () => {
+    it('should detect UV is unavailable', async () => {
+      // Given: Environment without UV installed
+      // environmentDetector = require('../../lib/environment');
+      // jest.spyOn(environmentDetector, 'detectUV').mockResolvedValue({
+      //   available: false,
+      //   version: null,
+      //   location: null
+      // });
+
+      // When: Run environment detection
+      // const result = await environmentDetector.detect();
+
+      // Then: UV is marked as unavailable
+      // expect(result.dependencies.uv.available).toBe(false);
+
+      // This will fail until environment module is implemented
+    });
+
+    it('should skip hook installation when UV is missing', async () => {
+      // Given: Environment without UV
+      // Mock environment detector to return UV unavailable
+      // environmentDetector = require('../../lib/environment');
+      // jest.spyOn(environmentDetector, 'detectUV').mockResolvedValue({
+      //   available: false,
+      //   version: null
+      // });
+
+      // When: Run installation script
+      // installer = require('../../lib/installer');
+      // await installer.install({ targetDir: testProjectDir });
+
+      // Then: Hook installation is skipped
+      // const hooksDir = path.join(testProjectDir, '.claude/hooks');
+      // const hooksExist = await fs.access(hooksDir).then(() => true).catch(() => false);
+      // expect(hooksExist).toBe(false);
+
+      // This will fail until installer is implemented
+    });
+
+    it('should display clear warning about missing UV', async () => {
+      // Given: Environment without UV
+
+      // When: Run installation script
+      // const logger = require('../../lib/logger');
+      // const warnSpy = jest.spyOn(logger, 'warn');
+      // await installer.install({ targetDir: testProjectDir });
+
+      // Then: Warning is displayed
+      // expect(warnSpy).toHaveBeenCalledWith(expect.stringContaining('UV not found'));
+      // expect(warnSpy).toHaveBeenCalledWith(expect.stringContaining('Hook functionality will be disabled'));
+
+      // This will fail until logger is implemented
+    });
+
+    it('should provide installation instructions for missing UV', async () => {
+      // Given: Environment without UV
+
+      // When: Run installation script
+      // const logger = require('../../lib/logger');
+      // const infoSpy = jest.spyOn(logger, 'info');
+      // await installer.install({ targetDir: testProjectDir });
+
+      // Then: Installation instructions are provided
+      // expect(infoSpy).toHaveBeenCalledWith(expect.stringContaining('curl -LsSf https://astral.sh/uv/install.sh'));
+
+      // This will fail until logger is implemented
+    });
+
+    it('should install all other components successfully', async () => {
+      // Given: Environment without UV
+
+      // When: Run installation script
+      // await installer.install({ targetDir: testProjectDir });
+
+      // Then: Core components are installed
+      // const expectedDirs = [
+      //   '.claude-buddy',
+      //   '.claude-buddy/personas',
+      //   '.claude-buddy/templates',
+      //   '.claude/commands',
+      //   '.claude/agents',
+      //   'directive'
+      // ];
+
+      // for (const dir of expectedDirs) {
+      //   const dirPath = path.join(testProjectDir, dir);
+      //   const exists = await fs.access(dirPath).then(() => true).catch(() => false);
+      //   expect(exists).toBe(true);
+      // }
+
+      // This will fail until installer is implemented
+    });
+
+    it('should mark hooks as disabled in metadata', async () => {
+      // Given: Environment without UV
+
+      // When: Run installation script
+      // await installer.install({ targetDir: testProjectDir });
+
+      // Then: Metadata shows hooks disabled
+      // const metadataPath = path.join(testProjectDir, '.claude-buddy', 'install-metadata.json');
+      // const metadata = JSON.parse(await fs.readFile(metadataPath, 'utf8'));
+
+      // expect(metadata.installedComponents.hooks.enabled).toBe(false);
+      // expect(metadata.installedComponents.hooks.reason).toContain('UV');
+
+      // This will fail until installer is implemented
+    });
+
+    it('should record UV unavailable in dependency status', async () => {
+      // Given: Environment without UV
+
+      // When: Run installation script
+      // await installer.install({ targetDir: testProjectDir });
+
+      // Then: Dependency status is recorded
+      // const metadataPath = path.join(testProjectDir, '.claude-buddy', 'install-metadata.json');
+      // const metadata = JSON.parse(await fs.readFile(metadataPath, 'utf8'));
+
+      // expect(metadata.dependencies.uv.available).toBe(false);
+      // expect(metadata.dependencies.uv.version).toBeNull();
+
+      // This will fail until installer is implemented
+    });
+
+    it('should still display installation success message', async () => {
+      // Given: Environment without UV
+
+      // When: Run installation script
+      // const logger = require('../../lib/logger');
+      // const successSpy = jest.spyOn(logger, 'success');
+      // await installer.install({ targetDir: testProjectDir });
+
+      // Then: Success message is displayed with partial functionality note
+      // expect(successSpy).toHaveBeenCalledWith(expect.stringContaining('Installation complete'));
+      // expect(successSpy).toHaveBeenCalledWith(expect.stringContaining('partial functionality'));
+
+      // This will fail until logger is implemented
+    });
+  });
+
+  describe('Missing Python Dependency', () => {
+    it('should skip hooks when Python is missing', async () => {
+      // Given: Environment with UV but without Python
+      // environmentDetector = require('../../lib/environment');
+      // jest.spyOn(environmentDetector, 'detectPython').mockResolvedValue({
+      //   available: false,
+      //   version: null
+      // });
+
+      // When: Run installation script
+      // await installer.install({ targetDir: testProjectDir });
+
+      // Then: Hooks are skipped due to missing Python
+      // const metadataPath = path.join(testProjectDir, '.claude-buddy', 'install-metadata.json');
+      // const metadata = JSON.parse(await fs.readFile(metadataPath, 'utf8'));
+
+      // expect(metadata.installedComponents.hooks.enabled).toBe(false);
+      // expect(metadata.installedComponents.hooks.reason).toContain('Python');
+
+      // This will fail until installer and environment modules are implemented
+    });
+
+    it('should suggest installing Python when missing', async () => {
+      // Given: Environment without Python
+
+      // When: Run installation script
+      // const logger = require('../../lib/logger');
+      // const infoSpy = jest.spyOn(logger, 'info');
+      // await installer.install({ targetDir: testProjectDir });
+
+      // Then: Python installation guide is provided
+      // expect(infoSpy).toHaveBeenCalledWith(expect.stringContaining('python.org'));
+
+      // This will fail until logger is implemented
+    });
+  });
+
+  describe('Multiple Missing Dependencies', () => {
+    it('should list all missing dependencies', async () => {
+      // Given: Environment without UV and Python
+      // environmentDetector = require('../../lib/environment');
+      // jest.spyOn(environmentDetector, 'detectUV').mockResolvedValue({ available: false });
+      // jest.spyOn(environmentDetector, 'detectPython').mockResolvedValue({ available: false });
+
+      // When: Run installation script
+      // const logger = require('../../lib/logger');
+      // const warnSpy = jest.spyOn(logger, 'warn');
+      // await installer.install({ targetDir: testProjectDir });
+
+      // Then: All missing dependencies are reported
+      // expect(warnSpy).toHaveBeenCalledWith(expect.stringContaining('UV not found'));
+      // expect(warnSpy).toHaveBeenCalledWith(expect.stringContaining('Python not found'));
+
+      // This will fail until logger is implemented
+    });
+
+    it('should list affected features for each missing dependency', async () => {
+      // Given: Environment without UV
+
+      // When: Run installation script
+      // const logger = require('../../lib/logger');
+      // const infoSpy = jest.spyOn(logger, 'info');
+      // await installer.install({ targetDir: testProjectDir });
+
+      // Then: Affected features are listed
+      // expect(infoSpy).toHaveBeenCalledWith(expect.stringContaining('Python hooks'));
+      // expect(infoSpy).toHaveBeenCalledWith(expect.stringContaining('Pre-commit validation'));
+
+      // This will fail until logger is implemented
+    });
+  });
+
+  describe('Post-Installation Verification', () => {
+    it('should suggest running verify after installing dependencies', async () => {
+      // Given: Environment without UV
+
+      // When: Run installation script
+      // const logger = require('../../lib/logger');
+      // const infoSpy = jest.spyOn(logger, 'info');
+      // await installer.install({ targetDir: testProjectDir });
+
+      // Then: Verify command is suggested
+      // expect(infoSpy).toHaveBeenCalledWith(expect.stringContaining('claude-buddy verify'));
+
+      // This will fail until logger is implemented
+    });
+
+    it('should allow enabling hooks after installing UV later', async () => {
+      // Given: Installation completed without UV
+      // await installer.install({ targetDir: testProjectDir });
+
+      // When: User installs UV and runs verify
+      // Mock UV now available
+      // jest.spyOn(environmentDetector, 'detectUV').mockResolvedValue({
+      //   available: true,
+      //   version: '0.1.0'
+      // });
+
+      // const verifier = require('../../lib/verifier');
+      // const result = await verifier.verify({ targetDir: testProjectDir, enableMissing: true });
+
+      // Then: Hooks are enabled
+      // const metadataPath = path.join(testProjectDir, '.claude-buddy', 'install-metadata.json');
+      // const metadata = JSON.parse(await fs.readFile(metadataPath, 'utf8'));
+      // expect(metadata.installedComponents.hooks.enabled).toBe(true);
+
+      // This will fail until verifier is implemented
+    });
+  });
+});

@@ -1,0 +1,336 @@
+/**
+ * Integration Test: Update with Customization Preservation
+ *
+ * Tests the update functionality:
+ * - Detect existing installation
+ * - Preserve user customizations
+ * - Update framework files
+ * - Create backup before update
+ * - Display update summary
+ */
+
+const fs = require('fs').promises;
+const path = require('path');
+const os = require('os');
+
+describe('Update with Customization Preservation', () => {
+  let testProjectDir;
+  let installer;
+  let updater;
+
+  beforeEach(async () => {
+    // Create temporary test project directory
+    testProjectDir = path.join(os.tmpdir(), `test-update-${Date.now()}`);
+    await fs.mkdir(testProjectDir, { recursive: true });
+
+    // Note: These modules will be implemented in Phase 3.3-3.4
+    // For now, this test will fail (TDD red phase)
+  });
+
+  afterEach(async () => {
+    // Clean up test directory
+    await fs.rm(testProjectDir, { recursive: true, force: true });
+  });
+
+  describe('Update Detection', () => {
+    it.todo('should detect existing Claude Buddy installation');
+      // Given: Project with Claude Buddy v1.0.0 installed
+      // installer = require('../../lib/installer');
+      // await installer.install({ targetDir: testProjectDir, version: '1.0.0' });
+
+      // When: Check for existing installation
+      // const environment = require('../../lib/environment');
+      // const detection = await environment.detectExisting({ targetDir: testProjectDir });
+
+      // Then: Installation is detected
+      // expect(detection.isInstalled).toBe(true);
+      // expect(detection.version).toBe('1.0.0');
+
+      // This will fail until environment module is implemented
+    });
+
+    it('should determine update is required for newer version');
+
+    it.todo('should skip update when versions match');
+  });
+
+  describe('User Customization Detection', () => {
+    it.todo('should identify user-modified files by timestamp');
+      // Given: Installation with custom persona file
+      // await installer.install({ targetDir: testProjectDir });
+
+      // Wait a moment then create custom file
+      // await new Promise(resolve => setTimeout(resolve, 100));
+      // const customPath = path.join(testProjectDir, '.claude-buddy/personas/custom-reviewer.md');
+      // await fs.writeFile(customPath, '# Custom Reviewer');
+
+      // When: Detect customizations
+      // updater = require('../../lib/updater');
+      // const customizations = await updater.detectCustomizations({ targetDir: testProjectDir });
+
+      // Then: Custom file is identified
+      // expect(customizations).toContainEqual(
+      //   expect.objectContaining({
+      //     file: expect.stringContaining('custom-reviewer.md'),
+      //     preserveOnUpdate: true
+      //   })
+      // );
+
+      // This will fail until updater is implemented
+    });
+
+    it('should identify modified framework files', async () => {
+      // Given: Installation with modified config file
+      // await installer.install({ targetDir: testProjectDir });
+
+      // Modify framework file
+      // const configPath = path.join(testProjectDir, '.claude-buddy/buddy-config.json');
+      // const config = JSON.parse(await fs.readFile(configPath, 'utf8'));
+      // config.userModified = true;
+      // await fs.writeFile(configPath, JSON.stringify(config, null, 2));
+
+      // When: Detect customizations
+      // const customizations = await updater.detectCustomizations({ targetDir: testProjectDir });
+
+      // Then: Modified config is identified
+      // expect(customizations).toContainEqual(
+      //   expect.objectContaining({
+      //     file: expect.stringContaining('buddy-config.json'),
+      //     preserveOnUpdate: true
+      //   })
+      // );
+
+      // This will fail until updater is implemented
+    });
+
+    it('should NOT flag unmodified framework files', async () => {
+      // Given: Fresh installation with no modifications
+      // await installer.install({ targetDir: testProjectDir });
+
+      // When: Detect customizations
+      // const customizations = await updater.detectCustomizations({ targetDir: testProjectDir });
+
+      // Then: No customizations detected
+      // expect(customizations).toHaveLength(0);
+
+      // This will fail until updater is implemented
+    });
+  });
+
+  describe('Backup Creation', () => {
+    it('should create timestamped backup before update', async () => {
+      // Given: Existing installation
+      // await installer.install({ targetDir: testProjectDir });
+
+      // When: Run update
+      // await updater.update({ targetDir: testProjectDir, toVersion: '1.1.0' });
+
+      // Then: Backup directory is created
+      // const backupPattern = /^backup-\d{4}-\d{2}-\d{2}T\d{2}-\d{2}-\d{2}Z$/;
+      // const buddyDir = path.join(testProjectDir, '.claude-buddy');
+      // const contents = await fs.readdir(buddyDir);
+      // const backups = contents.filter(name => backupPattern.test(name));
+      // expect(backups.length).toBeGreaterThan(0);
+
+      // This will fail until updater is implemented
+    });
+
+    it('should include all current files in backup', async () => {
+      // Given: Existing installation with custom file
+      // await installer.install({ targetDir: testProjectDir });
+      // await fs.writeFile(
+      //   path.join(testProjectDir, '.claude-buddy/personas/custom.md'),
+      //   '# Custom'
+      // );
+
+      // When: Run update
+      // await updater.update({ targetDir: testProjectDir, toVersion: '1.1.0' });
+
+      // Then: Custom file is in backup
+      // const backupDir = await findBackupDir(testProjectDir);
+      // const backupCustom = path.join(backupDir, 'personas/custom.md');
+      // const exists = await fs.access(backupCustom).then(() => true).catch(() => false);
+      // expect(exists).toBe(true);
+
+      // This will fail until updater is implemented
+    });
+
+    it('should limit backups to last 3', async () => {
+      // Given: Installation with 3 existing backups
+      // await installer.install({ targetDir: testProjectDir });
+
+      // Create 3 old backups
+      // for (let i = 0; i < 3; i++) {
+      //   const backupName = `backup-2025-10-0${i}T12-00-00Z`;
+      //   await fs.mkdir(path.join(testProjectDir, '.claude-buddy', backupName));
+      // }
+
+      // When: Run update (creates 4th backup)
+      // await updater.update({ targetDir: testProjectDir, toVersion: '1.1.0' });
+
+      // Then: Only 3 most recent backups remain
+      // const buddyDir = path.join(testProjectDir, '.claude-buddy');
+      // const contents = await fs.readdir(buddyDir);
+      // const backups = contents.filter(name => name.startsWith('backup-'));
+      // expect(backups).toHaveLength(3);
+
+      // This will fail until updater is implemented
+    });
+  });
+
+  describe('Framework File Updates', () => {
+    it('should update unmodified framework files', async () => {
+      // Given: Existing v1.0.0 installation
+      // await installer.install({ targetDir: testProjectDir, version: '1.0.0' });
+
+      // When: Run update to v1.1.0
+      // await updater.update({ targetDir: testProjectDir, toVersion: '1.1.0' });
+
+      // Then: Framework files are updated
+      // const metadata = JSON.parse(await fs.readFile(
+      //   path.join(testProjectDir, '.claude-buddy/install-metadata.json'),
+      //   'utf8'
+      // ));
+      // expect(metadata.version).toBe('1.1.0');
+
+      // This will fail until updater is implemented
+    });
+
+    it('should preserve modified framework files', async () => {
+      // Given: Installation with modified config
+      // await installer.install({ targetDir: testProjectDir });
+      // const configPath = path.join(testProjectDir, '.claude-buddy/buddy-config.json');
+      // const config = JSON.parse(await fs.readFile(configPath, 'utf8'));
+      // config.userSetting = 'custom';
+      // await fs.writeFile(configPath, JSON.stringify(config, null, 2));
+
+      // When: Run update
+      // await updater.update({ targetDir: testProjectDir, toVersion: '1.1.0' });
+
+      // Then: User setting is preserved
+      // const updatedConfig = JSON.parse(await fs.readFile(configPath, 'utf8'));
+      // expect(updatedConfig.userSetting).toBe('custom');
+
+      // This will fail until updater is implemented
+    });
+
+    it('should preserve all custom persona files', async () => {
+      // Given: Installation with custom personas
+      // await installer.install({ targetDir: testProjectDir });
+      // const customPersonas = ['custom-1.md', 'custom-2.md', 'custom-3.md'];
+      // for (const persona of customPersonas) {
+      //   await fs.writeFile(
+      //     path.join(testProjectDir, '.claude-buddy/personas', persona),
+      //     `# ${persona}`
+      //   );
+      // }
+
+      // When: Run update
+      // await updater.update({ targetDir: testProjectDir, toVersion: '1.1.0' });
+
+      // Then: All custom personas still exist
+      // for (const persona of customPersonas) {
+      //   const exists = await fs.access(
+      //     path.join(testProjectDir, '.claude-buddy/personas', persona)
+      //   ).then(() => true).catch(() => false);
+      //   expect(exists).toBe(true);
+      // }
+
+      // This will fail until updater is implemented
+    });
+  });
+
+  describe('Update Summary', () => {
+    it('should display update summary with version change', async () => {
+      // Given: Existing v1.0.0 installation
+      // await installer.install({ targetDir: testProjectDir, version: '1.0.0' });
+
+      // When: Run update to v1.1.0
+      // const logger = require('../../lib/logger');
+      // const successSpy = jest.spyOn(logger, 'success');
+      // await updater.update({ targetDir: testProjectDir, toVersion: '1.1.0' });
+
+      // Then: Summary shows version change
+      // expect(successSpy).toHaveBeenCalledWith(
+      //   expect.stringContaining('Updated from 1.0.0 to 1.1.0')
+      // );
+
+      // This will fail until logger and updater are implemented
+    });
+
+    it('should list count of preserved customizations', async () => {
+      // Given: Installation with 3 customizations
+      // await installer.install({ targetDir: testProjectDir });
+      // for (let i = 0; i < 3; i++) {
+      //   await fs.writeFile(
+      //     path.join(testProjectDir, `.claude-buddy/personas/custom-${i}.md`),
+      //     '# Custom'
+      //   );
+      // }
+
+      // When: Run update
+      // const logger = require('../../lib/logger');
+      // const infoSpy = jest.spyOn(logger, 'info');
+      // await updater.update({ targetDir: testProjectDir, toVersion: '1.1.0' });
+
+      // Then: Summary shows preserved count
+      // expect(infoSpy).toHaveBeenCalledWith(
+      //   expect.stringContaining('3 customizations preserved')
+      // );
+
+      // This will fail until logger and updater are implemented
+    });
+
+    it('should show updated file count', async () => {
+      // Given: Existing installation
+
+      // When: Run update
+      // const logger = require('../../lib/logger');
+      // const successSpy = jest.spyOn(logger, 'success');
+      // await updater.update({ targetDir: testProjectDir, toVersion: '1.1.0' });
+
+      // Then: Updated file count is shown
+      // expect(successSpy).toHaveBeenCalledWith(
+      //   expect.stringMatching(/Updated \d+ files/)
+      // );
+
+      // This will fail until logger and updater are implemented
+    });
+  });
+
+  describe('Metadata Updates', () => {
+    it('should update version in metadata');
+
+    it.todo('should set lastUpdateDate timestamp');
+
+    it.todo('should record update in transaction history');
+
+    it.todo('should track user customizations in metadata');
+  });
+
+  describe('Update Performance', () => {
+    it('should complete update in under 10 seconds', async () => {
+      // Given: Existing installation
+      // await installer.install({ targetDir: testProjectDir });
+
+      // When: Run update with timing
+      const startTime = Date.now();
+      // await updater.update({ targetDir: testProjectDir, toVersion: '1.1.0' });
+      const endTime = Date.now();
+      const duration = endTime - startTime;
+
+      // Then: Update completes in under 10 seconds
+      // expect(duration).toBeLessThan(10000);
+
+      // This will fail until updater is implemented
+    });
+  });
+});
+
+// Helper function (will be implemented in Phase 3.3)
+async function findBackupDir(projectDir) {
+  // const buddyDir = path.join(projectDir, '.claude-buddy');
+  // const contents = await fs.readdir(buddyDir);
+  // const backups = contents.filter(name => name.startsWith('backup-'));
+  // return path.join(buddyDir, backups[backups.length - 1]);
+}

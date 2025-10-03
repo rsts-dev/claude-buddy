@@ -1,1 +1,17 @@
+# Examples directory
 /examples
+
+# Node.js dependencies
+node_modules/
+
+# Logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# OS files
+.DS_Store
+
+# Test coverage
+coverage/

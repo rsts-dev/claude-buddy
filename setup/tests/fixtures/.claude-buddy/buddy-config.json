@@ -1,0 +1,11 @@
+{
+  "version": "2.0.0",
+  "features": {
+    "auto_commit": true,
+    "auto_push": true
+  },
+  "git": {
+    "branch_protection": ["main", "master"],
+    "conventional_commits": true
+  }
+}

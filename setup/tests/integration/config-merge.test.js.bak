@@ -1,0 +1,96 @@
+/**
+ * Integration Test: Configuration Merging
+ *
+ * Tests configuration merge strategies during updates:
+ * - Shallow merge for user-modified configs
+ * - Deep merge when appropriate
+ * - Conflict detection and resolution
+ * - Schema migration
+ */
+
+const fs = require('fs').promises;
+const path = require('path');
+const os = require('os');
+
+describe('Configuration Merging', () => {
+  let testProjectDir;
+
+  beforeEach(async () => {
+    testProjectDir = path.join(os.tmpdir(), `test-config-merge-${Date.now()}`);
+    await fs.mkdir(testProjectDir, { recursive: true });
+  });
+
+  afterEach(async () => {
+    await fs.rm(testProjectDir, { recursive: true, force: true });
+  });
+
+  describe('Shallow Merge Strategy', () => {
+    it('should preserve user fields and add new framework fields', async () => {
+      // Given: Config with user modifications
+      // When: Update adds new framework fields
+      // Then: User fields preserved, new fields added
+
+      expect(true).toBe(false); // TDD red phase
+    });
+
+    it('should NOT overwrite modified user values', async () => {
+      // Given: User modified existing field
+      // When: Framework has new default for that field
+      // Then: User value is kept
+
+      expect(true).toBe(false); // TDD red phase
+    });
+  });
+
+  describe('Conflict Detection', () => {
+    it('should detect conflicting configuration changes', async () => {
+      // Given: User and framework both changed same field
+      // When: Run update
+      // Then: Conflict is detected and flagged
+
+      expect(true).toBe(false); // TDD red phase
+    });
+
+    it('should prompt user for conflict resolution', async () => {
+      // Given: Configuration conflict
+      // When: Update runs in interactive mode
+      // Then: User is prompted to choose resolution
+
+      expect(true).toBe(false); // TDD red phase
+    });
+
+    it('should use keep_user strategy in non-interactive mode', async () => {
+      // Given: Conflict in non-interactive mode
+      // When: Update runs
+      // Then: User value is preserved by default
+
+      expect(true).toBe(false); // TDD red phase
+    });
+  });
+
+  describe('Schema Migration', () => {
+    it('should migrate configuration schema across versions', async () => {
+      // Given: v1.0 config with old schema
+      // When: Update to v1.1 with new schema
+      // Then: Config is migrated to new schema
+
+      expect(true).toBe(false); // TDD red phase
+    });
+
+    it('should rename fields according to migration rules', async () => {
+      // Given: Config with field 'oldName'
+      // When: Migration renames to 'newName'
+      // Then: Value is moved to new field name
+
+      expect(true).toBe(false); // TDD red phase
+    });
+
+    it('should add new required fields with defaults', async () => {
+      // Given: Old config missing new required field
+      // When: Run migration
+      // Then: New field added with default value
+
+      expect(true).toBe(false); // TDD red phase
+    });
+  });
+});

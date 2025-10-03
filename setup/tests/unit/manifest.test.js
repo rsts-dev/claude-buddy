@@ -51,10 +51,10 @@ describe('Manifest Module', () => {
       expect(componentNames).toContain('hooks');
       expect(componentNames).toContain('templates');
       expect(componentNames).toContain('personas');
+      expect(componentNames).toContain('context');
       expect(componentNames).toContain('configs');
       expect(componentNames).toContain('commands');
       expect(componentNames).toContain('agents');
-      expect(componentNames).toContain('foundation');
     });
   });
 
@@ -289,9 +289,9 @@ describe('Manifest Module', () => {
         { name: 'git', available: true }
       ];
 
-      const filtered = filterComponentsByDependencies(manifest.components, availableDeps);
+      const filtered = filterComponentsByDependencies(manifest, availableDeps);
 
-      expect(filtered).toHaveLength(manifest.components.length);
+      expect(filtered.enabledComponents).toHaveLength(manifest.components.length);
     });
 
     it('should filter out hooks when UV is unavailable', () => {
@@ -303,9 +303,9 @@ describe('Manifest Module', () => {
         { name: 'git', available: true }
       ];
 
-      const filtered = filterComponentsByDependencies(manifest.components, availableDeps);
+      const filtered = filterComponentsByDependencies(manifest, availableDeps);
 
-      const hooksComponent = filtered.find(c => c.name === 'hooks');
+      const hooksComponent = filtered.enabledComponents.find(c => c.name === 'hooks');
       expect(hooksComponent).toBeUndefined();
     });
 
@@ -318,11 +318,11 @@ describe('Manifest Module', () => {
         { name: 'git', available: false }
       ];
 
-      const filtered = filterComponentsByDependencies(manifest.components, availableDeps);
+      const filtered = filterComponentsByDependencies(manifest, availableDeps);
 
       const requiredComponents = manifest.components.filter(c => c.type === 'required');
       requiredComponents.forEach(comp => {
-        const found = filtered.find(c => c.name === comp.name);
+        const found = filtered.enabledComponents.find(c => c.name === comp.name);
         expect(found).toBeDefined();
       });
     });
@@ -336,12 +336,12 @@ describe('Manifest Module', () => {
         { name: 'git', available: false }
       ];
 
-      const filtered = filterComponentsByDependencies(manifest.components, availableDeps);
+      const filtered = filterComponentsByDependencies(manifest, availableDeps);
 
       // Components with no dependencies should be included
       const noDepsComponents = manifest.components.filter(c => c.dependencies.length === 0);
       noDepsComponents.forEach(comp => {
-        const found = filtered.find(c => c.name === comp.name);
+        const found = filtered.enabledComponents.find(c => c.name === comp.name);
         expect(found).toBeDefined();
       });
     });
@@ -355,13 +355,18 @@ describe('Manifest Module', () => {
         { name: 'git', available: true }
       ];
 
-      const filtered = filterComponentsByDependencies(manifest.components, availableDeps);
+      const filtered = filterComponentsByDependencies(manifest, availableDeps);
 
       // Hooks should be filtered out
       const allComponents = manifest.components.length;
-      const filteredCount = filtered.filter(c => c.included !== false).length;
+      const enabledCount = filtered.enabledComponents.length;
 
-      expect(filteredCount).toBeLessThanOrEqual(allComponents);
+      expect(enabledCount).toBeLessThanOrEqual(allComponents);
+      expect(filtered.disabledComponents.length).toBeGreaterThan(0);
+      // Check that disabled components have a reason
+      filtered.disabledComponents.forEach(comp => {
+        expect(comp.disabledReason).toBeDefined();
+      });
     });
   });
 
@@ -404,8 +409,6 @@ describe('Manifest Module', () => {
 
       expect(dirPaths).toContain('.claude-buddy');
       expect(dirPaths).toContain('.claude');
-      expect(dirPaths).toContain('directive');
-      expect(dirPaths).toContain('specs');
     });
 
     it('should set proper permissions for directories', () => {

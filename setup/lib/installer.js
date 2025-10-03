@@ -310,22 +310,23 @@ async function createDirectoryStructure(targetDirectory, directories, transactio
         continue;
       }
 
-      // Create directory
-      await fs.mkdir(dirPath, { recursive: true });
-
-      // Set permissions (Unix only)
-      if (dirSpec.permissions && process.platform !== 'win32') {
-        await fs.chmod(dirPath, parseInt(dirSpec.permissions, 8));
-      }
-
-      // Log to transaction
+      // Create directory through transaction system (or directly if no transaction)
       if (transaction) {
         await executeAction(transaction, {
-          type: 'create',
+          type: 'create_directory',
           path: dirSpec.path,
           reason: 'Directory creation',
-          isDirectory: true
+          isDirectory: true,
+          targetPermissions: dirSpec.permissions
         });
+      } else {
+        // No transaction - create directly
+        await fs.mkdir(dirPath, { recursive: true });
+
+        // Set permissions (Unix only)
+        if (dirSpec.permissions && process.platform !== 'win32') {
+          await fs.chmod(dirPath, parseInt(dirSpec.permissions, 8));
+        }
       }
 
       result.created.push(dirSpec.path);
@@ -391,26 +392,29 @@ async function installComponent(component, targetDirectory, transaction, dryRun,
           continue;
         }
 
-        // Create parent directory if needed
-        const targetDir = path.dirname(targetFile);
-        await fs.mkdir(targetDir, { recursive: true });
+        // Read source file content
+        const sourceContent = await fs.readFile(sourceFile, 'utf-8');
+        const permissions = (process.platform !== 'win32' && file.endsWith('.py')) ? '0755' : null;
 
-        // Copy file
-        await fs.copyFile(sourceFile, targetFile);
-
-        // Set permissions for executable files (Unix only)
-        if (process.platform !== 'win32' && file.endsWith('.py')) {
-          await fs.chmod(targetFile, 0o755);
-        }
-
-        // Log to transaction
+        // Create file through transaction system (or directly if no transaction)
         if (transaction) {
           await executeAction(transaction, {
             type: 'create',
             path: path.join(component.target, file),
+            sourceContent: sourceContent,
+            targetPermissions: permissions,
             component: component.name,
             reason: `Install ${component.name} file`
           });
+        } else {
+          // No transaction - copy directly
+          const targetDir = path.dirname(targetFile);
+          await fs.mkdir(targetDir, { recursive: true });
+          await fs.copyFile(sourceFile, targetFile);
+
+          if (permissions) {
+            await fs.chmod(targetFile, parseInt(permissions, 8));
+          }
         }
 
         result.filesCopied.push(file);
@@ -468,14 +472,17 @@ async function createDefaultConfiguration(targetDirectory, manifest, installedCo
   try {
     const existingConfig = await fs.readFile(buddyConfigPath, 'utf8').catch(() => null);
     if (!existingConfig) {
-      await fs.writeFile(buddyConfigPath, JSON.stringify(buddyConfig, null, 2), 'utf8');
+      const configContent = JSON.stringify(buddyConfig, null, 2);
 
       if (transaction) {
         await executeAction(transaction, {
           type: 'create',
           path: '.claude-buddy/buddy-config.json',
+          sourceContent: configContent,
           reason: 'Create default configuration'
         });
+      } else {
+        await fs.writeFile(buddyConfigPath, configContent, 'utf8');
       }
 
       logger.debug('Created buddy-config.json', verbose);
@@ -509,14 +516,17 @@ async function createDefaultConfiguration(targetDirectory, manifest, installedCo
     };
 
     try {
-      await fs.writeFile(hooksConfigPath, JSON.stringify(hooksConfig, null, 2), 'utf8');
+      const hooksContent = JSON.stringify(hooksConfig, null, 2);
 
       if (transaction) {
         await executeAction(transaction, {
           type: 'create',
           path: '.claude/hooks.json',
+          sourceContent: hooksContent,
           reason: 'Create hooks configuration'
         });
+      } else {
+        await fs.writeFile(hooksConfigPath, hooksContent, 'utf8');
       }
 
       logger.debug('Created hooks.json', verbose);
@@ -581,14 +591,17 @@ async function createInstallationMetadata(targetDirectory, manifest, installedCo
 
   // Write metadata file
   const metadataPath = path.join(targetDirectory, '.claude-buddy', 'install-metadata.json');
-  await fs.writeFile(metadataPath, JSON.stringify(metadata, null, 2), 'utf8');
+  const metadataContent = JSON.stringify(metadata, null, 2);
 
   if (transaction) {
     await executeAction(transaction, {
       type: 'create',
       path: '.claude-buddy/install-metadata.json',
+      sourceContent: metadataContent,
       reason: 'Create installation metadata'
     });
+  } else {
+    await fs.writeFile(metadataPath, metadataContent, 'utf8');
   }
 
   logger.debug('Created install-metadata.json', verbose);

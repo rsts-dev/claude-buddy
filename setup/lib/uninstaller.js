@@ -144,7 +144,7 @@ async function performUninstall(options) {
       });
     }
 
-    // Clean up empty directories
+    // Clean up empty directories (or all directories in purge mode)
     logger.progress('Cleaning up directories', verbose);
     const cleanupResult = await cleanupDirectories(
       targetDirectory,
@@ -152,14 +152,17 @@ async function performUninstall(options) {
         '.claude-buddy/personas',
         '.claude-buddy/templates',
         '.claude-buddy/context',
+        '.claude-buddy/logs',
         '.claude-buddy',
         '.claude/hooks',
+        '.claude/commands/buddy',
         '.claude/commands',
         '.claude/agents',
         '.claude',
         'directive'
       ],
       dryRun,
+      purge,
       verbose
     );
 
@@ -292,15 +295,16 @@ async function removeFiles(targetDirectory, filesToRemove, dryRun, verbose) {
 }
 
 /**
- * Removes empty directories
+ * Removes empty directories (or all directories in purge mode)
  *
  * @param {string} targetDirectory - Base directory
  * @param {Array} directories - Directories to check
  * @param {boolean} dryRun - Dry-run mode
+ * @param {boolean} purge - Force remove non-empty directories
  * @param {boolean} verbose - Verbose logging
  * @returns {Promise<Object>} Cleanup result
  */
-async function cleanupDirectories(targetDirectory, directories, dryRun, verbose) {
+async function cleanupDirectories(targetDirectory, directories, dryRun, purge, verbose) {
   const result = {
     removed: [],
     preserved: []
@@ -326,21 +330,34 @@ async function cleanupDirectories(targetDirectory, directories, dryRun, verbose)
         continue;
       }
 
-      // Check if directory is empty
-      const entries = await fs.readdir(dirPath);
-
-      if (entries.length === 0) {
+      // In purge mode, force-remove all directories
+      // Otherwise, only remove empty directories
+      if (purge) {
         if (dryRun) {
           result.removed.push(dir);
-          logger.debug(`Would remove empty directory: ${dir}`, verbose);
+          logger.debug(`Would force-remove directory: ${dir}`, verbose);
         } else {
-          await fs.rmdir(dirPath);
+          await fs.rm(dirPath, { recursive: true, force: true });
           result.removed.push(dir);
-          logger.debug(`Removed empty directory: ${dir}`, verbose);
+          logger.debug(`Force-removed directory: ${dir}`, verbose);
         }
       } else {
-        result.preserved.push(dir);
-        logger.debug(`Preserved non-empty directory: ${dir} (${entries.length} items)`, verbose);
+        // Check if directory is empty
+        const entries = await fs.readdir(dirPath);
+
+        if (entries.length === 0) {
+          if (dryRun) {
+            result.removed.push(dir);
+            logger.debug(`Would remove empty directory: ${dir}`, verbose);
+          } else {
+            await fs.rmdir(dirPath);
+            result.removed.push(dir);
+            logger.debug(`Removed empty directory: ${dir}`, verbose);
+          }
+        } else {
+          result.preserved.push(dir);
+          logger.debug(`Preserved non-empty directory: ${dir} (${entries.length} items)`, verbose);
+        }
       }
 
     } catch (error) {

@@ -262,13 +262,28 @@ async function performUpdate(options) {
 
           const existingConfig = JSON.parse(await fs.readFile(configPath, 'utf8'));
 
-          // Load new config from component files
-          const newConfigPath = path.join(__dirname, '..', '..', configFile);
+          // Load new config from component source directory (same logic as updateComponent)
+          const componentForConfig = components.find(comp => {
+            const fileName = path.basename(configFile);
+            return comp.filePatterns.includes(fileName);
+          });
+
+          if (!componentForConfig) {
+            // No component found for this config, preserve existing
+            logger.debug(`No component found for ${configFile}, preserving existing`, verbose);
+            continue;
+          }
+
+          const setupDir = path.join(__dirname, '..');
+          const sourcePath = path.join(setupDir, '..', componentForConfig.source);
+          const newConfigPath = path.join(sourcePath, path.basename(configFile));
+
           let newConfig;
           try {
             newConfig = JSON.parse(await fs.readFile(newConfigPath, 'utf8'));
           } catch {
-            // New config doesn't exist, skip merge
+            // New config doesn't exist in source, preserve existing
+            logger.debug(`No source config at ${newConfigPath}, preserving existing`, verbose);
             continue;
           }
 

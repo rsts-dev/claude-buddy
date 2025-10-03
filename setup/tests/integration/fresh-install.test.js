@@ -55,7 +55,6 @@ describe('Fresh Installation', () => {
       expect(result.success).toBe(true);
       expect(await fileExists(path.join(testProjectDir, '.claude-buddy'))).toBe(true);
       expect(await fileExists(path.join(testProjectDir, '.claude'))).toBe(true);
-      expect(await fileExists(path.join(testProjectDir, 'directive'))).toBe(true);
     });
 
     it('should install all framework files', async () => {
@@ -195,8 +194,6 @@ describe('Fresh Installation', () => {
       expect(metadata.dependencies.node.available).toBe(true);
       expect(metadata.dependencies.node.version).toBeTruthy();
     });
-
-    it.todo('should create empty specs directory for future use');
   });
 
   describe('Installation Validation', () => {

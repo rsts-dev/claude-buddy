@@ -81,8 +81,7 @@ describe('Fresh Installation Performance', () => {
         '.claude-buddy/templates',
         '.claude',
         '.claude/commands',
-        '.claude/agents',
-        'directive'
+        '.claude/agents'
       ];
 
       for (const dir of requiredDirs) {

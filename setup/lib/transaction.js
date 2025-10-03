@@ -216,6 +216,7 @@ async function executeAction(transaction, action) {
 
     switch (action.type) {
     case 'create':
+    case 'create_directory':
       result = await executeCreateAction(transaction, action);
       break;
     case 'update':
@@ -234,14 +235,18 @@ async function executeAction(transaction, action) {
       throw new Error(`Unknown action type: ${action.type}`);
     }
 
-    action.status = result.success ? 'completed' : 'failed';
+    action.status = result.success ? (result.skipped ? 'skipped' : 'completed') : 'failed';
     action.executionTime = new Date().toISOString();
     action.duration = Date.now() - startTime;
     action.result = result;
 
     if (result.success) {
       transaction.executedActions.push(action);
-      logger.debug(`Action completed: ${action.type} ${action.path}`);
+      if (result.skipped) {
+        logger.debug(`Action skipped: ${action.type} ${action.path} - ${result.message}`);
+      } else {
+        logger.debug(`Action completed: ${action.type} ${action.path}`);
+      }
     } else {
       logger.error(`Action failed: ${action.type} ${action.path} - ${result.message}`);
     }
@@ -283,32 +288,63 @@ async function executeCreateAction(transaction, action) {
   const targetPath = path.join(transaction.targetDirectory, action.path);
 
   try {
-    // Check if file already exists
+    // Check if target already exists
+    let exists = false;
+    let isDirectory = false;
     try {
-      await fs.access(targetPath);
-      return {
-        success: false,
-        message: `File already exists: ${action.path}`
-      };
+      const stats = await fs.stat(targetPath);
+      exists = true;
+      isDirectory = stats.isDirectory();
     } catch (err) {
       // File doesn't exist, proceed with creation
     }
 
-    // Create parent directory if needed
-    const parentDir = path.dirname(targetPath);
-    await fs.mkdir(parentDir, { recursive: true });
+    if (exists) {
+      // For directories, treat as success (idempotent)
+      if (isDirectory && action.type === 'create_directory') {
+        return {
+          success: true,
+          message: `Directory already exists: ${action.path}`,
+          skipped: true
+        };
+      }
 
-    // Write file content
-    if (action.sourceContent) {
-      await fs.writeFile(targetPath, action.sourceContent, 'utf-8');
-    } else {
-      // Create empty file
-      await fs.writeFile(targetPath, '', 'utf-8');
+      // For files, check if we should overwrite
+      // During updates or with --force, this would use update action instead
+      // For now, treat as skipped success to avoid noise
+      return {
+        success: true,
+        message: `File already exists: ${action.path}`,
+        skipped: true
+      };
     }
 
-    // Set permissions (Unix only)
-    if (process.platform !== 'win32' && action.targetPermissions) {
-      await fs.chmod(targetPath, parseInt(action.targetPermissions, 8));
+    // Handle directory creation vs file creation
+    if (action.isDirectory || action.type === 'create_directory') {
+      // Create directory
+      await fs.mkdir(targetPath, { recursive: true });
+
+      // Set permissions (Unix only)
+      if (process.platform !== 'win32' && action.targetPermissions) {
+        await fs.chmod(targetPath, parseInt(action.targetPermissions, 8));
+      }
+    } else {
+      // Create parent directory if needed
+      const parentDir = path.dirname(targetPath);
+      await fs.mkdir(parentDir, { recursive: true });
+
+      // Write file content
+      if (action.sourceContent) {
+        await fs.writeFile(targetPath, action.sourceContent, 'utf-8');
+      } else {
+        // Create empty file
+        await fs.writeFile(targetPath, '', 'utf-8');
+      }
+
+      // Set permissions (Unix only)
+      if (process.platform !== 'win32' && action.targetPermissions) {
+        await fs.chmod(targetPath, parseInt(action.targetPermissions, 8));
+      }
     }
 
     return {
@@ -630,7 +666,7 @@ function getTransactionStatus(transaction) {
  * @returns {Promise<void>}
  */
 async function saveTransactionLog(transaction) {
-  const logDir = path.join(transaction.targetDirectory, '.claude-buddy', 'transactions');
+  const logDir = path.join(transaction.targetDirectory, '.claude-buddy', 'logs');
   const logPath = path.join(logDir, `${transaction.transactionId}.json`);
 
   try {
@@ -719,7 +755,7 @@ async function releaseLock(lockFile) {
  * @returns {Promise<Object|null>} Interrupted transaction or null
  */
 async function detectInterruptedTransaction(targetDirectory) {
-  const transactionDir = path.join(targetDirectory, '.claude-buddy', 'transactions');
+  const transactionDir = path.join(targetDirectory, '.claude-buddy', 'logs');
 
   try {
     const files = await fs.readdir(transactionDir);

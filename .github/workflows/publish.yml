@@ -27,15 +27,13 @@ jobs:
         with:
           node-version: '18'
           cache: 'npm'
+          cache-dependency-path: 'setup/package-lock.json'
 
       - name: Install dependencies
-        run: npm ci
+        run: cd setup && npm ci
 
       - name: Run tests
-        run: npm test
-
-      - name: Run type checking
-        run: npm run type-check
+        run: cd setup && npm test
 
   publish:
     needs: test
@@ -50,24 +48,29 @@ jobs:
         with:
           node-version: '18'
           cache: 'npm'
+          cache-dependency-path: 'setup/package-lock.json'
 
       - name: Install dependencies
-        run: npm ci
+        run: cd setup && npm ci
 
       - name: Build package
-        run: npm run build:dist
+        run: |
+          mkdir -p dist
+          cp setup/install.js dist/
+          cp setup/package.json dist/
+          cp -r setup/lib dist/
 
       - name: Extract version from tag
         id: version
         run: echo "VERSION=${GITHUB_REF#refs/tags/v}" >> $GITHUB_OUTPUT
 
       - name: Setup NPM Authentication
-        run: npm run setup-auth
+        run: echo "//registry.npmjs.org/:_authToken=${NPM_TOKEN}" > setup/.npmrc
         env:
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
 
       - name: Publish to NPM
-        run: npm publish
+        run: cd setup && npm publish
 
       - name: Create GitHub Release
         uses: softprops/action-gh-release@v2

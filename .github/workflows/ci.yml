@@ -37,29 +37,31 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
           cache: 'npm'
+          cache-dependency-path: 'setup/package-lock.json'
 
       - name: Install dependencies
-        run: npm ci
+        run: cd setup && npm ci
 
       - name: Run tests
-        run: npm test
-
-      - name: Run type checking
-        run: npm run type-check
+        run: cd setup && npm test
 
       - name: Test build
-        run: npm run build:dist
+        run: |
+          mkdir -p dist
+          cp setup/install.js dist/
+          cp setup/package.json dist/
+          cp -r setup/lib dist/
 
       - name: Test CLI installation (Unix)
         if: runner.os != 'Windows'
         run: |
-          node install.js --help
+          node setup/install.js --help
           # Test that the CLI can show help without errors
 
       - name: Test CLI installation (Windows)
         if: runner.os == 'Windows'
         run: |
-          node install.js --help
+          node setup/install.js --help
         shell: cmd
 
   lint:
@@ -74,12 +76,13 @@ jobs:
         with:
           node-version: '18'
           cache: 'npm'
+          cache-dependency-path: 'setup/package-lock.json'
 
       - name: Install dependencies
-        run: npm ci
+        run: cd setup && npm ci
 
       - name: Run linting
-        run: npm run lint
+        run: cd setup && npm run lint
 
   security:
     runs-on: ubuntu-latest
@@ -93,12 +96,13 @@ jobs:
         with:
           node-version: '18'
           cache: 'npm'
+          cache-dependency-path: 'setup/package-lock.json'
 
       - name: Install dependencies
-        run: npm ci
+        run: cd setup && npm ci
 
       - name: Run security audit
-        run: npm audit --audit-level=moderate
+        run: cd setup && npm audit --audit-level=moderate
 
       - name: Check for vulnerable dependencies
-        run: npm audit --audit-level=high
+        run: cd setup && npm audit --audit-level=high

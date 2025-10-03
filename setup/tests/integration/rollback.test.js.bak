@@ -1,0 +1,214 @@
+/**
+ * Integration Test: Rollback on Failure
+ *
+ * Tests automatic rollback when installation fails:
+ * - Trigger rollback on critical errors
+ * - Restore from pre-install snapshot
+ * - Reverse executed actions in LIFO order
+ * - Leave no partial installation
+ */
+
+const fs = require('fs').promises;
+const path = require('path');
+const os = require('os');
+
+describe('Rollback on Failure', () => {
+  let testProjectDir;
+
+  beforeEach(async () => {
+    testProjectDir = path.join(os.tmpdir(), `test-rollback-${Date.now()}`);
+    await fs.mkdir(testProjectDir, { recursive: true });
+  });
+
+  afterEach(async () => {
+    await fs.rm(testProjectDir, { recursive: true, force: true });
+  });
+
+  describe('Rollback Trigger', () => {
+    it('should trigger rollback on file copy failure', async () => {
+      // Given: Installation in progress
+      // When: File copy fails (disk full, etc.)
+      // Then: Automatic rollback initiated
+
+      expect(true).toBe(false); // TDD red phase
+    });
+
+    it('should trigger rollback on permission error mid-install', async () => {
+      // Given: Installation started successfully
+      // When: Permission error occurs during install
+      // Then: Rollback to clean state
+
+      expect(true).toBe(false); // TDD red phase
+    });
+
+    it('should trigger rollback on corrupted source files', async () => {
+      // Given: Installation detects corrupted file
+      // When: Validation fails
+      // Then: Rollback initiated
+
+      expect(true).toBe(false); // TDD red phase
+    });
+
+    it('should NOT trigger rollback on non-critical warnings', async () => {
+      // Given: Warning (e.g., UV missing)
+      // When: Installation continues
+      // Then: No rollback, installation completes
+
+      expect(true).toBe(false); // TDD red phase
+    });
+  });
+
+  describe('Action Reversal', () => {
+    it('should reverse actions in LIFO order', async () => {
+      // Given: Actions executed: A, B, C
+      // When: Rollback
+      // Then: Reverse order: C, B, A
+
+      expect(true).toBe(false); // TDD red phase
+    });
+
+    it('should delete created files during rollback', async () => {
+      // Given: Files created during installation
+      // When: Rollback
+      // Then: Created files are deleted
+
+      expect(true).toBe(false); // TDD red phase
+    });
+
+    it('should restore updated files to original content', async () => {
+      // Given: Files updated during installation
+      // When: Rollback
+      // Then: Files restored from snapshot
+
+      expect(true).toBe(false); // TDD red phase
+    });
+
+    it('should restore deleted files', async () => {
+      // Given: Files deleted during installation
+      // When: Rollback
+      // Then: Files restored from snapshot
+
+      expect(true).toBe(false); // TDD red phase
+    });
+
+    it('should remove created directories', async () => {
+      // Given: Directories created
+      // When: Rollback
+      // Then: Directories removed (if empty)
+
+      expect(true).toBe(false); // TDD red phase
+    });
+  });
+
+  describe('Snapshot Restoration', () => {
+    it('should capture pre-install snapshot', async () => {
+      // Given: Before installation starts
+      // When: Create snapshot
+      // Then: All existing files captured
+
+      expect(true).toBe(false); // TDD red phase
+    });
+
+    it('should restore from snapshot on rollback', async () => {
+      // Given: Snapshot captured
+      // When: Rollback needed
+      // Then: System restored to snapshot state
+
+      expect(true).toBe(false); // TDD red phase
+    });
+
+    it('should verify restoration completeness', async () => {
+      // Given: Rollback completed
+      // When: Verify state
+      // Then: State matches pre-install snapshot
+
+      expect(true).toBe(false); // TDD red phase
+    });
+  });
+
+  describe('Transaction Cleanup', () => {
+    it('should mark transaction as rolled_back', async () => {
+      // Given: Rollback successful
+      // When: Update transaction log
+      // Then: status = 'rolled_back'
+
+      expect(true).toBe(false); // TDD red phase
+    });
+
+    it('should record rollback reason in transaction log', async () => {
+      // Given: Rollback triggered
+      // When: Log rollback
+      // Then: Error message and reason recorded
+
+      expect(true).toBe(false); // TDD red phase
+    });
+
+    it('should clean up transaction artifacts', async () => {
+      // Given: Rollback complete
+      // When: Cleanup
+      // Then: Transaction log moved to history
+
+      expect(true).toBe(false); // TDD red phase
+    });
+
+    it('should release transaction lock', async () => {
+      // Given: Rollback finished
+      // When: Check lock file
+      // Then: Lock file removed
+
+      expect(true).toBe(false); // TDD red phase
+    });
+  });
+
+  describe('User Notification', () => {
+    it('should notify user of rollback initiation', async () => {
+      // Given: Error occurs
+      // When: Rollback starts
+      // Then: "Rolling back changes..."
+
+      expect(true).toBe(false); // TDD red phase
+    });
+
+    it('should display error that triggered rollback', async () => {
+      // Given: Rollback in progress
+      // When: Show message
+      // Then: Original error displayed
+
+      expect(true).toBe(false); // TDD red phase
+    });
+
+    it('should confirm successful rollback', async () => {
+      // Given: Rollback complete
+      // When: Show summary
+      // Then: "Rollback successful, system restored"
+
+      expect(true).toBe(false); // TDD red phase
+    });
+
+    it('should provide troubleshooting suggestions', async () => {
+      // Given: Rollback due to known error
+      // When: Display message
+      // Then: Actionable suggestions provided
+
+      expect(true).toBe(false); // TDD red phase
+    });
+  });
+
+  describe('Partial Update Rollback', () => {
+    it('should rollback failed update to previous version', async () => {
+      // Given: Update from v1.0.0 to v1.1.0 fails
+      // When: Rollback
+      // Then: v1.0.0 fully restored
+
+      expect(true).toBe(false); // TDD red phase
+    });
+
+    it('should restore user customizations after update rollback', async () => {
+      // Given: Update started with customizations
+      // When: Rollback
+      // Then: Customizations intact
+
+      expect(true).toBe(false); // TDD red phase
+    });
+  });
+});

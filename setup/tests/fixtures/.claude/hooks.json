@@ -1,0 +1,8 @@
+{
+  "hooks": {
+    "command-validator": {
+      "enabled": true,
+      "script": ".claude/hooks/command-validator.py"
+    }
+  }
+}

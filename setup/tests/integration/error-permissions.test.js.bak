@@ -1,0 +1,106 @@
+/**
+ * Integration Test: Permission Errors
+ *
+ * Tests handling of permission issues:
+ * - Detect permission errors before execution
+ * - Provide actionable error messages
+ * - Suggest resolution steps
+ * - Graceful failure without corruption
+ */
+
+const fs = require('fs').promises;
+const path = require('path');
+const os = require('os');
+
+describe('Permission Errors', () => {
+  let testProjectDir;
+
+  beforeEach(async () => {
+    testProjectDir = path.join(os.tmpdir(), `test-permissions-${Date.now()}`);
+    await fs.mkdir(testProjectDir, { recursive: true });
+  });
+
+  afterEach(async () => {
+    await fs.rm(testProjectDir, { recursive: true, force: true });
+  });
+
+  describe('Permission Detection', () => {
+    it('should detect read permission issues', async () => {
+      // Given: Directory without read permission
+      // When: Check permissions
+      // Then: Read permission error detected
+
+      expect(true).toBe(false); // TDD red phase
+    });
+
+    it('should detect write permission issues', async () => {
+      // Given: Directory without write permission
+      // When: Attempt installation
+      // Then: Write permission error detected before any changes
+
+      expect(true).toBe(false); // TDD red phase
+    });
+
+    it('should detect execute permission issues on Unix', async () => {
+      if (os.platform() === 'win32') return;
+
+      // Given: Directory without execute permission
+      // When: Check permissions
+      // Then: Execute permission error detected
+
+      expect(true).toBe(false); // TDD red phase
+    });
+  });
+
+  describe('Error Messages', () => {
+    it('should provide actionable error message for write permission', async () => {
+      // Given: Write permission denied
+      // When: Display error
+      // Then: Message includes resolution steps (chmod, chown)
+
+      expect(true).toBe(false); // TDD red phase
+    });
+
+    it('should suggest using sudo when appropriate', async () => {
+      // Given: Permission error in system directory
+      // When: Display error
+      // Then: Suggests running with sudo (with caution)
+
+      expect(true).toBe(false); // TDD red phase
+    });
+
+    it('should display current permissions vs required', async () => {
+      // Given: Permission mismatch
+      // When: Show error
+      // Then: Current: r--, Required: rw-
+
+      expect(true).toBe(false); // TDD red phase
+    });
+  });
+
+  describe('Graceful Failure', () => {
+    it('should exit cleanly without partial installation', async () => {
+      // Given: Permission error detected
+      // When: Installation fails
+      // Then: No files created, clean exit
+
+      expect(true).toBe(false); // TDD red phase
+    });
+
+    it('should not create transaction log on permission failure', async () => {
+      // Given: Pre-flight permission check fails
+      // When: Installation aborts
+      // Then: No transaction artifacts left behind
+
+      expect(true).toBe(false); // TDD red phase
+    });
+
+    it('should return appropriate exit code', async () => {
+      // Given: Permission error
+      // When: Exit
+      // Then: Exit code indicates permission error (not generic)
+
+      expect(true).toBe(false); // TDD red phase
+    });
+  });
+});

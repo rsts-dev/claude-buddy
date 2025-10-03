@@ -1,0 +1,241 @@
+/**
+ * Integration Test: Verification Command
+ *
+ * Tests the post-installation verification:
+ * - Check component installation
+ * - Validate configuration files
+ * - Verify dependency status
+ * - Detect corruption
+ * - Suggest repairs
+ */
+
+const fs = require('fs').promises;
+const path = require('path');
+const os = require('os');
+
+describe('Verification Command', () => {
+  let testProjectDir;
+
+  beforeEach(async () => {
+    testProjectDir = path.join(os.tmpdir(), `test-verify-${Date.now()}`);
+    await fs.mkdir(testProjectDir, { recursive: true });
+  });
+
+  afterEach(async () => {
+    await fs.rm(testProjectDir, { recursive: true, force: true });
+  });
+
+  describe('Component Verification', () => {
+    it('should verify all expected directories exist', async () => {
+      // Given: Fresh installation
+      // When: Run verify command
+      // Then: All directories checked and reported
+
+      expect(true).toBe(false); // TDD red phase
+    });
+
+    it('should verify framework files are present', async () => {
+      // Given: Installation complete
+      // When: Verify
+      // Then: buddy-config.json, hooks.json, etc. verified
+
+      expect(true).toBe(false); // TDD red phase
+    });
+
+    it('should check component enable status', async () => {
+      // Given: Installation with hooks disabled
+      // When: Verify
+      // Then: Reports hooks disabled, reason displayed
+
+      expect(true).toBe(false); // TDD red phase
+    });
+
+    it('should count installed files per component', async () => {
+      // Given: Full installation
+      // When: Verify
+      // Then: "Templates: 45 files, Personas: 12 files"
+
+      expect(true).toBe(false); // TDD red phase
+    });
+  });
+
+  describe('Configuration Validation', () => {
+    it('should validate buddy-config.json schema', async () => {
+      // Given: Config file exists
+      // When: Verify
+      // Then: Schema validation passes
+
+      expect(true).toBe(false); // TDD red phase
+    });
+
+    it('should detect corrupted configuration', async () => {
+      // Given: Malformed JSON in config
+      // When: Verify
+      // Then: Error reported with file path
+
+      expect(true).toBe(false); // TDD red phase
+    });
+
+    it('should validate metadata consistency', async () => {
+      // Given: Metadata file
+      // When: Verify
+      // Then: Checks version, components, timestamps
+
+      expect(true).toBe(false); // TDD red phase
+    });
+
+    it('should check for required metadata fields', async () => {
+      // Given: Metadata missing field
+      // When: Verify
+      // Then: Missing field reported
+
+      expect(true).toBe(false); // TDD red phase
+    });
+  });
+
+  describe('Dependency Status', () => {
+    it('should check Node.js version', async () => {
+      // Given: Installation complete
+      // When: Verify dependencies
+      // Then: Node version displayed and checked
+
+      expect(true).toBe(false); // TDD red phase
+    });
+
+    it('should report UV availability', async () => {
+      // Given: UV installed
+      // When: Verify
+      // Then: UV version displayed
+
+      expect(true).toBe(false); // TDD red phase
+    });
+
+    it('should report Python availability', async () => {
+      // Given: Python installed
+      // When: Verify
+      // Then: Python version displayed
+
+      expect(true).toBe(false); // TDD red phase
+    });
+
+    it('should suggest installing missing optional dependencies', async () => {
+      // Given: UV not installed
+      // When: Verify
+      // Then: Installation command suggested
+
+      expect(true).toBe(false); // TDD red phase
+    });
+  });
+
+  describe('Corruption Detection', () => {
+    it('should detect missing expected files', async () => {
+      // Given: Installation with deleted file
+      // When: Verify
+      // Then: Missing file reported
+
+      expect(true).toBe(false); // TDD red phase
+    });
+
+    it('should detect unexpected file modifications', async () => {
+      // Given: Framework file corrupted
+      // When: Verify (optional: checksum validation)
+      // Then: Modification detected
+
+      expect(true).toBe(false); // TDD red phase
+    });
+
+    it('should detect incomplete installation', async () => {
+      // Given: Partial installation
+      // When: Verify
+      // Then: Reports incomplete, suggests repair
+
+      expect(true).toBe(false); // TDD red phase
+    });
+  });
+
+  describe('Repair Suggestions', () => {
+    it('should suggest repair command for corruption', async () => {
+      // Given: Corruption detected
+      // When: Verify
+      // Then: "Run 'claude-buddy install --force' to repair"
+
+      expect(true).toBe(false); // TDD red phase
+    });
+
+    it('should suggest installing missing dependencies', async () => {
+      // Given: UV missing, hooks disabled
+      // When: Verify
+      // Then: Shows how to install UV and enable hooks
+
+      expect(true).toBe(false); // TDD red phase
+    });
+
+    it('should suggest update if version mismatch', async () => {
+      // Given: Package version > installed version
+      // When: Verify
+      // Then: Suggests running update
+
+      expect(true).toBe(false); // TDD red phase
+    });
+  });
+
+  describe('Verification Output', () => {
+    it('should display success message when all checks pass', async () => {
+      // Given: Perfect installation
+      // When: Verify
+      // Then: "✅ Claude Buddy is correctly installed"
+
+      expect(true).toBe(false); // TDD red phase
+    });
+
+    it('should display version information', async () => {
+      // Given: Installation verified
+      // When: Show output
+      // Then: Installed version displayed
+
+      expect(true).toBe(false); // TDD red phase
+    });
+
+    it('should list enabled features', async () => {
+      // Given: Verification complete
+      // When: Show summary
+      // Then: Lists all enabled features
+
+      expect(true).toBe(false); // TDD red phase
+    });
+
+    it('should use appropriate exit code', async () => {
+      // Given: Verification passed
+      // When: Exit
+      // Then: Exit code 0
+
+      expect(true).toBe(false); // TDD red phase
+    });
+
+    it('should return error exit code on corruption', async () => {
+      // Given: Corruption detected
+      // When: Exit
+      // Then: Exit code > 0
+
+      expect(true).toBe(false); // TDD red phase
+    });
+  });
+
+  describe('Enable Missing Components', () => {
+    it('should enable hooks when UV becomes available', async () => {
+      // Given: Installation without UV (hooks disabled)
+      // When: User installs UV, runs verify --enable-missing
+      // Then: Hooks are installed and enabled
+
+      expect(true).toBe(false); // TDD red phase
+    });
+
+    it('should update metadata after enabling components', async () => {
+      // Given: Component enabled via verify
+      // When: Check metadata
+      // Then: Component marked as enabled
+
+      expect(true).toBe(false); // TDD red phase
+    });
+  });
+});

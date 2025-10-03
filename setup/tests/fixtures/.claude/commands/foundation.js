@@ -1,0 +1,2 @@
+// Foundation command
+module.exports = {};

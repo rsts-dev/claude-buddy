@@ -1,5 +1,6 @@
 # Examples directory
 /examples
+/tmp
 
 # Node.js dependencies
 node_modules/

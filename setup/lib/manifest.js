@@ -62,6 +62,21 @@ const INSTALLATION_MANIFEST = {
       ]
     },
     {
+      name: 'context',
+      displayName: 'Framework Context Files',
+      type: 'required',
+      source: '.claude-buddy/context/',
+      target: '.claude-buddy/context/',
+      dependencies: [],
+      filePatterns: ['**/*.md'],
+      description: 'Framework-specific context and documentation',
+      affectedFeatures: [
+        'Framework-specific guidance',
+        'Technology documentation',
+        'Best practices and patterns'
+      ]
+    },
+    {
       name: 'configs',
       displayName: 'Framework Configuration',
       type: 'required',
@@ -110,20 +125,6 @@ const INSTALLATION_MANIFEST = {
         'Task generation agent',
         'Documentation agent'
       ]
-    },
-    {
-      name: 'foundation',
-      displayName: 'Foundation Template',
-      type: 'required',
-      source: 'directive/',
-      target: 'directive/',
-      dependencies: [],
-      filePatterns: ['foundation.md'],
-      description: 'Project foundation document template',
-      affectedFeatures: [
-        'Foundation-driven development',
-        'Principle compliance tracking'
-      ]
     }
   ],
   directories: [
@@ -169,16 +170,6 @@ const INSTALLATION_MANIFEST = {
     },
     {
       path: '.claude/agents',
-      permissions: '755',
-      createIfMissing: true
-    },
-    {
-      path: 'directive',
-      permissions: '755',
-      createIfMissing: true
-    },
-    {
-      path: 'specs',
       permissions: '755',
       createIfMissing: true
     }

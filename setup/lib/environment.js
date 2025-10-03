@@ -21,15 +21,22 @@ async function detectEnvironment(targetDirectory) {
 
   const platform = detectPlatform();
   const nodeVersion = detectNodeVersion();
-  const dependencies = await detectDependencies();
+  const dependenciesArray = await detectDependencies();
   const permissions = await checkPermissions(targetDirectory);
   const diskSpace = await checkDiskSpace(targetDirectory);
   const existingInstallation = await detectExistingInstallation(targetDirectory);
 
+  // Convert dependencies array to object for easier access
+  const dependencies = {};
+  for (const dep of dependenciesArray) {
+    dependencies[dep.name] = dep;
+  }
+
   const result = {
     platform,
     nodeVersion,
-    detectedDependencies: dependencies,
+    dependencies,
+    detectedDependencies: dependenciesArray,
     permissions,
     diskSpace,
     existingInstallation

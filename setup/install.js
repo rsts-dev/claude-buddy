@@ -23,7 +23,7 @@ const path = require('path');
 const fs = require('fs-extra');
 const { createLogger } = require('./lib/logger');
 const { detectEnvironment, validateEnvironment } = require('./lib/environment');
-const { loadManifest } = require('./lib/manifest');
+const { getManifest } = require('./lib/manifest');
 // const { createTransaction } = require('./lib/transaction'); // TODO: Implement transaction handling
 const { performInstallation } = require('./lib/installer');
 const { performUpdate } = require('./lib/updater');
@@ -272,7 +272,7 @@ function displayBanner(logger, version) {
 ║           ╚═════╝  ╚═════╝ ╚═════╝ ╚═════╝    ╚═╝
 ║                                           ║
 ║           Installation & Setup Tool       ║
-║                 v${version.padEnd(9)}              ║
+║                 v${version.padEnd(9)}                ║
 ╚═══════════════════════════════════════════╝
 `;
 
@@ -414,10 +414,10 @@ async function handleInstallCommand(options, logger) {
     }
 
     // Load manifest
-    const manifest = await loadManifest(options.skipHooks);
+    const manifest = getManifest();
 
     // Check if installation already exists
-    const metadataPath = path.join(options.targetDirectory, '.claude-buddy', 'metadata.json');
+    const metadataPath = path.join(options.targetDirectory, '.claude-buddy', 'install-metadata.json');
     const installationExists = await fs.pathExists(metadataPath);
 
     if (installationExists && !options.force) {
@@ -425,8 +425,17 @@ async function handleInstallCommand(options, logger) {
       if (!options.quiet) {
         logger.info('Existing installation detected. Performing update...');
       }
+
+      // Read existing metadata
+      const existingMetadataContent = await fs.readFile(metadataPath, 'utf-8');
+      const existingMetadata = JSON.parse(existingMetadataContent);
+
       return await performUpdate({
         targetDirectory: options.targetDirectory,
+        fromVersion: existingMetadata.version || '0.0.0',
+        toVersion: manifest.version,
+        components: manifest.components,
+        existingMetadata,
         manifest,
         environment,
         dryRun: options.dryRun,
@@ -473,7 +482,7 @@ async function handleUpdateCommand(options, logger) {
     }
 
     // Check if installation exists
-    const metadataPath = path.join(options.targetDirectory, '.claude-buddy', 'metadata.json');
+    const metadataPath = path.join(options.targetDirectory, '.claude-buddy', 'install-metadata.json');
     const installationExists = await fs.pathExists(metadataPath);
 
     if (!installationExists) {
@@ -481,15 +490,23 @@ async function handleUpdateCommand(options, logger) {
       return { success: false, error: 'No existing installation' };
     }
 
+    // Read existing metadata
+    const existingMetadataContent = await fs.readFile(metadataPath, 'utf-8');
+    const existingMetadata = JSON.parse(existingMetadataContent);
+
     // Detect environment
     const environment = await detectEnvironment(options.targetDirectory);
 
     // Load manifest
-    const manifest = await loadManifest(options.skipHooks);
+    const manifest = getManifest();
 
     // Perform update
     return await performUpdate({
       targetDirectory: options.targetDirectory,
+      fromVersion: existingMetadata.version || '0.0.0',
+      toVersion: manifest.version,
+      components: manifest.components,
+      existingMetadata,
       manifest,
       environment,
       dryRun: options.dryRun,
@@ -520,7 +537,7 @@ async function handleUninstallCommand(options, logger) {
     }
 
     // Check if installation exists
-    const metadataPath = path.join(options.targetDirectory, '.claude-buddy', 'metadata.json');
+    const metadataPath = path.join(options.targetDirectory, '.claude-buddy', 'install-metadata.json');
     const installationExists = await fs.pathExists(metadataPath);
 
     if (!installationExists) {
@@ -576,7 +593,7 @@ async function handleVerifyCommand(options, logger) {
     };
 
     // Check if installation exists
-    const metadataPath = path.join(options.targetDirectory, '.claude-buddy', 'metadata.json');
+    const metadataPath = path.join(options.targetDirectory, '.claude-buddy', 'install-metadata.json');
     const installationExists = await fs.pathExists(metadataPath);
 
     if (!installationExists) {
@@ -625,10 +642,10 @@ async function handleVerifyCommand(options, logger) {
       { name: 'Framework Configuration', path: '.claude-buddy/buddy-config.json' },
       { name: 'Document Templates', path: '.claude-buddy/templates' },
       { name: 'AI Personas', path: '.claude-buddy/personas' },
+      { name: 'Framework Context Files', path: '.claude-buddy/context' },
       { name: 'Slash Commands', path: '.claude/commands' },
       { name: 'Python Hooks', path: '.claude/hooks', optional: true },
-      { name: 'Agents', path: '.claude/agents' },
-      { name: 'Foundation Document', path: 'directive/foundation.md' }
+      { name: 'Agents', path: '.claude/agents' }
     ];
 
     for (const component of componentsToCheck) {
@@ -670,9 +687,19 @@ async function handleVerifyCommand(options, logger) {
         const config = JSON.parse(configContent);
 
         // Basic validation
-        if (!config.personas || !Array.isArray(config.personas)) {
+        if (!config.version) {
           result.configuration.valid = false;
-          result.configuration.errors.push('Missing or invalid personas array');
+          result.configuration.errors.push('Missing version field');
+        }
+
+        if (!config.personas || typeof config.personas !== 'object') {
+          result.configuration.valid = false;
+          result.configuration.errors.push('Missing or invalid personas configuration');
+        }
+
+        if (!config.features || typeof config.features !== 'object') {
+          result.configuration.valid = false;
+          result.configuration.errors.push('Missing or invalid features configuration');
         }
 
         if (!options.quiet) {

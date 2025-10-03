@@ -34,12 +34,17 @@ const loggerState = {
  */
 function createLogger(options = {}) {
   loggerState.level = options.level || 'normal';
-  loggerState.colorEnabled = options.color !== false;
   loggerState.logFile = options.logFile || null;
 
-  // Detect terminal color support
-  if (loggerState.colorEnabled && !supportsColor()) {
+  // Check environment variables first (they take precedence)
+  if (process.env.NO_COLOR || process.env.CLAUDE_BUDDY_NO_COLOR) {
     loggerState.colorEnabled = false;
+  } else if (options.color !== undefined) {
+    // Explicit color option
+    loggerState.colorEnabled = options.color;
+  } else {
+    // Auto-detect
+    loggerState.colorEnabled = supportsColor();
   }
 
   // Initialize file logging if specified
@@ -253,13 +258,10 @@ function warn(message) {
  */
 function error(message) {
   // Always log errors, even in quiet mode
-  const formatted = loggerState.colorEnabled
-    ? chalk.red(`✗ ${message}`)
-    : `ERROR: ${message}`;
-
   if (loggerState.level === 'json') {
     console.error(JSON.stringify({ level: 'error', message }));
   } else {
+    const formatted = colorize(`✗ ${message}`, 'red');
     console.error(formatted);
   }
 
@@ -326,9 +328,9 @@ function section(title) {
 }
 
 /**
- * Display progress indicator
+ * Display progress indicator or status message
  * @param {string} message - Progress message
- * @param {number} current - Current progress value
+ * @param {number|boolean} current - Current progress value (or verbose flag for simple status)
  * @param {number} total - Total progress value
  */
 function progress(message, current, total) {
@@ -336,17 +338,24 @@ function progress(message, current, total) {
     return;
   }
 
-  const percentage = Math.floor((current / total) * 100);
-  const barLength = 30;
-  const filledLength = Math.floor((barLength * current) / total);
-  const bar = '█'.repeat(filledLength) + '░'.repeat(barLength - filledLength);
+  // If current and total are valid numbers, show progress bar
+  if (typeof current === 'number' && typeof total === 'number' && total > 0) {
+    const percentage = Math.floor((current / total) * 100);
+    const barLength = 30;
+    const filledLength = Math.floor((barLength * current) / total);
+    const bar = '█'.repeat(filledLength) + '░'.repeat(barLength - filledLength);
 
-  const formatted = `${message} [${bar}] ${percentage}% (${current}/${total})`;
-  process.stdout.write('\r' + formatted);
+    const formatted = `${message} [${bar}] ${percentage}% (${current}/${total})`;
+    process.stdout.write('\r' + formatted);
 
-  if (current === total) {
-    process.stdout.write('\n');
-    writeToFile(`PROGRESS: ${message} - Complete (${current}/${total})`);
+    if (current === total) {
+      process.stdout.write('\n');
+      writeToFile(`PROGRESS: ${message} - Complete (${current}/${total})`);
+    }
+  } else {
+    // Simple status message without progress bar (when called with verbose flag)
+    // Don't output anything - the success/info message will be shown instead
+    writeToFile(`STATUS: ${message}`);
   }
 }
 

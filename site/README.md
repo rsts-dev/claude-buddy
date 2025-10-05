@@ -1,6 +1,6 @@
-# Claude Buddy Landing Page
+# Claude Buddy 2.0 Landing Page
 
-A professional, Claude Code-inspired landing page designed to showcase Claude Buddy as an enhancement to Claude Code and drive traffic to the GitHub repository.
+A professional, Claude Code-inspired landing page designed to showcase Claude Buddy 2.0 as an enterprise-ready AI development platform and drive traffic to the GitHub repository.
 
 ## 🎨 Design Features
 
@@ -20,66 +20,78 @@ A professional, Claude Code-inspired landing page designed to showcase Claude Bu
 ## 📁 File Structure
 
 ```
-@site/
-├── index.html              # Main landing page
+site/
+├── index.html                  # Main landing page (v2.0)
+├── sitemap.xml                 # SEO sitemap with v2 sections
 ├── assets/
 │   ├── css/
-│   │   └── style.css      # Complete styling with Claude Code theme
+│   │   └── style.css          # Complete styling with v2 sections
 │   ├── js/
-│   │   └── main.js        # Interactive functionality with theme toggle
+│   │   └── main.js            # Interactive functionality
 │   └── images/
-│       └── claude-buddy-logo.svg  # Custom infinity symbol logo
-├── logo-options.html       # Logo selection reference
-└── README.md               # This documentation
+│       └── claude-buddy-logo.svg  # Infinity symbol logo
+├── FRONTEND_ANALYSIS.md        # Frontend consistency report
+└── README.md                   # This documentation
 ```
 
 ## 🎯 Key Sections
 
 ### 1. Hero Section
-- **Professional headline** positioning Claude Buddy as Claude Code enhancement
-- **Code comparison demo** showing before/after with Claude Buddy
-- **Installation terminal** with copy-to-clipboard functionality
-- **Primary CTA** buttons leading to GitHub repository
+- **v2.0 headline** emphasizing NPM-powered enterprise platform
+- **Installation terminal** showing NPM global install
+- **Success indicators** for v2.0, personas, templates, workflow automation
+- **Primary CTA** buttons to GitHub and documentation
 
-### 2. Integration Section
-- **Seamless integration flow** showing Claude Code → Claude Buddy → Enhanced Experience
-- **Zero configuration messaging** emphasizing easy setup
-- **Local processing benefits** highlighting privacy and security
-- **Integration feature cards** with hover effects
+### 2. What's New in 2.0 (NEW)
+- **Feature grid** showcasing NPM package, MuleSoft/JHipster, workflow, foundation
+- **v1 vs v2 comparison table** highlighting key improvements
+- **Migration benefits** for existing users
+- **Enterprise readiness** messaging
 
-### 3. Enhanced Capabilities
-- **Professional comparison** of standard vs enhanced Claude Code experience
-- **Clean value proposition** highlighting key improvements
-- **Focus on enhancement** rather than replacement
+### 3. Enterprise Templates (NEW)
+- **MuleSoft API Platform** showcase with features and use cases
+- **JHipster Full-Stack** showcase with tech stack and scenarios
+- **Template selection** guidance
+- **Professional developer positioning**
 
-### 4. Features Showcase
-- **Interactive feature blocks** with subtle hover effects
-- **Code demonstrations** showing slash commands in action
-- **Safety system visualization** with professional alerts
-- **Persona system explanation** with context-aware activation
+### 4. Workflow Automation (NEW)
+- **5-step process** visualization (spec → plan → tasks → implement → commit)
+- **Comprehensive commands grid** organized by category:
+  - Foundation & Setup
+  - Development Workflow
+  - Personas & Templates
+  - Documentation & Git
+- **Real-world examples** and use cases
 
-### 5. Persona Gallery
-- **Professional persona cards** with clean hover animations
-- **12 specialized AI experts** each with icons, descriptions, and tags
-- **Responsive grid layout** adapting to screen sizes
-- **Click interactions** for detailed persona information
+### 5. Enhanced Personas Section
+- **12 AI experts** with v2 intelligence updates
+- **Auto-activation** with 0.7 confidence threshold
+- **Session memory** and learning capabilities
+- **Professional persona cards** with hover effects
 
-### 6. Installation Guide
-- **Multiple installation options** (Global, Project-specific, Interactive)
-- **Copy-to-clipboard code blocks** for easy installation
-- **Prerequisites section** with clear requirements
-- **Clean code examples** with professional styling
+### 6. Features Showcase
+- **Slash commands** demonstration (valid commands only)
+- **Safety hooks** visualization
+- **Context-aware activation** examples
+- **Performance optimizations**
 
-### 7. Call-to-Action
-- **Professional headline** with brand-consistent colors
-- **GitHub and documentation links** as primary actions
-- **Statistics display** (12 AI Experts, 0 External API Calls, ♾️ Possibilities)
-- **Trust signals** emphasizing open source and privacy
+### 7. Installation Guide
+- **NPM package** installation (@claude-buddy/setup)
+- **Global and project-specific** options
+- **Prerequisites** (Node.js ≥18.0.0)
+- **Verification** steps
 
-### 8. Footer
-- **Comprehensive link sections** (Resources, Community, Legal)
-- **Direct links** to documentation, API reference, and GitHub
-- **Brand consistency** with infinity logo and messaging
+### 8. Call-to-Action
+- **GitHub repository** link (rsts-dev/claude-buddy)
+- **NPM package** link (@claude-buddy/setup)
+- **Documentation** access
+- **Version indicator** (v2.0.0)
+
+### 9. Footer
+- **Updated links** to rsts-dev organization
+- **NPM package** in Community section
+- **Version 2.0.0** indicator
+- **Professional branding**
 
 ## ♾️ Brand Identity
 
@@ -88,10 +100,11 @@ A professional, Claude Code-inspired landing page designed to showcase Claude Bu
 - **Current**: Infinity symbol (♾️) - unlimited possibilities and professional enhancement
 - **Custom SVG**: Professional infinity symbol logo in brand colors
 
-### Brand Message
-- **Core Concept**: Unlimited possibilities with Claude Code enhancement
-- **Professional Positioning**: Tool for serious developers, not a novelty
-- **Integration Focus**: Enhances rather than replaces Claude Code
+### Brand Message (v2.0)
+- **Core Concept**: Enterprise-ready AI development platform with unlimited possibilities
+- **Professional Positioning**: NPM-distributed platform for serious enterprise development
+- **Platform Focus**: Complete development lifecycle automation from spec to deployment
+- **Enterprise Templates**: Production-ready frameworks (MuleSoft & JHipster)
 
 ## ⚡ Interactive Features
 
@@ -155,34 +168,36 @@ A professional, Claude Code-inspired landing page designed to showcase Claude Bu
 ## 🔗 Links and CTAs
 
 All primary call-to-action buttons and links point to:
-- **GitHub Repository**: https://github.com/gsetsero/claude-buddy
-- **README Documentation**: https://github.com/gsetsero/claude-buddy#readme
-- **API Documentation**: https://github.com/gsetsero/claude-buddy/tree/main/docs/api
-- **Troubleshooting Guide**: https://github.com/gsetsero/claude-buddy/blob/main/docs/troubleshooting.md
+- **GitHub Repository**: https://github.com/rsts-dev/claude-buddy
+- **NPM Package**: https://www.npmjs.com/package/@claude-buddy/setup
+- **Website**: https://claude-buddy.dev
+- **Documentation**: https://github.com/rsts-dev/claude-buddy/tree/main/docs
+- **Installation Guide**: https://github.com/rsts-dev/claude-buddy/tree/main/setup
 
 ## 🚀 Deployment
 
 The landing page is a static site that can be deployed to any web hosting platform:
 
 ### GitHub Pages
-1. Push the `@site` folder contents to a `gh-pages` branch
+1. Push the `site/` folder contents to a `gh-pages` branch
 2. Enable GitHub Pages in repository settings
 3. Site will be available at `https://[username].github.io/[repo-name]`
 
 ### Netlify
 1. Connect repository to Netlify
-2. Set build directory to `@site`
+2. Set build directory to `site/`
 3. Deploy automatically on git push
 
 ### Vercel
 1. Import repository to Vercel
-2. Set root directory to `@site`
+2. Set root directory to `site/`
 3. Deploy with automatic HTTPS
 
-### Custom Domain
-1. Update meta tags with actual domain
-2. Add CNAME file for custom domain
-3. Configure DNS settings
+### Custom Domain (claude-buddy.dev)
+1. Configure DNS with CNAME pointing to hosting provider
+2. Add CNAME file to `site/` directory
+3. Update canonical URLs in HTML meta tags
+4. Enable HTTPS with automatic certificates
 
 ## 🎯 Performance Metrics
 
@@ -249,14 +264,36 @@ This landing page follows Claude Code's design principles:
 
 Potential improvements for the landing page:
 - **Interactive demos** showing Claude Buddy commands in action
-- **User testimonials** and case studies from developers
-- **Integration metrics** from actual Claude Code users
-- **Blog integration** for updates and tutorials
-- **Command reference** integrated into the site
-- **Video demonstrations** of key features
+- **User testimonials** from enterprise developers
+- **Case studies** showcasing MuleSoft & JHipster implementations
+- **Blog integration** for v2.0 updates and tutorials
+- **Command playground** for testing slash commands
+- **Video demonstrations** of workflow automation
+- **Template gallery** with detailed comparisons
+- **NPM download statistics** and adoption metrics
+
+## 📝 Recent v2.0 Updates
+
+### Content Updates (October 2025)
+- ✅ Updated hero section to emphasize NPM-powered platform
+- ✅ Added "What's New in 2.0" section with feature grid and comparison table
+- ✅ Added Enterprise Templates showcase (MuleSoft & JHipster)
+- ✅ Added Workflow Automation section with 5-step process
+- ✅ Updated all GitHub links from `gsetsero` to `rsts-dev`
+- ✅ Added NPM package references throughout
+- ✅ Removed non-existent slash commands (analyze, review, architect, improve, pr)
+- ✅ Updated personas section with v2 intelligence features
+- ✅ Added sitemap.xml with new v2 sections
+
+### Design Updates
+- ✅ Added 390+ lines of CSS for new v2 sections
+- ✅ Implemented consistent hover effects and transitions
+- ✅ Enhanced responsive design for all new sections
+- ✅ Maintained visual consistency with existing design system
+- ✅ Added frontend analysis documentation
 
 ---
 
 **Made with ♾️ for the Claude Code community**
 
-*This landing page serves as the professional front-end for Claude Buddy, designed to convert Claude Code users into Claude Buddy users through clear integration messaging and seamless GitHub onboarding.*
+*This landing page serves as the professional showcase for Claude Buddy 2.0, an enterprise-ready AI development platform. Designed to demonstrate the power of NPM distribution, enterprise templates, and complete workflow automation to professional developers.*

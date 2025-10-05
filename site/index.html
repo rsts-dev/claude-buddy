@@ -13,8 +13,8 @@
 
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Claude Buddy - Enhanced Claude Code with Expert AI Personas</title>
-    <meta name="description" content="Enhance Claude Code with 12 specialized AI experts. Get domain-specific insights, automated workflows, and advanced safety features.">
+    <title>Claude Buddy 2.0 - NPM-Powered AI Development Platform with Enterprise Templates</title>
+    <meta name="description" content="Transform Claude Code with Claude Buddy 2.0. Install via NPM, leverage MuleSoft & JHipster templates, and automate your entire development workflow from spec to implementation. 12 AI personas, foundation-driven development, and enterprise-ready tooling.">
     <meta name="keywords" content="Claude Code, AI development, coding assistant, personas, automation, TypeScript, JavaScript, Python">
     
     <!-- Canonical URL -->
@@ -22,14 +22,14 @@
     
     <!-- Open Graph / Facebook -->
     <meta property="og:type" content="website">
-    <meta property="og:title" content="Claude Buddy - AI Development Powerhouse">
-    <meta property="og:description" content="Transform Claude Code with 12 specialized AI experts, intelligent automation, and safety-first design.">
+    <meta property="og:title" content="Claude Buddy 2.0 - Enterprise AI Development Platform">
+    <meta property="og:description" content="NPM-installable AI development platform with MuleSoft & JHipster templates, specification-driven workflows, and 12 expert personas.">
     <meta property="og:url" content="https://claude-buddy.dev">
-    
+
     <!-- Twitter -->
     <meta property="twitter:card" content="summary_large_image">
-    <meta property="twitter:title" content="Claude Buddy - AI Development Powerhouse">
-    <meta property="twitter:description" content="Transform Claude Code with 12 specialized AI experts, intelligent automation, and safety-first design.">
+    <meta property="twitter:title" content="Claude Buddy 2.0 - Enterprise AI Development Platform">
+    <meta property="twitter:description" content="NPM-installable AI development platform with MuleSoft & JHipster templates, specification-driven workflows, and 12 expert personas.">
     
     <!-- Favicon -->
     <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100' role='img' aria-label='Claude Buddy Logo'><text y='.9em' font-size='90'>♾️</text></svg>">
@@ -59,9 +59,11 @@
         "@context": "https://schema.org",
         "@type": "SoftwareApplication",
         "name": "Claude Buddy",
-        "description": "Transform Claude Code with 12 specialized AI experts, intelligent automation, and safety-first design",
+        "version": "2.0.0",
+        "description": "NPM-installable AI development platform with enterprise templates and workflow automation",
         "applicationCategory": "DeveloperApplication",
         "operatingSystem": "macOS, Linux, Windows",
+        "requirements": "Node.js >= 18.0.0",
         "offers": {
             "@type": "Offer",
             "price": "0",
@@ -84,7 +86,7 @@
                     <li class="nav__item"><a href="#features" class="nav__link">Features</a></li>
                     <li class="nav__item"><a href="#personas" class="nav__link">Personas</a></li>
                     <li class="nav__item"><a href="#installation" class="nav__link">Install</a></li>
-                    <li class="nav__item"><a href="https://github.com/gsetsero/claude-buddy" class="nav__link" target="_blank">GitHub</a></li>
+                    <li class="nav__item"><a href="https://github.com/rsts-dev/claude-buddy" class="nav__link" target="_blank">GitHub</a></li>
                 </ul>
             </div>
             <div class="nav__actions">
@@ -92,7 +94,7 @@
                     <span class="theme-toggle__light" role="img" aria-label="Light mode">☀️</span>
                     <span class="theme-toggle__dark" role="img" aria-label="Dark mode">🌙</span>
                 </button>
-                <a href="https://github.com/gsetsero/claude-buddy#readme" class="btn btn--primary" target="_blank">Get Started</a>
+                <a href="https://github.com/rsts-dev/claude-buddy#readme" class="btn btn--primary" target="_blank">Get Started</a>
             </div>
             <div class="nav__toggle" id="nav-toggle">
                 <span></span>
@@ -107,15 +109,15 @@
         <div class="hero__container container">
             <div class="hero__content">
                 <h1 class="hero__title">
-                    Enhanced Claude Code with
-                    <span class="hero__title--accent">Expert AI Personas</span>
+                    Claude Buddy 2.0 is Here
+                    <span class="hero__title--accent">Enterprise-Ready AI Development Platform</span>
                 </h1>
                 <p class="hero__description">
-                    Extend Claude Code's capabilities with 12 specialized AI experts. 
-                    Get domain-specific insights, automated workflows, and enhanced safety—all integrated seamlessly into your Claude Code experience.
+                    Install via NPM. Deploy MuleSoft & JHipster templates. Automate spec-to-implementation workflows.
+                    Transform Claude Code into an enterprise development powerhouse with 12 AI experts, foundation-driven architecture, and complete workflow automation.
                 </p>
                 <div class="hero__actions">
-                    <a href="https://github.com/gsetsero/claude-buddy" 
+                    <a href="https://github.com/rsts-dev/claude-buddy"
                        class="btn btn--primary btn--large" target="_blank">
                         <span role="img" aria-label="Rocket">🚀</span> Explore on GitHub
                     </a>
@@ -134,12 +136,28 @@
                         <div class="terminal__content">
                             <div class="terminal__line">
                                 <span class="terminal__prompt">$</span>
-                                <span class="terminal__command">npm install -g claude-buddy</span>
-                                <button class="terminal__copy" onclick="copyToClipboard('npm install -g claude-buddy')" aria-label="Copy to clipboard"><span role="img" aria-label="Clipboard">📋</span></button>
+                                <span class="terminal__command">npm install -g @claude-buddy/setup</span>
+                                <button class="terminal__copy" onclick="copyToClipboard('npm install -g @claude-buddy/setup')" aria-label="Copy to clipboard"><span role="img" aria-label="Clipboard">📋</span></button>
                             </div>
                             <div class="terminal__line">
                                 <span class="terminal__prompt">$</span>
                                 <span class="terminal__command">claude-buddy --global</span>
+                            </div>
+                            <div class="terminal__line terminal__success">
+                                <span class="terminal__prompt">✓</span>
+                                <span class="terminal__output">Claude Buddy 2.0 installed successfully</span>
+                            </div>
+                            <div class="terminal__line terminal__success">
+                                <span class="terminal__prompt">✓</span>
+                                <span class="terminal__output">12 personas ready</span>
+                            </div>
+                            <div class="terminal__line terminal__success">
+                                <span class="terminal__prompt">✓</span>
+                                <span class="terminal__output">MuleSoft & JHipster templates loaded</span>
+                            </div>
+                            <div class="terminal__line terminal__success">
+                                <span class="terminal__prompt">✓</span>
+                                <span class="terminal__output">Workflow automation enabled</span>
                             </div>
                         </div>
                     </div>
@@ -160,13 +178,126 @@
                             <div class="code-panel__header">Claude Code + Buddy</div>
                             <div class="code-panel__content">
                                 <span class="code-comment"># Enhanced with personas</span>
-                                <span class="code-line">$ /buddy:analyze</span>
+                                <span class="code-line">$ /buddy:persona security performance</span>
                                 <span class="code-output">→ 🛡️ Security + ⚡ Performance</span>
                                 <span class="code-output">→ Multi-expert analysis</span>
                             </div>
                         </div>
                     </div>
                 </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- What's New Section -->
+    <section class="whats-new" id="whats-new">
+        <div class="container">
+            <h2 class="section__title">Claude Buddy 2.0: Complete Platform Evolution</h2>
+            <p class="section__subtitle">From persona-based assistant to enterprise development platform</p>
+
+            <div class="feature-grid">
+                <div class="feature-card">
+                    <div class="feature-card__icon" role="img" aria-label="Package">📦</div>
+                    <h3 class="feature-card__title">NPM Package Manager</h3>
+                    <p class="feature-card__description">Professional installation via NPM with automatic updates</p>
+                    <ul class="feature-card__details">
+                        <li>Global or project-specific installation</li>
+                        <li>Dependency management</li>
+                        <li>Version control</li>
+                        <li><code>@claude-buddy/setup</code> package</li>
+                    </ul>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-card__icon" role="img" aria-label="Building">🏢</div>
+                    <h3 class="feature-card__title">MuleSoft & JHipster Ready</h3>
+                    <p class="feature-card__description">Production-ready enterprise templates out of the box</p>
+                    <ul class="feature-card__details">
+                        <li>MuleSoft API integration</li>
+                        <li>JHipster full-stack apps</li>
+                        <li>Custom foundation support</li>
+                        <li>Template extensibility</li>
+                    </ul>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-card__icon" role="img" aria-label="Cycle">🔄</div>
+                    <h3 class="feature-card__title">Spec-to-Implementation</h3>
+                    <p class="feature-card__description">Complete development workflow from specification to deployment</p>
+                    <ul class="feature-card__details">
+                        <li><code>/buddy:spec</code> - Create specifications</li>
+                        <li><code>/buddy:plan</code> - Generate plans</li>
+                        <li><code>/buddy:tasks</code> - Break down tasks</li>
+                        <li><code>/buddy:implement</code> - Execute with TDD</li>
+                    </ul>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-card__icon" role="img" aria-label="Classical building">🏛️</div>
+                    <h3 class="feature-card__title">Foundation-Driven Development</h3>
+                    <p class="feature-card__description">Project-wide consistency through foundation documents</p>
+                    <ul class="feature-card__details">
+                        <li>5 core principles</li>
+                        <li>Project governance</li>
+                        <li>Template alignment</li>
+                        <li>Context propagation</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="comparison-table">
+                <h3 class="comparison-table__title">Version Comparison</h3>
+                <table class="comparison-table__content">
+                    <thead>
+                        <tr>
+                            <th>Feature</th>
+                            <th>Claude Buddy v1</th>
+                            <th>Claude Buddy v2</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Installation</strong></td>
+                            <td>Git clone + manual setup</td>
+                            <td><code>npm install -g @claude-buddy/setup</code></td>
+                        </tr>
+                        <tr>
+                            <td><strong>Updates</strong></td>
+                            <td>Manual git pull</td>
+                            <td><code>npm update</code> automatic</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Personas</strong></td>
+                            <td>12 experts</td>
+                            <td>12 experts + auto-activation</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Templates</strong></td>
+                            <td>Basic</td>
+                            <td>MuleSoft, JHipster, Custom</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Workflow</strong></td>
+                            <td>Personas only</td>
+                            <td>Complete spec→implementation</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Foundation</strong></td>
+                            <td>None</td>
+                            <td>Foundation-driven development</td>
+                        </tr>
+                        <tr>
+                            <td><strong>CLI Tool</strong></td>
+                            <td>Basic commands</td>
+                            <td>Full CLI with multiple commands</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Safety</strong></td>
+                            <td>Basic</td>
+                            <td>Transaction rollback, validation</td>
+                        </tr>
+                    </tbody>
+                </table>
             </div>
         </div>
     </section>
@@ -276,8 +407,8 @@
                 <div class="feature-block__visual">
                     <div class="command-demo">
                         <div class="command-demo__input">
-                            <span class="command-prompt">/buddy:analyze</span>
-                            <span class="command-text">Review this security vulnerability</span>
+                            <span class="command-prompt">/buddy:persona</span>
+                            <span class="command-text">security --auto-activate</span>
                         </div>
                         <div class="command-demo__output">
                             <div class="persona-activation">
@@ -341,20 +472,20 @@
                     </p>
                     <div class="slash-commands__grid">
                         <div class="slash-command">
-                            <code>/buddy:analyze</code>
-                            <span>Multi-dimensional code analysis</span>
+                            <code>/buddy:spec</code>
+                            <span>Create feature specifications</span>
                         </div>
                         <div class="slash-command">
-                            <code>/buddy:review</code>
-                            <span>Comprehensive code review</span>
+                            <code>/buddy:plan</code>
+                            <span>Generate implementation plans</span>
                         </div>
                         <div class="slash-command">
                             <code>/buddy:commit</code>
                             <span>Professional commit messages</span>
                         </div>
                         <div class="slash-command">
-                            <code>/buddy:architect</code>
-                            <span>System architecture design</span>
+                            <code>/buddy:docs</code>
+                            <span>Generate documentation</span>
                         </div>
                     </div>
                 </div>
@@ -362,21 +493,21 @@
                     <div class="commands-showcase">
                         <div class="command-example">
                             <div class="command-input">
-                                <span>/buddy:improve</span> --comprehensive
+                                <span>/buddy:implement</span>
                             </div>
                             <div class="command-result">
                                 <div class="improvement-suggestions">
                                     <div class="suggestion">
                                         <span class="suggestion__icon" role="img" aria-label="Wrench">🔧</span>
-                                        <span class="suggestion__text">Refactor: Extract complex logic into separate functions</span>
+                                        <span class="suggestion__text">Creating: Entity models and repositories</span>
                                     </div>
                                     <div class="suggestion">
                                         <span class="suggestion__icon" role="img" aria-label="Lightning">⚡</span>
-                                        <span class="suggestion__text">Performance: Optimize database query patterns</span>
+                                        <span class="suggestion__text">Testing: Unit tests with TDD approach</span>
                                     </div>
                                     <div class="suggestion">
                                         <span class="suggestion__icon" role="img" aria-label="Shield">🛡️</span>
-                                        <span class="suggestion__text">Security: Add input validation for user data</span>
+                                        <span class="suggestion__text">Validating: Integration tests passing</span>
                                     </div>
                                 </div>
                             </div>
@@ -387,11 +518,160 @@
         </div>
     </section>
 
+    <!-- Enterprise Templates Section -->
+    <section class="enterprise-templates" id="enterprise-templates">
+        <div class="container">
+            <h2 class="section__title">Enterprise Templates Built-In</h2>
+            <p class="section__subtitle">Production-ready templates for MuleSoft and JHipster development</p>
+
+            <div class="templates-grid">
+                <div class="template-showcase">
+                    <div class="template-showcase__header">
+                        <div class="template-showcase__icon" role="img" aria-label="Infinity">∞</div>
+                        <h3 class="template-showcase__title">MuleSoft API Platform</h3>
+                        <p class="template-showcase__tagline">API-Led Connectivity</p>
+                    </div>
+                    <div class="template-showcase__content">
+                        <h4>Features:</h4>
+                        <ul>
+                            <li>Experience, Process, System APIs</li>
+                            <li>RAML specifications</li>
+                            <li>DataWeave transformations</li>
+                            <li>Anypoint Studio integration</li>
+                            <li>CloudHub deployment ready</li>
+                        </ul>
+                        <h4>Use Cases:</h4>
+                        <ul>
+                            <li>System integration</li>
+                            <li>API management</li>
+                            <li>Enterprise service bus</li>
+                            <li>B2B connectivity</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="template-showcase">
+                    <div class="template-showcase__header">
+                        <div class="template-showcase__icon" role="img" aria-label="Gear">⚙️</div>
+                        <h3 class="template-showcase__title">JHipster Full-Stack</h3>
+                        <p class="template-showcase__tagline">Enterprise Applications</p>
+                    </div>
+                    <div class="template-showcase__content">
+                        <h4>Features:</h4>
+                        <ul>
+                            <li>Spring Boot backend</li>
+                            <li>Angular/React/Vue frontend</li>
+                            <li>Microservices or Monolithic</li>
+                            <li>JWT/OAuth2 security</li>
+                            <li>Docker & Kubernetes ready</li>
+                        </ul>
+                        <h4>Use Cases:</h4>
+                        <ul>
+                            <li>Enterprise web apps</li>
+                            <li>Microservices architecture</li>
+                            <li>Cloud-native applications</li>
+                            <li>Full-stack development</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Workflow Section -->
+    <section class="workflow" id="workflow">
+        <div class="container">
+            <h2 class="section__title">Complete Development Workflow</h2>
+            <p class="section__subtitle">From specification to production in a seamless flow</p>
+
+            <div class="workflow-visual">
+                <div class="workflow-step">
+                    <div class="workflow-step__number">1</div>
+                    <h3 class="workflow-step__title">Specification</h3>
+                    <p class="workflow-step__description">Create feature specs</p>
+                    <code class="workflow-step__command">/buddy:spec</code>
+                </div>
+                <div class="workflow-arrow">→</div>
+                <div class="workflow-step">
+                    <div class="workflow-step__number">2</div>
+                    <h3 class="workflow-step__title">Planning</h3>
+                    <p class="workflow-step__description">Generate implementation plans</p>
+                    <code class="workflow-step__command">/buddy:plan</code>
+                </div>
+                <div class="workflow-arrow">→</div>
+                <div class="workflow-step">
+                    <div class="workflow-step__number">3</div>
+                    <h3 class="workflow-step__title">Tasks</h3>
+                    <p class="workflow-step__description">Break down into tasks</p>
+                    <code class="workflow-step__command">/buddy:tasks</code>
+                </div>
+                <div class="workflow-arrow">→</div>
+                <div class="workflow-step">
+                    <div class="workflow-step__number">4</div>
+                    <h3 class="workflow-step__title">Implementation</h3>
+                    <p class="workflow-step__description">Execute with TDD</p>
+                    <code class="workflow-step__command">/buddy:implement</code>
+                </div>
+                <div class="workflow-arrow">→</div>
+                <div class="workflow-step">
+                    <div class="workflow-step__number">5</div>
+                    <h3 class="workflow-step__title">Deployment</h3>
+                    <p class="workflow-step__description">Validate & deploy</p>
+                    <code class="workflow-step__command">/buddy:commit</code>
+                </div>
+            </div>
+
+            <div class="commands-grid">
+                <div class="commands-section">
+                    <h3>Foundation & Setup</h3>
+                    <ul class="command-list">
+                        <li><code>/buddy:foundation</code> - Initialize project foundation</li>
+                        <li><code>claude-buddy install</code> - Setup or update</li>
+                        <li><code>claude-buddy verify</code> - Check integrity</li>
+                    </ul>
+                </div>
+
+                <div class="commands-section">
+                    <h3>Development Workflow</h3>
+                    <ul class="command-list">
+                        <li><code>/buddy:spec</code> - Create feature specification</li>
+                        <li><code>/buddy:plan</code> - Generate implementation plan</li>
+                        <li><code>/buddy:tasks</code> - Create task breakdown</li>
+                        <li><code>/buddy:implement</code> - Execute with TDD</li>
+                    </ul>
+                </div>
+
+                <div class="commands-section">
+                    <h3>Personas & Templates</h3>
+                    <ul class="command-list">
+                        <li><code>/buddy:persona</code> - Activate specific personas</li>
+                        <li><code>/buddy:foundation</code> - Initialize project foundation</li>
+                    </ul>
+                </div>
+
+                <div class="commands-section">
+                    <h3>Documentation & Git</h3>
+                    <ul class="command-list">
+                        <li><code>/buddy:docs</code> - Generate documentation</li>
+                        <li><code>/buddy:commit</code> - Professional commits</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <!-- Personas Section -->
     <section class="personas" id="personas">
         <div class="container">
-            <h2 class="section__title">Meet Your AI Development Team</h2>
-            <p class="section__subtitle">12 specialized experts, each with deep domain knowledge</p>
+            <h2 class="section__title">12 AI Experts, Now with v2 Intelligence</h2>
+            <p class="section__subtitle">Auto-activation, confidence scoring, and deep integration with the complete workflow</p>
+
+            <div class="personas-intro">
+                <p class="personas-intro__text">
+                    <strong>What's New:</strong> Personas now feature auto-activation based on context (0.7 confidence threshold),
+                    session memory for context continuity, and seamless integration with the complete development workflow.
+                </p>
+            </div>
             
             <div class="personas__grid">
                 <div class="persona-card" data-persona="architect">
@@ -540,8 +820,8 @@
                     <h3 class="install-option__title"><span role="img" aria-label="Globe">🌐</span> Global Installation</h3>
                     <p class="install-option__description">Install once, use everywhere (Recommended)</p>
                     <div class="code-block">
-                        <button class="code-block__copy" onclick="copyToClipboard('npm install -g claude-buddy && claude-buddy --global')" aria-label="Copy to clipboard"><span role="img" aria-label="Clipboard">📋</span></button>
-                        <pre><code>npm install -g claude-buddy
+                        <button class="code-block__copy" onclick="copyToClipboard('npm install -g @claude-buddy/setup && claude-buddy --global')" aria-label="Copy to clipboard"><span role="img" aria-label="Clipboard">📋</span></button>
+                        <pre><code>npm install -g @claude-buddy/setup
 claude-buddy --global</code></pre>
                     </div>
                 </div>
@@ -606,11 +886,11 @@ npx claude-buddy --project</code></pre>
                     faster and safer than ever before.
                 </p>
                 <div class="cta__actions">
-                    <a href="https://github.com/gsetsero/claude-buddy" 
+                    <a href="https://github.com/rsts-dev/claude-buddy"
                        class="btn btn--primary btn--large" target="_blank">
                         <span role="img" aria-label="Rocket">🚀</span> Get Started on GitHub
                     </a>
-                    <a href="https://github.com/gsetsero/claude-buddy/tree/main/docs" 
+                    <a href="https://github.com/rsts-dev/claude-buddy/tree/main/docs"
                        class="btn btn--secondary btn--large" target="_blank">
                         <span role="img" aria-label="Books">📚</span> Read Documentation
                     </a>
@@ -650,27 +930,28 @@ npx claude-buddy --project</code></pre>
                 <div class="footer__section">
                     <h4 class="footer__section-title">Resources</h4>
                     <ul class="footer__links">
-                        <li><a href="https://github.com/gsetsero/claude-buddy#readme" target="_blank">Documentation</a></li>
-                        <li><a href="https://github.com/gsetsero/claude-buddy/tree/main/docs/api" target="_blank">API Reference</a></li>
-                        <li><a href="https://github.com/gsetsero/claude-buddy/blob/main/docs/troubleshooting.md" target="_blank">Troubleshooting</a></li>
-                        <li><a href="https://github.com/gsetsero/claude-buddy/tree/main/docs/architecture" target="_blank">Architecture</a></li>
+                        <li><a href="https://github.com/rsts-dev/claude-buddy#readme" target="_blank">Documentation</a></li>
+                        <li><a href="https://github.com/rsts-dev/claude-buddy/tree/main/docs/api" target="_blank">API Reference</a></li>
+                        <li><a href="https://github.com/rsts-dev/claude-buddy/blob/main/docs/troubleshooting.md" target="_blank">Troubleshooting</a></li>
+                        <li><a href="https://github.com/rsts-dev/claude-buddy/tree/main/docs/architecture" target="_blank">Architecture</a></li>
                     </ul>
                 </div>
-                
+
                 <div class="footer__section">
                     <h4 class="footer__section-title">Community</h4>
                     <ul class="footer__links">
-                        <li><a href="https://github.com/gsetsero/claude-buddy" target="_blank">GitHub Repository</a></li>
-                        <li><a href="https://github.com/gsetsero/claude-buddy/issues" target="_blank">Issues & Support</a></li>
-                        <li><a href="https://github.com/gsetsero/claude-buddy/discussions" target="_blank">Discussions</a></li>
+                        <li><a href="https://github.com/rsts-dev/claude-buddy" target="_blank">GitHub Repository</a></li>
+                        <li><a href="https://github.com/rsts-dev/claude-buddy/issues" target="_blank">Issues & Support</a></li>
+                        <li><a href="https://github.com/rsts-dev/claude-buddy/discussions" target="_blank">Discussions</a></li>
                         <li><a href="https://claude.ai/code" target="_blank">Claude Code</a></li>
+                        <li><a href="https://www.npmjs.com/package/@claude-buddy/setup" target="_blank">NPM Package</a></li>
                     </ul>
                 </div>
-                
+
                 <div class="footer__section">
                     <h4 class="footer__section-title">Legal</h4>
                     <ul class="footer__links">
-                        <li><a href="https://github.com/gsetsero/claude-buddy/blob/main/LICENSE" target="_blank">MIT License</a></li>
+                        <li><a href="https://github.com/rsts-dev/claude-buddy/blob/main/LICENSE" target="_blank">MIT License</a></li>
                         <li>Open Source</li>
                         <li>No External API Calls</li>
                         <li>Privacy-First</li>
@@ -680,7 +961,7 @@ npx claude-buddy --project</code></pre>
             
             <div class="footer__bottom">
                 <p class="footer__copyright">
-                    Made with <span role="img" aria-label="Love">❤️</span> for the Claude Code community • Open Source MIT License
+                    Claude Buddy v2.0.0 • Made with <span role="img" aria-label="Love">❤️</span> for the Claude Code community • Open Source MIT License
                 </p>
             </div>
         </div>

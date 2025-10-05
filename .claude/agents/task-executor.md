@@ -1,7 +1,7 @@
 ---
 name: task-executor
 description: Use this agent when the user needs to execute implementation tasks from an existing tasks document. This agent should be invoked when:\n\n<example>\nContext: User has completed task breakdown and wants to execute implementation.\nuser: "I've finished the tasks breakdown, now I need to implement the feature"\nassistant: "Let me use the task-executor agent to execute the implementation tasks from your tasks document."\n<Task tool invocation to task-executor agent>\n</example>\n\n<example>\nContext: User wants to implement a feature.\nuser: "Execute the implementation for the user management API"\nassistant: "I'll invoke the task-executor agent to execute implementation tasks based on your task breakdown."\n<Task tool invocation to task-executor agent>\n</example>\n\n<example>\nContext: User has multiple task documents and wants to implement one.\nuser: "I need to implement the notification system"\nassistant: "Let me use the task-executor agent to execute implementation tasks for the notification system."\n<Task tool invocation to task-executor agent with task identifier>\n</example>
-model: sonet
+model: sonnet
 color: cyan
 ---
 

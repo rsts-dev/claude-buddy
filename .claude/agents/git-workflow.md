@@ -1,7 +1,7 @@
 ---
 name: git-workflow
 description: Use proactively to handle git operations including commits, branch management, and PR creation with persona integration and intelligent commit message generation
-model: opus
+model: sonnet
 color: orange
 tools: Bash, Read, Grep, Glob
 ---

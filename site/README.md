@@ -76,14 +76,14 @@ site/
 - **Performance optimizations**
 
 ### 7. Installation Guide
-- **NPM package** installation (@claude-buddy/setup)
+- **NPM package** installation (claude-buddy)
 - **Global and project-specific** options
 - **Prerequisites** (Node.js ≥18.0.0)
 - **Verification** steps
 
 ### 8. Call-to-Action
 - **GitHub repository** link (rsts-dev/claude-buddy)
-- **NPM package** link (@claude-buddy/setup)
+- **NPM package** link (claude-buddy)
 - **Documentation** access
 - **Version indicator** (v2.0.0)
 
@@ -169,7 +169,7 @@ site/
 
 All primary call-to-action buttons and links point to:
 - **GitHub Repository**: https://github.com/rsts-dev/claude-buddy
-- **NPM Package**: https://www.npmjs.com/package/@claude-buddy/setup
+- **NPM Package**: https://www.npmjs.com/package/claude-buddy
 - **Website**: https://claude-buddy.dev
 - **Documentation**: https://github.com/rsts-dev/claude-buddy/tree/main/docs
 - **Installation Guide**: https://github.com/rsts-dev/claude-buddy/tree/main/setup

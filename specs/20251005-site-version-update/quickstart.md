@@ -15,7 +15,7 @@
 - [ ] Structured data includes version "2.0.0"
 
 #### Installation Instructions
-- [ ] Primary installation command is `npm install -g @claude-buddy/setup`
+- [ ] Primary installation command is `npm install -g claude-buddy`
 - [ ] Git clone instructions completely removed
 - [ ] CLI commands show `claude-buddy` executable
 - [ ] Installation section shows 3-step process
@@ -65,7 +65,7 @@
 ```bash
 # Test all external links
 - GitHub repository: https://github.com/rsts-dev/claude-buddy
-- NPM package: https://www.npmjs.com/package/@claude-buddy/setup
+- NPM package: https://www.npmjs.com/package/claude-buddy
 - Documentation (when available)
 ```
 
@@ -203,7 +203,7 @@ Run Lighthouse audit in Chrome DevTools:
 #### NPM Package
 ```bash
 # Verify package details
-npm view @claude-buddy/setup
+npm view claude-buddy
 
 # Check:
 - Package exists
@@ -325,7 +325,7 @@ describe('Claude Buddy v2 Site', () => {
   })
 
   it('shows NPM installation command', () => {
-    cy.contains('npm install -g @claude-buddy/setup')
+    cy.contains('npm install -g claude-buddy')
   })
 
   it('links to correct GitHub repo', () => {

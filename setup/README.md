@@ -22,13 +22,13 @@ The Claude Buddy installation script provides a robust, cross-platform solution 
 
 ```bash
 # Install globally
-npm install -g @claude-buddy/setup
+npm install -g claude-buddy
 
 # Run installation
 claude-buddy install
 
 # Or use npx for one-time installation
-npx @claude-buddy/setup install
+npx claude-buddy install
 ```
 
 ### Basic Usage
@@ -196,7 +196,7 @@ The installation script uses standard exit codes:
 # GitHub Actions example
 - name: Install Claude Buddy
   run: |
-    npx @claude-buddy/setup install \
+    npx claude-buddy install \
       --non-interactive \
       --target $GITHUB_WORKSPACE \
       --skip-hooks
@@ -210,7 +210,7 @@ The installation script uses standard exit codes:
 FROM node:18-alpine
 
 # Install Claude Buddy
-RUN npx @claude-buddy/setup install \
+RUN npx claude-buddy install \
     --non-interactive \
     --target /app
 
@@ -223,7 +223,7 @@ WORKDIR /app
 const { execSync } = require('child_process');
 
 // Run installation programmatically
-execSync('npx @claude-buddy/setup install --non-interactive', {
+execSync('npx claude-buddy install --non-interactive', {
   cwd: '/path/to/project',
   stdio: 'inherit'
 });

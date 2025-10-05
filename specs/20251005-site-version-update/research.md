@@ -14,7 +14,7 @@
 
 **Key CLI Features Discovered**:
 - **Main executable**: `claude-buddy` (via NPM bin configuration)
-- **Package**: `@claude-buddy/setup` v2.0.0
+- **Package**: `claude-buddy` v2.0.0
 - **Commands**:
   - `install` - Fresh installation or update (default command)
   - `update` - Explicit update of existing installation
@@ -43,7 +43,7 @@
 **Alternatives considered**: Git clone, manual installation, custom installers
 
 **NPM Package Information**:
-- **Package name**: `@claude-buddy/setup`
+- **Package name**: `claude-buddy`
 - **Version**: 2.0.0
 - **Installation command**: `npm install -g claude-buddy`
 - **Dependencies**:

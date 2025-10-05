@@ -63,7 +63,7 @@
 
 ## Phase 3.3: Installation Section Updates
 - [X] T010 Replace git clone instructions with NPM installation commands in site/index.html
-- [X] T011 Update terminal display to show `npm install -g @claude-buddy/setup` in site/index.html
+- [X] T011 Update terminal display to show `npm install -g claude-buddy` in site/index.html
 - [X] T012 Add 3-step installation process (Install, Initialize, Choose Foundation) in site/index.html
 - [X] T013 [P] Add CLI options display (`--dry-run`, `--verbose`, `--force`) in site/index.html
 
@@ -98,7 +98,7 @@
 - [X] T033 Update all GitHub links from `gsetsero/claude-buddy` to `rsts-dev/claude-buddy` in site/index.html
 - [X] T034 [P] Update GitHub link in navigation menu in site/index.html
 - [X] T035 [P] Update repository link in footer in site/index.html
-- [X] T036 [P] Add NPM package link to `@claude-buddy/setup` in site/index.html
+- [X] T036 [P] Add NPM package link to `claude-buddy` in site/index.html
 
 ## Phase 3.9: Code Examples & Syntax Updates
 - [X] T037 Update all v1 code examples to v2 syntax in site/index.html
@@ -120,7 +120,7 @@
 
 ## Phase 3.12: Content Validation
 - [X] T049 Verify all "v1" references are updated to "v2" throughout site/index.html
-- [X] T050 Verify NPM installation command is correct (`@claude-buddy/setup`)
+- [X] T050 Verify NPM installation command is correct (`claude-buddy`)
 - [X] T051 [P] Verify all 12 personas are still listed correctly in site/index.html
 - [X] T052 [P] Verify all new slash commands are accurate in site/index.html
 - [X] T053 [P] Check for any remaining `gsetsero` references in site/index.html

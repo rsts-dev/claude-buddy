@@ -45,7 +45,7 @@ Transform Claude Code into an enterprise development powerhouse with 12 AI exper
 
 #### Terminal Display
 ```bash
-$ npm install -g @claude-buddy/setup
+$ npm install -g claude-buddy
 $ claude-buddy --global
 ✓ Claude Buddy 2.0 installed successfully
 ✓ 12 personas ready
@@ -76,7 +76,7 @@ $ claude-buddy --global
   - Global or project-specific installation
   - Dependency management
   - Version control
-  - `@claude-buddy/setup` package
+  - `claude-buddy` package
 
 ##### Enterprise Templates
 - **Icon**: 🏢
@@ -118,10 +118,10 @@ $ claude-buddy --global
 ##### Step 1: Install Package
 ```bash
 # Install Claude Buddy globally
-npm install -g @claude-buddy/setup
+npm install -g claude-buddy
 
 # Or install in specific project
-npm install @claude-buddy/setup
+npm install claude-buddy
 ```
 
 ##### Step 2: Initialize
@@ -158,7 +158,7 @@ claude-buddy verify
 
 | Feature | Claude Buddy v1 | Claude Buddy v2 |
 |---------|----------------|-----------------|
-| **Installation** | Git clone + manual setup | `npm install -g @claude-buddy/setup` |
+| **Installation** | Git clone + manual setup | `npm install -g claude-buddy` |
 | **Updates** | Manual git pull | `npm update` automatic |
 | **Personas** | 12 experts | 12 experts + auto-activation |
 | **Templates** | Basic | MuleSoft, JHipster, Custom |
@@ -293,7 +293,7 @@ Auto-activation, confidence scoring, and deep integration with the complete work
 Claude Buddy 2.0 is fully backward compatible. Your personas and customizations are preserved during upgrade.
 
 # Simple upgrade process
-npm install -g @claude-buddy/setup
+npm install -g claude-buddy
 claude-buddy update --preserve-all
 ```
 

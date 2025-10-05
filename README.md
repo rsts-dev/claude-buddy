@@ -1,6 +1,6 @@
 # ♾️ Claude Buddy 2.0
 
-[![NPM Version](https://img.shields.io/npm/v/@claude-buddy/setup)](https://www.npmjs.com/package/@claude-buddy/setup)
+[![NPM Version](https://img.shields.io/npm/v/claude-buddy)](https://www.npmjs.com/package/claude-buddy)
 [![Node.js Version](https://img.shields.io/badge/node-%3E%3D18.0.0-brightgreen)](https://nodejs.org/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 
@@ -12,7 +12,7 @@ Transform your development workflow with Claude Buddy 2.0 - an NPM-powered AI pl
 
 ```bash
 # Install globally via NPM
-npm install -g @claude-buddy/setup
+npm install -g claude-buddy
 
 # Initialize in your project
 claude-buddy install
@@ -104,7 +104,7 @@ Each persona brings specialized expertise to your development process:
 
 ```bash
 # Install the setup package globally
-npm install -g @claude-buddy/setup
+npm install -g claude-buddy
 
 # Verify installation
 claude-buddy --version
@@ -117,10 +117,10 @@ claude-buddy install
 
 ```bash
 # Using npx (no global install)
-npx @claude-buddy/setup install
+npx claude-buddy install
 
 # Or install locally
-npm install --save-dev @claude-buddy/setup
+npm install --save-dev claude-buddy
 npx claude-buddy install
 ```
 
@@ -209,7 +209,7 @@ claude-buddy/
 │   │   ├── mulesoft/         # MuleSoft API templates
 │   │   └── jhipster/         # JHipster templates
 │   └── buddy-config.json     # Configuration
-├── setup/                     # NPM package (@claude-buddy/setup)
+├── setup/                     # NPM package (claude-buddy)
 │   ├── install.js            # Installation script
 │   ├── lib/                  # Core modules
 │   └── tests/                # Test suites
@@ -433,7 +433,7 @@ Copyright (c) 2025 Claude Buddy Contributors
 
 - **Website**: [https://claude-buddy.dev](https://claude-buddy.dev)
 - **GitHub**: [https://github.com/rsts-dev/claude-buddy](https://github.com/rsts-dev/claude-buddy)
-- **NPM Package**: [@claude-buddy/setup](https://www.npmjs.com/package/@claude-buddy/setup)
+- **NPM Package**: [claude-buddy](https://www.npmjs.com/package/claude-buddy)
 - **Documentation**: [docs/](docs/)
 - **Issue Tracker**: [GitHub Issues](https://github.com/rsts-dev/claude-buddy/issues)
 

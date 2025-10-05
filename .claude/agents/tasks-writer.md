@@ -1,7 +1,7 @@
 ---
 name: tasks-writer
 description: Use this agent when the user needs to generate implementation tasks from an existing plan document. This agent should be invoked when:\n\n<example>\nContext: User has completed a plan and wants to generate implementation tasks.\nuser: "I've finished the implementation plan, now I need to generate the task list"\nassistant: "Let me use the tasks-writer agent to create a detailed task list from your implementation plan."\n<Task tool invocation to tasks-writer agent>\n</example>\n\n<example>\nContext: User wants to create tasks for a feature.\nuser: "Generate tasks for implementing the user management API"\nassistant: "I'll invoke the tasks-writer agent to generate implementation tasks based on your plan."\n<Task tool invocation to tasks-writer agent>\n</example>\n\n<example>\nContext: User has multiple plans and wants to generate tasks for one.\nuser: "I need to create tasks for the notification system"\nassistant: "Let me use the tasks-writer agent to generate implementation tasks for the notification system plan."\n<Task tool invocation to tasks-writer agent with plan identifier>\n</example>
-model: sonet
+model: opus
 color: purple
 ---
 

@@ -117,7 +117,7 @@ tasks:
         VERSION=$(node -p "require('./setup/package.json').version")
         git add setup/package.json setup/package-lock.json
         git commit -m "chore: bump version to v$VERSION"
-        git push origin main
+        git push origin master
         git tag -a "v$VERSION" -m "Release v$VERSION"
         git push origin "v$VERSION"
         echo "Tagged and pushed version v$VERSION"

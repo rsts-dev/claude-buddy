@@ -19,7 +19,7 @@ const INSTALLATION_MANIFEST = {
       name: 'hooks',
       displayName: 'Python Safety Hooks',
       type: 'optional',
-      source: '.claude/hooks/',
+      source: 'dist/.claude/hooks/',
       target: '.claude/hooks/',
       dependencies: ['uv', 'python'],
       filePatterns: ['*.py', '*.json'],
@@ -34,7 +34,7 @@ const INSTALLATION_MANIFEST = {
       name: 'templates',
       displayName: 'Document Templates',
       type: 'required',
-      source: '.claude-buddy/templates/',
+      source: 'dist/.claude-buddy/templates/',
       target: '.claude-buddy/templates/',
       dependencies: [],
       filePatterns: ['**/*.md'],
@@ -50,7 +50,7 @@ const INSTALLATION_MANIFEST = {
       name: 'personas',
       displayName: 'AI Personas',
       type: 'required',
-      source: '.claude-buddy/personas/',
+      source: 'dist/.claude-buddy/personas/',
       target: '.claude-buddy/personas/',
       dependencies: [],
       filePatterns: ['*.md'],
@@ -65,7 +65,7 @@ const INSTALLATION_MANIFEST = {
       name: 'context',
       displayName: 'Framework Context Files',
       type: 'required',
-      source: '.claude-buddy/context/',
+      source: 'dist/.claude-buddy/context/',
       target: '.claude-buddy/context/',
       dependencies: [],
       filePatterns: ['**/*.md'],
@@ -80,7 +80,7 @@ const INSTALLATION_MANIFEST = {
       name: 'configs',
       displayName: 'Framework Configuration',
       type: 'required',
-      source: '.claude-buddy/',
+      source: 'dist/.claude-buddy/',
       target: '.claude-buddy/',
       dependencies: [],
       filePatterns: ['buddy-config.json'],
@@ -95,7 +95,7 @@ const INSTALLATION_MANIFEST = {
       name: 'commands',
       displayName: 'Slash Commands',
       type: 'required',
-      source: '.claude/commands/',
+      source: 'dist/.claude/commands/',
       target: '.claude/commands/',
       dependencies: [],
       filePatterns: ['**/*.md'],
@@ -114,7 +114,7 @@ const INSTALLATION_MANIFEST = {
       name: 'agents',
       displayName: 'Specialized Agents',
       type: 'required',
-      source: '.claude/agents/',
+      source: 'dist/.claude/agents/',
       target: '.claude/agents/',
       dependencies: [],
       filePatterns: ['**/*.md'],
@@ -468,10 +468,33 @@ function getInstallationSummary(manifest) {
  * @returns {string} Absolute source path
  */
 function resolveSourcePath(sourcePath) {
-  // Source paths are relative to the package root
-  // The package root is two levels up from this file (setup/lib/manifest.js -> root)
-  const packageRoot = path.resolve(__dirname, '..', '..');
-  return path.join(packageRoot, sourcePath);
+  const fs = require('fs');
+
+  // Source paths in manifest use 'dist/' prefix for npm packages
+  // This file is at setup/lib/manifest.js
+  // Package root (setup/) is one level up: ../
+  // Repo root is two levels up: ../../
+
+  const packageRoot = path.resolve(__dirname, '..');
+  const repoRoot = path.resolve(__dirname, '..', '..');
+
+  // Try package-bundled path first (setup/dist/.claude/)
+  const resolvedPath = path.join(packageRoot, sourcePath);
+  if (fs.existsSync(resolvedPath)) {
+    return resolvedPath;
+  }
+
+  // Fallback to development repo root (claude-buddy/.claude/)
+  // Remove 'dist/' prefix and resolve from repo root
+  const devSourcePath = sourcePath.replace(/^dist\//, '');
+  const devResolvedPath = path.join(repoRoot, devSourcePath);
+
+  if (fs.existsSync(devResolvedPath)) {
+    return devResolvedPath;
+  }
+
+  // Return original resolved path if neither exists (will fail later with clear error)
+  return resolvedPath;
 }
 
 /**
@@ -489,6 +512,8 @@ module.exports = {
   getManifestForPlatform,
   validateManifest,
   filterComponentsByDependencies,
+  resolveSourcePath,
+  resolveTargetPath,
   getComponent,
   getRequiredComponents,
   getOptionalComponents,

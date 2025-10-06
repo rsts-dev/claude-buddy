@@ -734,12 +734,11 @@ async function validateTargetDirectory(targetDirectory) {
  * @returns {Object} Source and target paths
  */
 function calculateInstallationPaths(component, targetDirectory) {
-  // Source path is relative to setup directory
-  const setupDir = path.join(__dirname, '..');
-  const sourcePath = path.join(setupDir, '..', component.source);
+  const { resolveSourcePath, resolveTargetPath } = require('./manifest');
 
-  // Target path is relative to target directory
-  const targetPath = path.join(targetDirectory, component.target);
+  // Use manifest's path resolution (handles both npm package and dev scenarios)
+  const sourcePath = resolveSourcePath(component.source);
+  const targetPath = resolveTargetPath(component.target, targetDirectory);
 
   return { sourcePath, targetPath };
 }

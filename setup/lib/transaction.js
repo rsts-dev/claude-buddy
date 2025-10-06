@@ -309,9 +309,33 @@ async function executeCreateAction(transaction, action) {
         };
       }
 
-      // For files, check if we should overwrite
-      // During updates or with --force, this would use update action instead
-      // For now, treat as skipped success to avoid noise
+      // For files during installation, overwrite existing files
+      // This ensures clean installation even if folders exist
+      if (transaction.operation === 'install') {
+        // Create parent directory if needed
+        const parentDir = path.dirname(targetPath);
+        await fs.mkdir(parentDir, { recursive: true });
+
+        // Overwrite file content
+        if (action.sourceContent) {
+          await fs.writeFile(targetPath, action.sourceContent, 'utf-8');
+        } else {
+          // Create empty file
+          await fs.writeFile(targetPath, '', 'utf-8');
+        }
+
+        // Set permissions (Unix only)
+        if (process.platform !== 'win32' && action.targetPermissions) {
+          await fs.chmod(targetPath, parseInt(action.targetPermissions, 8));
+        }
+
+        return {
+          success: true,
+          message: `Overwrote existing file: ${action.path}`
+        };
+      }
+
+      // For updates or other operations, skip to avoid overwriting user customizations
       return {
         success: true,
         message: `File already exists: ${action.path}`,

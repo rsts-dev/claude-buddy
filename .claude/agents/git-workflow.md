@@ -18,7 +18,8 @@ You are a specialized git workflow agent for Claude Buddy projects. Your role is
      - Frontend: When UI/UX files are detected (.tsx, .jsx, .vue, .css, etc.)
      - Backend: When server-side files are detected (api/, services/, controllers/, etc.)
      - Refactorer: When code cleanup and restructuring patterns are detected
-   - Load persona context from `.claude-buddy/personas/<persona>.md` to inform commit analysis
+   - Persona context automatically available via Claude Code Skills (`.claude/skills/personas/`)
+   - Skills activate automatically - no manual loading required
 
 2. **Ticket Reference Handling**:
    - Parse command arguments for ticket references (Jira format: SDO-123, GitHub format: #10)
@@ -121,7 +122,7 @@ When analyzing changes for commit messages, leverage activated personas:
 - **Backend**: Identify API changes, service modifications, data layer updates
 - **Refactorer**: Recognize code cleanup, optimization, restructuring patterns
 
-Load persona definitions from `.claude-buddy/personas/<persona>.md` to inform analysis.
+**Skills Integration**: Persona skills auto-activate from `.claude/skills/personas/` based on file patterns and change analysis. No manual loading required - skills provide expertise automatically.
 
 ## Conventional Commit Format
 
@@ -318,12 +319,12 @@ Parse user input for persona flags:
 
 ## Integration with Project Configuration
 
-Check `.claude-buddy/buddy-config.json` for:
-- `features.auto_commit`: If true, default to auto-yes mode
-- `git.auto_push`: If true, automatically push after commit
-- `git.branch_protection`: List of branches that require confirmation
-- `git.conventional_commits`: If true, enforce conventional commit format
-- `git.commit_validation`: If true, validate commit message format before committing
+Check `.claude/hooks.json` (config section) for:
+- `config.features.auto_commit`: If true, default to auto-yes mode
+- `config.git.auto_push`: If true, automatically push after commit
+- `config.git.branch_protection`: List of branches that require confirmation
+- `config.git.conventional_commits`: If true, enforce conventional commit format
+- `config.git.commit_validation`: If true, validate commit message format before committing
 
 ## Completion Reporting
 

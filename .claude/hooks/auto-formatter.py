@@ -97,27 +97,30 @@ FORMATTERS = {
 
 def load_config() -> Dict[str, Any]:
     """Load Claude Buddy configuration for auto-formatting settings."""
-    config_paths = [
-        ".claude-buddy/config.json",
-        os.path.expanduser("~/.claude-buddy/config.json"),
-        ".claude/buddy-config.json",
-        os.path.expanduser("~/.claude/buddy-config.json")
+    # Try new location first: .claude/hooks.json
+    hooks_config_paths = [
+        ".claude/hooks.json",
+        os.path.expanduser("~/.claude/hooks.json")
     ]
-    
-    for config_path in config_paths:
+
+    for config_path in hooks_config_paths:
         if os.path.exists(config_path):
             try:
                 with open(config_path, 'r') as f:
-                    return json.load(f)
+                    hooks_data = json.load(f)
+                    # Extract config section from hooks.json
+                    if "config" in hooks_data:
+                        return hooks_data["config"]
             except (json.JSONDecodeError, IOError):
                 continue
-    
+
+    # Return defaults if no config found
     return {
         "auto_formatting": {
             "enabled": True,
             "extensions": [".py", ".js", ".ts", ".tsx", ".jsx", ".json", ".css", ".scss", ".md"],
             "tools": {},
-            "exclude_patterns": ["node_modules/", ".git/", "dist/", "build/", "__pycache__/"],
+            "exclude_patterns": ["node_modules/", ".git/", "dist/", "build/", "__pycache__/", ".venv/"],
             "create_backup": False
         }
     }

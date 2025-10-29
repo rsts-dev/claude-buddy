@@ -6,6 +6,12 @@ Use the Task tool to launch the tasks-writer agent with the following prompt:
 
 **Prompt for tasks-writer agent**:
 
+
+**Skills that auto-activate**:
+- tasks-generator skill: Task breakdown templates
+- Persona skills: Based on task types (frontend, backend, qa, devops, etc.)
+- Domain skills: Technology-specific task patterns
+
 You are being invoked to generate implementation tasks from an existing implementation plan.
 
 **User provided plan identifier (optional)**: $ARGUMENTS
@@ -32,8 +38,10 @@ You are being invoked to generate implementation tasks from an existing implemen
   - **Optional (if exists)**: Read `test-scenarios.md` for test cases
   - **Optional**: Read any other `.md` files in the folder for additional context
 - Load the foundation document from `directive/foundation.md` to extract foundation type
-- Load the tasks template from `.claude-buddy/templates/<foundation-type>/tasks.md`
-- Load context files from `.claude-buddy/context/<foundation-type>/` (if available)
+**Skills that auto-activate**:
+- tasks-generator skill: Task breakdown templates
+- Domain skills: Technology-specific task patterns (react, jhipster, mulesoft)
+- QA persona: Testing and validation guidance
 - Generate comprehensive, ordered tasks following the template structure:
   - Number tasks sequentially (T001, T002, ...)
   - Mark parallel tasks with [P] flag

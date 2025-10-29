@@ -89,29 +89,17 @@ async function bundle() {
       process.exit(1);
     }
 
-    // Bundle .claude-buddy directory
-    console.log('📁 Bundling .claude-buddy directory...');
-    const buddySrc = path.join(ROOT_DIR, '.claude-buddy');
-    const buddyDest = path.join(DIST_DIR, '.claude-buddy');
-
-    if (await fs.pathExists(buddySrc)) {
-      const buddyCount = await copyDirWithExclusions(buddySrc, buddyDest);
-      console.log(`  ✓ Bundled ${buddyCount} files from .claude-buddy/\n`);
-    } else {
-      console.error(`  ✗ Source not found: ${buddySrc}`);
-      process.exit(1);
-    }
-
     // Verify bundle contents
     console.log('🔍 Verifying bundle...');
     const verifyPaths = [
       path.join(claudeDest, 'agents'),
       path.join(claudeDest, 'commands'),
       path.join(claudeDest, 'hooks'),
-      path.join(buddyDest, 'personas'),
-      path.join(buddyDest, 'templates'),
-      path.join(buddyDest, 'context'),
-      path.join(buddyDest, 'buddy-config.json')
+      path.join(claudeDest, 'hooks.json'),
+      path.join(claudeDest, 'skills'),
+      path.join(claudeDest, 'skills', 'personas'),
+      path.join(claudeDest, 'skills', 'domains'),
+      path.join(claudeDest, 'skills', 'generators')
     ];
 
     let allValid = true;

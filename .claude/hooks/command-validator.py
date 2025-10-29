@@ -63,21 +63,24 @@ BEST_PRACTICE_SUGGESTIONS = [
 
 def load_config() -> Dict[str, Any]:
     """Load Claude Buddy configuration for custom command rules."""
-    config_paths = [
-        ".claude-buddy/config.json",
-        os.path.expanduser("~/.claude-buddy/config.json"),
-        ".claude/buddy-config.json", 
-        os.path.expanduser("~/.claude/buddy-config.json")
+    # Try new location first: .claude/hooks.json
+    hooks_config_paths = [
+        ".claude/hooks.json",
+        os.path.expanduser("~/.claude/hooks.json")
     ]
-    
-    for config_path in config_paths:
+
+    for config_path in hooks_config_paths:
         if os.path.exists(config_path):
             try:
                 with open(config_path, 'r') as f:
-                    return json.load(f)
+                    hooks_data = json.load(f)
+                    # Extract config section from hooks.json
+                    if "config" in hooks_data:
+                        return hooks_data["config"]
             except (json.JSONDecodeError, IOError):
                 continue
-    
+
+    # Return defaults if no config found
     return {
         "command_validation": {
             "enabled": True,
@@ -173,8 +176,8 @@ def create_block_response(command: str, reason: str, alternative: str) -> Dict[s
 
 If you're certain this command is safe:
 1. Run it directly in your terminal
-2. Add to whitelist in .claude-buddy/config.json  
-3. Use /buddy-config to adjust validation settings
+2. Add to whitelist in .claude/hooks.json (config.command_validation.whitelist_patterns)
+3. Disable validation by setting config.command_validation.block_dangerous = false
 
 Stay safe! 🔒""",
         "continue": False,

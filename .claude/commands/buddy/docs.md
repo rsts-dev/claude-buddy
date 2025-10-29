@@ -6,14 +6,23 @@ Use the Task tool to launch the docs-generator agent with the following prompt:
 
 **Prompt for docs-generator agent**:
 
+
+**Skills that auto-activate**:
+- docs-generator skill: Comprehensive documentation templates
+- Scribe persona: Professional writing guidance
+- Domain skills: Technology-specific documentation (react, jhipster, mulesoft)
+- Technical personas: Architecture, security, etc. as needed
+
 You are being invoked to generate comprehensive technical documentation for this project.
 
 **Instructions**:
 - Verify that `directive/foundation.md` exists before proceeding
 - If foundation is missing, inform the user to run `/buddy:foundation` first
 - Extract the foundation type from the foundation document
-- Load the documentation template from `.claude-buddy/templates/<foundation-type>/docs.md`
-- Load context files from `.claude-buddy/context/<foundation-type>/` (if available)
+**Skills that auto-activate**:
+- docs-generator skill: Comprehensive documentation templates
+- Scribe persona: Professional writing guidance
+- Domain skills: Technology-specific documentation (react, jhipster, mulesoft)
 - Execute the codebase analysis commands specified in the template
 - Generate documentation files in the `docs/` directory following the template structure
 - Create `docs/README.md` as the navigation index

@@ -35,12 +35,10 @@ First, check if `/directive/foundation.md` exists:
 
 **If file DOES NOT EXIST**:
 - This is initial foundation creation
-- Load the template at `/.claude-buddy/templates/foundation.md` for structural guidance
-  - Use this template's section structure, heading hierarchy, and formatting patterns
-  - The template provides the architectural blueprint for the foundation document
-- **Load stack-specific context** from `/.claude-buddy/context/<foundation-type>/`:
-  - Read all `.md` files in the context directory for the foundation type
-  - These files contain framework-specific best practices, patterns, and principles
+**Skills Integration**: Foundation templates and stack-specific context auto-activate:
+  - Foundation template structure from skills system
+  - Domain skills (react, jhipster, mulesoft) provide stack-specific best practices automatically
+  - Skills activate based on detected foundation type and technology patterns
   - Use this context to inform principle derivation and technical requirements
   - If context directory doesn't exist, proceed with general codebase analysis only
 - Analyze the codebase comprehensively to understand:
@@ -66,11 +64,12 @@ First, check if `/directive/foundation.md` exists:
 
 ### Phase 2: Value Collection & Derivation
 
-**First, load stack-specific context** if foundation type is known:
+**Skills Integration** if foundation type is known:
 - Extract foundation type from existing foundation metadata or user specification
-- Read all `.md` files from `/.claude-buddy/context/<foundation-type>/`
-- Use this context to inform technical principles, best practices, and framework-specific requirements
-- If context directory doesn't exist, proceed without stack-specific context
+- Domain skills auto-activate based on foundation type, providing:
+  - Framework-specific best practices and patterns
+  - Technical principles and requirements
+  - Stack-specific guidance automatically
 
 For each placeholder, determine its value using this priority order:
 
@@ -114,13 +113,13 @@ For each placeholder, determine its value using this priority order:
 
 ### Phase 4: Consistency Propagation
 
-Validate and update these dependent artifacts (use foundation type from `**Foundation Type**` field to determine template paths):
+Validate and update these dependent artifacts:
 
-1. **`/.claude-buddy/templates/{foundation-type}/plan.md`**: Verify "Foundation Check" sections align with updated principles
-2. **`/.claude-buddy/templates/{foundation-type}/spec.md`**: Ensure scope/requirements sections reflect any new mandatory constraints or removed requirements
-3. **`/.claude-buddy/templates/{foundation-type}/tasks.md`**: Update task categorization to reflect principle-driven task types (e.g., observability, versioning, testing discipline)
-4. **`/.claude-buddy/templates/commands/*.md`**: Remove outdated references; ensure generic guidance doesn't contain agent-specific names inappropriately
-5. **Runtime guidance** (`README.md`, `docs/quickstart.md`, agent-specific docs): Update any references to changed principles
+1. **Generator Skills**: Update if foundation principles significantly change:
+   - `plan-generator` skill: Verify "Foundation Check" sections align
+   - `spec-generator` skill: Ensure scope/requirements reflect new constraints
+   - `tasks-generator` skill: Update task categorization for principle-driven types
+2. **Runtime guidance** (`README.md`, `docs/quickstart.md`): Update any references to changed principles
 
 **Note**: `{foundation-type}` is extracted from the `**Foundation Type**` metadata field in the foundation document (e.g., "default", "mulesoft")
 
@@ -147,10 +146,10 @@ Removed Sections:
 - [section name]: [rationale]
 
 Template Updates:
-✅ /.claude-buddy/templates/{foundation-type}/plan.md - [specific changes]
-✅ /.claude-buddy/templates/{foundation-type}/spec.md - [specific changes]
-⚠️ /.claude-buddy/templates/{foundation-type}/tasks.md - [pending changes needed]
-➖ /.claude-buddy/templates/commands/example.md - No changes required
+✅ Generator skills reviewed and aligned with foundation changes
+✅ plan-generator skill - [specific changes if needed]
+✅ spec-generator skill - [specific changes if needed]
+⚠️ tasks-generator skill - [pending changes if needed]
 
 Deferred Items:
 - TODO(FIELD_NAME): [explanation]

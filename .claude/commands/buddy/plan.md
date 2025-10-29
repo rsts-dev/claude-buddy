@@ -6,6 +6,12 @@ Use the Task tool to launch the plan-writer agent with the following prompt:
 
 **Prompt for plan-writer agent**:
 
+
+**Skills that auto-activate**:
+- plan-generator skill: Implementation planning templates
+- Architect persona: Technical approach and design guidance
+- Domain skills: Technology-specific patterns (react, jhipster, mulesoft)
+
 You are being invoked to create an implementation plan from an existing feature specification.
 
 **User provided spec identifier (optional)**: $ARGUMENTS
@@ -21,8 +27,10 @@ You are being invoked to create an implementation plan from an existing feature 
   - Parse success criteria and acceptance criteria
   - Note technical constraints and dependencies
 - Load the foundation document from `directive/foundation.md` to extract foundation type
-- Load the plan template from `.claude-buddy/templates/<foundation-type>/plan.md`
-- Load context files from `.claude-buddy/context/<foundation-type>/` (if available)
+**Skills that auto-activate**:
+- plan-generator skill: Implementation planning templates
+- Domain skills: Technology-specific planning patterns (react, jhipster, mulesoft)
+- Architect persona: Systems design guidance
 - Create a comprehensive implementation plan following the template structure
 - Write the plan to: `specs/[YYYYMMDD-three-word-slug]/plan.md` (same folder as spec.md)
 - Mark any unclear aspects with `[NEEDS CLARIFICATION: specific question]` markers

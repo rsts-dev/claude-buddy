@@ -309,12 +309,13 @@ Check if request requires a validation chain:
 
 If validation chain detected, ensure all required personas are loaded (may override limit of 3).
 
-### 6. Persona Context Loading
+### 6. Persona Skills Integration
 For each selected persona:
-1. Load `.claude-buddy/personas/{persona_name}.md` file
-2. If file doesn't exist, warn user: "Persona '{name}' not found. Please ensure `.claude-buddy/personas/{name}.md` exists."
-3. Extract persona's identity, principles, decision-making framework, and response patterns
-4. Note persona's priority hierarchy for conflict resolution
+1. Persona skills auto-activate from `.claude/skills/personas/{persona_name}/SKILL.md`
+2. Skills activate automatically based on scoring and selection - no manual loading required
+3. Each skill provides: identity, principles, decision-making framework, and response patterns
+4. Skills compose naturally - multiple personas work together automatically
+5. Note persona's priority hierarchy for conflict resolution (from skill frontmatter)
 
 ### 7. Context Merging and Response Generation
 1. **Priority Reconciliation**: When personas have conflicting priorities, use highest-scoring persona's hierarchy as primary

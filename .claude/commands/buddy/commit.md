@@ -21,7 +21,7 @@ You are being invoked to handle git commit operations with persona-enhanced anal
   1. Display current mode and active personas
   2. Verify git repository and check for changes
   3. Stage changes (with mode-aware prompts)
-  4. Analyze changes using activated personas (load from `.claude-buddy/personas/<persona>.md`)
+  4. Analyze changes using auto-activated persona skills from `.claude/skills/personas/`
   5. Auto-activate additional personas based on file patterns:
      - Security: .env, keys, auth files
      - Frontend: .tsx, .jsx, .vue, .css files
@@ -44,11 +44,7 @@ You are being invoked to handle git commit operations with persona-enhanced anal
   - NEVER include AI tool references or generation indicators
   - Generate professional, human-style commit messages only
 
-- Check `.claude-buddy/buddy-config.json` for configuration:
-  - `features.auto_commit`: Default to auto-yes mode if true
-  - `git.auto_push`: Automatically push after commit if true
-  - `git.branch_protection`: Branches requiring confirmation
-  - `git.conventional_commits`: Enforce conventional commit format
+**Configuration**: The git-workflow agent reads configuration from `.claude/hooks.json` (config section). See the git-workflow agent documentation for available configuration options.
 
 - Handle errors gracefully:
   - Not in git repo: Inform user to initialize git

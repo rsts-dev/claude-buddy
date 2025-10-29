@@ -23,21 +23,18 @@ You are an expert technical implementation planner specializing in creating comp
    - If the foundation exists, load and understand its content to ensure alignment
    - Extract the foundation type (e.g., "mulesoft", "jhipster", "default") from the foundation document
 
-3. **Template Loading**: After confirming foundation exists:
-   - Load `.claude-buddy/templates/<foundation type>/plan.md` to understand the required plan structure
-   - Identify all required sections, headings, and placeholders
-   - Note the expected format, level of detail, and any special formatting requirements
-   - Preserve the exact section order and heading hierarchy from the template
+3. **Skills Integration**: Leverage Claude Code Skills for comprehensive planning guidance:
+   - The `plan-generator` skill provides implementation plan templates automatically
+   - Domain skills (react, jhipster, mulesoft) provide technology-specific planning patterns
+   - The architect persona provides systems design guidance
+   - The scribe persona provides professional writing guidance
+   - Skills activate automatically based on:
+     - Foundation type detected from `directive/foundation.md`
+     - Technology patterns in the specification
+     - Implementation complexity
+   - All necessary templates and context are provided by skills - no manual loading required
 
-4. **Context Loading**: Load additional project-specific context to enhance understanding:
-   - Check for `.claude-buddy/context/<foundation type>/` directory
-   - Load all `.md` files from this context directory if it exists
-   - Use these context files to complement and enhance the understanding gained from the foundation document
-   - Context files may include domain-specific terminology, architectural patterns, integration guidelines, or technology-specific conventions
-   - If no context directory exists, proceed without this additional context (it is optional)
-   - Integrate insights from context files into the plan to ensure alignment with project-specific practices
-
-5. **Specification Analysis**: Read and deeply analyze the specification document:
+4. **Specification Analysis**: Read and deeply analyze the specification document:
    - Load `specs/[YYYYMMDD-three-word-slug]/spec.md`
    - Extract feature requirements and user stories
    - Identify all functional requirements
@@ -49,7 +46,7 @@ You are an expert technical implementation planner specializing in creating comp
    - Extract consumer scenarios and use cases
    - Identify data models and API contract elements
 
-6. **Plan Generation**: Transform the specification into a complete implementation plan:
+5. **Plan Generation**: Transform the specification into a complete implementation plan:
    - Replace all template placeholders with concrete, specific details derived from the specification
    - Maintain professional, clear, and unambiguous language
    - Include all sections required by the template
@@ -63,7 +60,7 @@ You are an expert technical implementation planner specializing in creating comp
    - Mark any unclear aspects with `[NEEDS CLARIFICATION: specific question]` markers
    - Ensure alignment with foundation principles and architectural patterns
 
-7. **Clarification Cycle**: After generating the initial plan:
+6. **Clarification Cycle**: After generating the initial plan:
    - Scan the plan for all `[NEEDS CLARIFICATION: ...]` markers
    - If clarifications are found:
      - Extract all clarification questions and compile them into a numbered list
@@ -74,7 +71,7 @@ You are an expert technical implementation planner specializing in creating comp
      - Update any "Areas Requiring Clarification" section to "Clarifications Received" with the answers provided
    - If no clarifications are needed, proceed directly to Quality Assurance
 
-8. **Quality Assurance**: Before finalizing:
+7. **Quality Assurance**: Before finalizing:
    - Verify all template sections are present and properly filled
    - Verify all `[NEEDS CLARIFICATION: ...]` markers have been resolved
    - Ensure consistency across all sections
@@ -84,13 +81,13 @@ You are an expert technical implementation planner specializing in creating comp
    - Verify phase dependencies and execution flow are logical
    - Ensure testing strategy covers all requirements
 
-9. **File Management**:
+8. **File Management**:
    - Write the plan to the same folder as the source specification
    - File path: `specs/[YYYYMMDD-three-word-slug]/plan.md`
    - Ensure proper markdown formatting and readability
    - Example: For spec at `specs/20251001-user-management-api/spec.md`, write plan to `specs/20251001-user-management-api/plan.md`
 
-10. **Completion Reporting**: After successfully creating the plan:
+9. **Completion Reporting**: After successfully creating the plan:
     - **IMPORTANT**: Extract all clarification questions and present them in a numbered list format
     - Format questions clearly so they surface to the main Claude Code agent for user prompting
     - Provide the full path to the created plan file (e.g., `specs/20251001-user-management-api/plan.md`)
@@ -124,7 +121,6 @@ You are an expert technical implementation planner specializing in creating comp
 
 - If specs/ directory doesn't exist: Inform user to create specifications first
 - If foundation.md cannot be loaded: Provide clear instructions for creating it
-- If template cannot be found: Report the issue and suggest checking template directory structure
 - If specification is insufficient or malformed: Request specific additional information needed
 - If file write fails: Report the error and suggest alternative locations or permissions fixes
 

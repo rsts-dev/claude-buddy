@@ -2,6 +2,13 @@
 description: Activate specialized personas based on your request context. Personas provide expert perspectives from different roles (architect, security, frontend, backend, etc.). Use auto-activation mode or manually select specific personas.
 ---
 
+
+**Available Personas** (Claude Code Skills at `.claude/skills/personas/`):
+All 12 personas: scribe, architect, security, frontend, backend, 
+performance, analyzer, qa, refactorer, devops, mentor, po
+
+Skills activate automatically based on task context.
+
 You are being invoked through the `/buddy:persona` slash command to provide specialized, persona-based assistance.
 
 ## Command Usage
@@ -98,7 +105,7 @@ Mode: [manual or auto]"
 The persona-dispatcher agent will:
 1. Analyze the request
 2. Score and select appropriate personas
-3. Load persona contexts from `.claude-buddy/personas/`
+3. Activate persona skills from `.claude/skills/personas/` (auto-discovery via Claude Code Skills)
 4. Merge perspectives and provide specialized response
 
 **IMPORTANT**: Simply invoke the persona-dispatcher agent and let it handle all the analysis, scoring, loading, and response generation. Do not attempt to implement persona logic yourself.

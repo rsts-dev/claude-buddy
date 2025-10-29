@@ -109,22 +109,73 @@ claude-buddy verify
 ### What Gets Installed
 
 ```
-.claude-buddy/           # Framework configuration
-├── buddy-config.json    # Main configuration
-├── personas/            # AI personas
-├── templates/           # Document templates
-└── context/             # Stack-specific context
-
 .claude/                 # Claude Code integration
 ├── hooks/               # Python safety hooks (requires UV + Python)
+├── hooks.json           # Configuration (replaces buddy-config.json)
 ├── commands/            # Slash commands
-└── agents/              # Specialized agents
+├── agents/              # Specialized agents
+└── skills/              # Auto-activating Claude Code Skills (v2.1.0+)
+    ├── personas/        # 12 persona skills
+    ├── domains/         # 3 domain skills
+    └── generators/      # 4 generator skills
 
 directive/               # Project foundation
 └── foundation.md        # Foundation document template
 
 specs/                   # Specification storage
 ```
+
+### 🚨 v3.0.0 Breaking Change
+
+The `.claude-buddy/` directory has been **completely removed** in v3.0.0:
+
+- ❌ `.claude-buddy/buddy-config.json` → ✅ `.claude/hooks.json` (config section)
+- ❌ `.claude-buddy/personas/` → ✅ `.claude/skills/personas/`
+- ❌ `.claude-buddy/templates/` → ✅ `.claude/skills/generators/`
+- ❌ `.claude-buddy/context/` → ✅ `.claude/skills/domains/`
+
+**Migration Required**: If upgrading from v2.x, ensure you have:
+1. Configuration in `.claude/hooks.json` (v2.2.0+)
+2. Skills directory at `.claude/skills/` (v2.1.0+)
+
+See [CHANGELOG.md](CHANGELOG.md#300---2025-10-29) for migration details.
+
+#### Claude Code Skills
+
+The Skills system provides auto-discovering capabilities that activate based on context:
+
+**Persona Skills** (12 total):
+- `scribe` - Professional writer and documentation specialist
+- `architect` - Systems design and architecture specialist
+- `security` - Threat modeling and vulnerability analysis
+- `frontend` - UI/UX and accessibility specialist
+- `backend` - API and reliability engineering
+- `performance` - Optimization and bottleneck elimination
+- `analyzer` - Root cause analysis and investigation
+- `qa` - Quality assurance and testing
+- `refactorer` - Code quality and technical debt management
+- `devops` - Infrastructure and deployment
+- `mentor` - Knowledge transfer and education
+- `po` - Product requirements and strategic planning
+
+**Domain Skills** (3 total):
+- `react` - React.js development patterns and best practices
+- `jhipster` - JHipster full-stack application development
+- `mulesoft` - MuleSoft integration, DataWeave, and Anypoint Platform
+
+**Generator Skills** (4 total):
+- `spec-generator` - Generate feature specifications from descriptions
+- `plan-generator` - Create implementation plans from specifications
+- `tasks-generator` - Generate task breakdowns from plans
+- `docs-generator` - Create comprehensive technical documentation
+
+**Benefits**:
+- **30-70% token savings** compared to manual file loading
+- **Auto-discovery** - skills activate based on keywords, file patterns, and context
+- **Progressive disclosure** - supporting files load only when needed
+- **Skill composition** - multiple skills collaborate naturally
+
+See [.claude/skills/README.md](.claude/skills/README.md) for detailed documentation.
 
 ### Dependencies
 

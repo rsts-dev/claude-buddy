@@ -59,21 +59,24 @@ CRITICAL_PATHS = [
 
 def load_config() -> Dict[str, Any]:
     """Load Claude Buddy configuration for custom protection rules."""
-    config_paths = [
-        ".claude-buddy/config.json",
-        os.path.expanduser("~/.claude-buddy/config.json"),
-        ".claude/buddy-config.json",
-        os.path.expanduser("~/.claude/buddy-config.json")
+    # Try new location first: .claude/hooks.json
+    hooks_config_paths = [
+        ".claude/hooks.json",
+        os.path.expanduser("~/.claude/hooks.json")
     ]
-    
-    for config_path in config_paths:
+
+    for config_path in hooks_config_paths:
         if os.path.exists(config_path):
             try:
                 with open(config_path, 'r') as f:
-                    return json.load(f)
+                    hooks_data = json.load(f)
+                    # Extract config section from hooks.json
+                    if "config" in hooks_data:
+                        return hooks_data["config"]
             except (json.JSONDecodeError, IOError):
                 continue
-    
+
+    # Return defaults if no config found
     return {
         "file_protection": {
             "enabled": True,
@@ -224,15 +227,15 @@ def main():
 
 Claude Buddy protects sensitive files to prevent accidental exposure of:
 • API keys and secrets
-• Database credentials  
+• Database credentials
 • SSH private keys
 • Authentication tokens
 • Personal data
 
 To modify this file:
 1. Use your text editor directly
-2. Add to whitelist in .claude-buddy/config.json
-3. Disable protection temporarily with /buddy-config
+2. Add to whitelist in .claude/hooks.json (config.file_protection.whitelist_patterns)
+3. Disable protection by setting config.file_protection.enabled = false
 
 Stay secure! 🔒"""
 

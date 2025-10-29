@@ -171,8 +171,8 @@ All primary call-to-action buttons and links point to:
 - **GitHub Repository**: https://github.com/rsts-dev/claude-buddy
 - **NPM Package**: https://www.npmjs.com/package/claude-buddy
 - **Website**: https://claude-buddy.dev
-- **Documentation**: https://github.com/rsts-dev/claude-buddy/blob/main/docs/README.md
-- **Installation Guide**: https://github.com/rsts-dev/claude-buddy/tree/main/setup
+- **Documentation**: https://github.com/rsts-dev/claude-buddy/blob/master/docs/README.md
+- **Installation Guide**: https://github.com/rsts-dev/claude-buddy/tree/master/setup
 
 ## 🚀 Deployment
 

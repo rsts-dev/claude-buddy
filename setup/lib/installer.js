@@ -11,7 +11,8 @@ const fs = require('fs').promises;
 const path = require('path');
 const { glob } = require('glob');
 const { createLogger } = require('./logger');
-const { createTransaction, executeAction, commitTransaction, rollbackTransaction } = require('./transaction');
+const { createTransaction, executeAction, commitTransaction } = require('./transaction');
+const { checkPermissions } = require('./environment');
 
 const logger = createLogger('installer');
 
@@ -249,14 +250,27 @@ async function performInstallation(options) {
   } catch (error) {
     logger.error(`Installation failed: ${error.message}`, verbose);
 
-    // Rollback transaction on failure
+    // Provide manual recovery instructions
     if (!dryRun && transaction) {
-      logger.progress('Rolling back transaction', verbose);
       try {
-        await rollbackTransaction(transaction);
-        logger.info('Rollback complete', verbose);
-      } catch (rollbackError) {
-        logger.error(`Rollback failed: ${rollbackError.message}`, verbose);
+        const permissions = await checkPermissions(targetDirectory);
+        logger.section('Manual Recovery Options', verbose);
+
+        if (permissions.isGitRepo) {
+          logger.info('Git repository detected:', verbose);
+          logger.info('  - Use "git status" to see changes', verbose);
+          logger.info('  - Use "git diff" to review changes', verbose);
+          logger.info('  - Use "git reset HEAD" to unstage changes', verbose);
+          logger.info('  - Use "git checkout -- <file>" to discard changes', verbose);
+        } else {
+          logger.info('Manual recovery:', verbose);
+          logger.info('  - Restore files manually if needed', verbose);
+          logger.info('  - Installation state has been partially modified', verbose);
+        }
+
+        logger.info(`Transaction log: .claude/logs/${transaction.transactionId}.json`, verbose);
+      } catch (recoveryError) {
+        logger.warn(`Could not determine recovery options: ${recoveryError.message}`, verbose);
       }
     }
 

@@ -44,14 +44,12 @@ async function createTransaction(options) {
     plannedActions: [],
     executedActions: [],
     errors: [],
-    rollbackPoint: null,
     lockFile: path.join(options.targetDirectory, '.claude-buddy', 'install.lock')
   };
 
   // Create initial checkpoint
   const preInstallCheckpoint = await createCheckpoint(transaction, 'pre-install');
   transaction.checkpoints.push(preInstallCheckpoint);
-  transaction.rollbackPoint = preInstallCheckpoint.snapshot;
 
   return transaction;
 }
@@ -558,119 +556,6 @@ async function commitTransaction(transaction) {
   logger.success(`Transaction ${transaction.transactionId} committed successfully`);
 }
 
-/**
- * Rollback the transaction
- * @param {Object} transaction - Transaction object
- * @param {string} reason - Reason for rollback
- * @returns {Promise<void>}
- */
-async function rollbackTransaction(transaction, reason) {
-  logger.warn(`Rolling back transaction ${transaction.transactionId}: ${reason}`);
-
-  transaction.status = 'rolled_back';
-  transaction.endTime = new Date().toISOString();
-
-  if (!transaction.rollbackPoint) {
-    logger.error('No rollback point available');
-    throw new Error('Cannot rollback: no rollback point');
-  }
-
-  // Reverse executed actions in LIFO order
-  const reversedActions = [...transaction.executedActions].reverse();
-
-  for (const action of reversedActions) {
-    try {
-      await reverseAction(transaction, action);
-    } catch (err) {
-      logger.error(`Failed to reverse action: ${err.message}`);
-      // Continue with other reversals
-    }
-  }
-
-  // Restore from snapshot if needed
-  await restoreFromSnapshot(transaction, transaction.rollbackPoint);
-
-  // Save transaction log
-  await saveTransactionLog(transaction);
-
-  // Clean up lock file
-  await releaseLock(transaction.lockFile);
-
-  logger.success('Transaction rolled back successfully');
-}
-
-/**
- * Reverse a single action
- * @param {Object} transaction - Transaction object
- * @param {Object} action - Action to reverse
- * @returns {Promise<void>}
- */
-async function reverseAction(transaction, action) {
-  logger.verbose(`Reversing action: ${action.type} ${action.path}`);
-
-  const targetPath = path.join(transaction.targetDirectory, action.path);
-
-  switch (action.type) {
-  case 'create':
-    // Reverse create = delete
-    try {
-      await fs.unlink(targetPath);
-    } catch (err) {
-      // File may already be deleted
-    }
-    break;
-
-  case 'update':
-    // Reverse update = restore previous content
-    if (action.previousContent) {
-      try {
-        await fs.writeFile(targetPath, action.previousContent, 'utf-8');
-      } catch (err) {
-        logger.error(`Failed to restore ${action.path}: ${err.message}`);
-      }
-    }
-    break;
-
-  case 'delete':
-    // Reverse delete = recreate
-    if (action.previousContent) {
-      try {
-        const parentDir = path.dirname(targetPath);
-        await fs.mkdir(parentDir, { recursive: true });
-        await fs.writeFile(targetPath, action.previousContent, 'utf-8');
-      } catch (err) {
-        logger.error(`Failed to recreate ${action.path}: ${err.message}`);
-      }
-    }
-    break;
-
-  case 'skip':
-  case 'backup':
-    // Nothing to reverse
-    break;
-  }
-}
-
-/**
- * Restore from a snapshot
- * @param {Object} transaction - Transaction object
- * @param {Object} snapshot - Snapshot to restore
- * @returns {Promise<void>}
- */
-async function restoreFromSnapshot(transaction, snapshot) {
-  logger.verbose('Restoring from snapshot');
-
-  // Restore metadata if it existed
-  if (snapshot.metadata) {
-    const metadataPath = path.join(transaction.targetDirectory, '.claude-buddy', 'install-metadata.json');
-    try {
-      await fs.mkdir(path.dirname(metadataPath), { recursive: true });
-      await fs.writeFile(metadataPath, JSON.stringify(snapshot.metadata, null, 2), 'utf-8');
-    } catch (err) {
-      logger.error(`Failed to restore metadata: ${err.message}`);
-    }
-  }
-}
 
 /**
  * Get transaction status
@@ -710,11 +595,7 @@ async function saveTransactionLog(transaction) {
         phase: cp.phase,
         timestamp: cp.timestamp,
         fileCount: cp.snapshot.files.length
-      })),
-      rollbackPoint: transaction.rollbackPoint ? {
-        timestamp: transaction.rollbackPoint.timestamp,
-        fileCount: transaction.rollbackPoint.files.length
-      } : null
+      }))
     };
 
     await fs.writeFile(logPath, JSON.stringify(logData, null, 2), 'utf-8');
@@ -817,7 +698,6 @@ module.exports = {
   planAction,
   executeAction,
   commitTransaction,
-  rollbackTransaction,
   getTransactionStatus,
   acquireLock,
   releaseLock,

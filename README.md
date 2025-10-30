@@ -1,6 +1,6 @@
-# Claude Buddy 2.0 Landing Page
+# Claude Buddy 3.0 Landing Page
 
-A professional, Claude Code-inspired landing page designed to showcase Claude Buddy 2.0 as an enterprise-ready AI development platform and drive traffic to the GitHub repository.
+A professional, Claude Code-inspired landing page designed to showcase Claude Buddy 3.0 as a skills-only architecture with native Claude Code integration and drive traffic to the GitHub repository.
 
 ## 🎨 Design Features
 
@@ -37,36 +37,33 @@ site/
 ## 🎯 Key Sections
 
 ### 1. Hero Section
-- **v2.0 headline** emphasizing NPM-powered enterprise platform
+- **v3.0 headline** emphasizing skills-only architecture
 - **Installation terminal** showing NPM global install
-- **Success indicators** for v2.0, personas, templates, workflow automation
+- **Success indicators** for v3.0, persona skills, domain skills, generator skills
 - **Primary CTA** buttons to GitHub and documentation
 
-### 2. What's New in 2.0 (NEW)
-- **Feature grid** showcasing NPM package, MuleSoft/JHipster, workflow, foundation
-- **v1 vs v2 comparison table** highlighting key improvements
-- **Migration benefits** for existing users
-- **Enterprise readiness** messaging
+### 2. What's New in 3.0
+- **Feature grid** showcasing skills-only system, auto-activation, token savings, standard pattern
+- **v1 vs v2 vs v3 comparison table** highlighting migration to skills
+- **40% package size reduction** messaging
+- **Progressive disclosure benefits** for token efficiency
 
-### 3. Enterprise Templates (NEW)
-- **MuleSoft API Platform** showcase with features and use cases
-- **JHipster Full-Stack** showcase with tech stack and scenarios
-- **Template selection** guidance
-- **Professional developer positioning**
+### 3. Domain Skills Section
+- **3 domain skills** (react, jhipster, mulesoft) with auto-activation
+- **Progressive loading** based on technology patterns
+- **Context-aware activation** for framework-specific assistance
 
-### 4. Workflow Automation (NEW)
-- **5-step process** visualization (spec → plan → tasks → implement → commit)
-- **Comprehensive commands grid** organized by category:
-  - Foundation & Setup
-  - Development Workflow
-  - Personas & Templates
-  - Documentation & Git
-- **Real-world examples** and use cases
+### 4. Generator Skills Section
+- **4 generator skills** (spec, plan, tasks, docs)
+- **Auto-activate** for document generation workflows
+- **Template composition** through skills
+- **Progressive disclosure** pattern
 
 ### 5. Enhanced Personas Section
-- **12 AI experts** with v2 intelligence updates
-- **Auto-activation** with 0.7 confidence threshold
-- **Session memory** and learning capabilities
+- **12 persona skills** with native SKILL.md format
+- **Auto-activation** based on task context and file patterns
+- **Confidence scoring** and session continuity
+- **30-70% token savings** through progressive loading
 - **Professional persona cards** with hover effects
 
 ### 6. Features Showcase
@@ -76,21 +73,22 @@ site/
 - **Performance optimizations**
 
 ### 7. Installation Guide
-- **NPM package** installation (claude-buddy)
+- **NPM package** installation (claude-buddy v3.0.0)
 - **Global and project-specific** options
 - **Prerequisites** (Node.js ≥18.0.0)
-- **Verification** steps
+- **Skills verification** steps
+- **Migration guidance** from v2.x
 
 ### 8. Call-to-Action
 - **GitHub repository** link (rsts-dev/claude-buddy)
 - **NPM package** link (claude-buddy)
 - **Documentation** access
-- **Version indicator** (v2.0.0)
+- **Version indicator** (v3.0.0)
 
 ### 9. Footer
 - **Updated links** to rsts-dev organization
 - **NPM package** in Community section
-- **Version 2.0.0** indicator
+- **Version 3.0.0** indicator
 - **Professional branding**
 
 ## ♾️ Brand Identity
@@ -100,11 +98,11 @@ site/
 - **Current**: Infinity symbol (♾️) - unlimited possibilities and professional enhancement
 - **Custom SVG**: Professional infinity symbol logo in brand colors
 
-### Brand Message (v2.0)
-- **Core Concept**: Enterprise-ready AI development platform with unlimited possibilities
-- **Professional Positioning**: NPM-distributed platform for serious enterprise development
-- **Platform Focus**: Complete development lifecycle automation from spec to deployment
-- **Enterprise Templates**: Production-ready frameworks (MuleSoft & JHipster)
+### Brand Message (v3.0)
+- **Core Concept**: Skills-only architecture with native Claude Code integration
+- **Professional Positioning**: Single source of truth for AI-powered development
+- **Platform Focus**: Progressive disclosure, auto-activation, 40% smaller footprint
+- **Skills System**: Native SKILL.md format with 19 auto-activating skills (12 personas + 3 domains + 4 generators)
 
 ## ⚡ Interactive Features
 
@@ -272,28 +270,29 @@ Potential improvements for the landing page:
 - **Template gallery** with detailed comparisons
 - **NPM download statistics** and adoption metrics
 
-## 📝 Recent v2.0 Updates
+## 📝 Recent v3.0 Updates
 
 ### Content Updates (October 2025)
-- ✅ Updated hero section to emphasize NPM-powered platform
-- ✅ Added "What's New in 2.0" section with feature grid and comparison table
-- ✅ Added Enterprise Templates showcase (MuleSoft & JHipster)
-- ✅ Added Workflow Automation section with 5-step process
-- ✅ Updated all GitHub links from `gsetsero` to `rsts-dev`
-- ✅ Added NPM package references throughout
-- ✅ Removed non-existent slash commands (analyze, review, architect, improve, pr)
-- ✅ Updated personas section with v2 intelligence features
-- ✅ Added sitemap.xml with new v2 sections
+- ✅ Updated hero section to emphasize skills-only architecture
+- ✅ Modified "What's New" section to showcase v3.0 features
+- ✅ Added v3.0 column to version comparison table
+- ✅ Updated installation terminal with skills-based success indicators
+- ✅ Changed personas section to highlight native SKILL.md format
+- ✅ Emphasized 40% package size reduction throughout
+- ✅ Added progressive disclosure and token savings messaging
+- ✅ Updated all version references from 2.0.0 to 3.0.0
+- ✅ Removed .claude-buddy references, emphasized .claude/skills/
+- ✅ Updated metadata and structured data to v3.0.0
 
 ### Design Updates
-- ✅ Added 390+ lines of CSS for new v2 sections
-- ✅ Implemented consistent hover effects and transitions
-- ✅ Enhanced responsive design for all new sections
-- ✅ Maintained visual consistency with existing design system
-- ✅ Added frontend analysis documentation
+- ✅ Updated comparison table styling for 3-column layout (v1, v2, v3)
+- ✅ Maintained consistent hover effects and transitions
+- ✅ Enhanced responsive design for updated sections
+- ✅ Preserved visual consistency with Claude Code design system
+- ✅ Updated footer and version indicators
 
 ---
 
 **Made with ♾️ for the Claude Code community**
 
-*This landing page serves as the professional showcase for Claude Buddy 2.0, an enterprise-ready AI development platform. Designed to demonstrate the power of NPM distribution, enterprise templates, and complete workflow automation to professional developers.*
+*This landing page serves as the professional showcase for Claude Buddy 3.0, a skills-only architecture with native Claude Code integration. Designed to demonstrate the power of progressive disclosure, auto-activation, and 40% package size reduction to professional developers.*

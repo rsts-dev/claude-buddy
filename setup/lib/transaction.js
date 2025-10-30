@@ -505,7 +505,7 @@ async function executeSkipAction(transaction, action) {
  */
 async function executeBackupAction(transaction, action) {
   const sourcePath = path.join(transaction.targetDirectory, action.path);
-  const backupDir = path.join(transaction.targetDirectory, '.claude-buddy', 'backups', transaction.transactionId);
+  const backupDir = path.join(transaction.targetDirectory, '.claude', 'transaction-backups', transaction.transactionId);
   const backupPath = path.join(backupDir, action.path);
 
   try {
@@ -697,7 +697,7 @@ function getTransactionStatus(transaction) {
  * @returns {Promise<void>}
  */
 async function saveTransactionLog(transaction) {
-  const logDir = path.join(transaction.targetDirectory, '.claude-buddy', 'logs');
+  const logDir = path.join(transaction.targetDirectory, '.claude', 'logs');
   const logPath = path.join(logDir, `${transaction.transactionId}.json`);
 
   try {
@@ -786,7 +786,7 @@ async function releaseLock(lockFile) {
  * @returns {Promise<Object|null>} Interrupted transaction or null
  */
 async function detectInterruptedTransaction(targetDirectory) {
-  const transactionDir = path.join(targetDirectory, '.claude-buddy', 'logs');
+  const transactionDir = path.join(targetDirectory, '.claude', 'logs');
 
   try {
     const files = await fs.readdir(transactionDir);

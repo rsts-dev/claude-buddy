@@ -11,6 +11,7 @@ const fs = require('fs').promises;
 const path = require('path');
 const { createLogger } = require('./logger');
 const { createTransaction, executeAction, commitTransaction, rollbackTransaction } = require('./transaction');
+const { checkPermissions } = require('./environment');
 
 const logger = createLogger('updater');
 
@@ -114,7 +115,8 @@ async function performUpdate(options) {
     duration: 0,
     warnings: [],
     errors: [],
-    isMigration
+    isMigration,
+    cleanedOldStructure: false
   };
 
   let transaction = null;
@@ -137,14 +139,22 @@ async function performUpdate(options) {
       });
     }
 
-    // Phase 1: Create backup
+    // Phase 1: Create backup (skip if project is in git)
     if (!dryRun) {
-      logger.progress('Creating backup', verbose);
-      const backupPath = await createBackup(targetDirectory, existingMetadata, verbose);
-      result.backupPath = backupPath;
-      logger.success(`Backup created: ${backupPath}`, verbose);
+      // Check if project is in source control
+      const permissions = await checkPermissions(targetDirectory);
+
+      if (permissions.isGitRepo) {
+        logger.info('Project is in git - skipping backup (use git to revert if needed)', verbose);
+        result.backupPath = 'skipped-git-repo';
+      } else {
+        logger.progress('Creating backup', verbose);
+        const backupPath = await createBackup(targetDirectory, existingMetadata, verbose);
+        result.backupPath = backupPath;
+        logger.success(`Backup created: ${backupPath}`, verbose);
+      }
     } else {
-      logger.info('Would create backup', verbose);
+      logger.info('Would create backup (unless in git repo)', verbose);
     }
 
     // Phase 2: Create transaction
@@ -331,6 +341,49 @@ async function performUpdate(options) {
       }
     } else if (dryRun) {
       logger.info('Would merge configurations', verbose);
+    }
+
+    // Phase 6.5: Clean up old v2.x structure (migration only)
+    if (isMigration && !dryRun) {
+      logger.progress('Cleaning up old v2.x structure', verbose);
+
+      const oldDir = path.join(targetDirectory, '.claude-buddy');
+      try {
+        // Safety checks before deleting
+        // 1. Verify new structure exists
+        const newMetadata = path.join(targetDirectory, '.claude', 'install-metadata.json');
+        await fs.access(newMetadata);
+
+        // 2. Verify files were actually updated
+        if (result.updatedFiles.length === 0) {
+          throw new Error('No files were updated, skipping cleanup for safety');
+        }
+
+        // 3. Remove old directory completely
+        await fs.rm(oldDir, { recursive: true, force: true });
+        logger.success('Removed old .claude-buddy directory', verbose);
+
+        // Log to transaction
+        if (transaction) {
+          await executeAction(transaction, {
+            type: 'delete',
+            path: '.claude-buddy',
+            reason: 'Clean up v2.x structure after migration to v3.0'
+          });
+        }
+
+        result.cleanedOldStructure = true;
+      } catch (error) {
+        // Don't fail migration if cleanup fails
+        logger.warn(`Could not remove old .claude-buddy directory: ${error.message}`, verbose);
+        result.warnings.push({
+          type: 'cleanup_failed',
+          message: `Old .claude-buddy directory not removed: ${error.message}`
+        });
+        result.cleanedOldStructure = false;
+      }
+    } else if (isMigration && dryRun) {
+      logger.info('Would remove old .claude-buddy directory', verbose);
     }
 
     // Phase 7: Update metadata
@@ -649,7 +702,7 @@ async function runMigrations(fromVersion, toVersion, targetDirectory, dryRun, ve
  */
 async function createBackup(targetDirectory, metadata, verbose) {
   const timestamp = new Date().toISOString().replace(/:/g, '-').replace(/\..+/, '');
-  const backupDir = path.join(targetDirectory, '.claude-buddy', `backup-${timestamp}`);
+  const backupDir = path.join(targetDirectory, '.claude', 'backups', `backup-${timestamp}`);
 
   try {
     // Create backup directory
@@ -681,7 +734,7 @@ async function createBackup(targetDirectory, metadata, verbose) {
     }
 
     // Clean old backups (keep last 3)
-    await cleanOldBackups(path.join(targetDirectory, '.claude-buddy'), 3, verbose);
+    await cleanOldBackups(path.join(targetDirectory, '.claude', 'backups'), 3, verbose);
 
     logger.debug(`Backup created: ${backupDir}`, verbose);
 

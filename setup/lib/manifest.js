@@ -8,12 +8,16 @@ const { createLogger } = require('./logger');
 
 const logger = createLogger();
 
+// Read version from package.json (single source of truth)
+const packageJson = require('../package.json');
+const VERSION = packageJson.version;
+
 /**
- * Hardcoded installation manifest definition
+ * Installation manifest definition
  * This defines all components that can be installed
  */
 const INSTALLATION_MANIFEST = {
-  version: '3.0.0',
+  version: VERSION,
   components: [
     {
       name: 'config',

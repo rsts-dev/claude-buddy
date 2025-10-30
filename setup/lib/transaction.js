@@ -309,33 +309,40 @@ async function executeCreateAction(transaction, action) {
         };
       }
 
-      // For files during installation, overwrite existing files
-      // This ensures clean installation even if folders exist
-      if (transaction.operation === 'install') {
-        // Create parent directory if needed
-        const parentDir = path.dirname(targetPath);
-        await fs.mkdir(parentDir, { recursive: true });
+      // For files during installation or update, overwrite existing framework files
+      // This ensures clean installation/update even if folders exist
+      // Exception: skip if file is marked as user-customizable
+      if (transaction.operation === 'install' || transaction.operation === 'update') {
+        // Check if this is a user customization that should be preserved
+        // User customizations are typically in specific directories or have specific patterns
+        const isUserCustomization = action.preserveUserContent === true;
 
-        // Overwrite file content
-        if (action.sourceContent) {
-          await fs.writeFile(targetPath, action.sourceContent, 'utf-8');
-        } else {
-          // Create empty file
-          await fs.writeFile(targetPath, '', 'utf-8');
+        if (!isUserCustomization) {
+          // Create parent directory if needed
+          const parentDir = path.dirname(targetPath);
+          await fs.mkdir(parentDir, { recursive: true });
+
+          // Overwrite file content
+          if (action.sourceContent) {
+            await fs.writeFile(targetPath, action.sourceContent, 'utf-8');
+          } else {
+            // Create empty file
+            await fs.writeFile(targetPath, '', 'utf-8');
+          }
+
+          // Set permissions (Unix only)
+          if (process.platform !== 'win32' && action.targetPermissions) {
+            await fs.chmod(targetPath, parseInt(action.targetPermissions, 8));
+          }
+
+          return {
+            success: true,
+            message: `Overwrote existing file: ${action.path}`
+          };
         }
-
-        // Set permissions (Unix only)
-        if (process.platform !== 'win32' && action.targetPermissions) {
-          await fs.chmod(targetPath, parseInt(action.targetPermissions, 8));
-        }
-
-        return {
-          success: true,
-          message: `Overwrote existing file: ${action.path}`
-        };
       }
 
-      // For updates or other operations, skip to avoid overwriting user customizations
+      // For other operations or user customizations, skip to avoid overwriting
       return {
         success: true,
         message: `File already exists: ${action.path}`,

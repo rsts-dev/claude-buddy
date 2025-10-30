@@ -416,14 +416,26 @@ async function handleInstallCommand(options, logger) {
     // Load manifest
     const manifest = getManifest();
 
-    // Check if installation already exists
-    const metadataPath = path.join(options.targetDirectory, '.claude-buddy', 'install-metadata.json');
-    const installationExists = await fs.pathExists(metadataPath);
+    // Check if installation already exists (check both old v2.x and new v3.0 paths)
+    const oldMetadataPath = path.join(options.targetDirectory, '.claude-buddy', 'install-metadata.json');
+    const newMetadataPath = path.join(options.targetDirectory, '.claude', 'install-metadata.json');
+
+    const oldInstallExists = await fs.pathExists(oldMetadataPath);
+    const newInstallExists = await fs.pathExists(newMetadataPath);
+    const installationExists = oldInstallExists || newInstallExists;
+
+    // Determine which metadata to use
+    const metadataPath = newInstallExists ? newMetadataPath : oldMetadataPath;
+    const isMigration = oldInstallExists && !newInstallExists;
 
     if (installationExists && !options.force) {
       // Update existing installation
       if (!options.quiet) {
-        logger.info('Existing installation detected. Performing update...');
+        if (isMigration) {
+          logger.info('Migrating from v2.x to v3.0...');
+        } else {
+          logger.info('Existing installation detected. Performing update...');
+        }
       }
 
       // Read existing metadata
@@ -442,6 +454,7 @@ async function handleInstallCommand(options, logger) {
         verbose: options.verbose,
         preserveAll: options.preserveAll,
         mergeConfig: options.mergeConfig,
+        isMigration,
         logger
       });
     } else {

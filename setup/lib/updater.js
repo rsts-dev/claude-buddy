@@ -97,6 +97,7 @@ async function performUpdate(options) {
     existingMetadata,
     // preserveAll = false, // Reserved for future use
     mergeConfig = true,
+    isMigration = false,
     dryRun = false,
     verbose = false
   } = options;
@@ -112,16 +113,20 @@ async function performUpdate(options) {
     backupPath: '',
     duration: 0,
     warnings: [],
-    errors: []
+    errors: [],
+    isMigration
   };
 
   let transaction = null;
 
   try {
-    logger.section('Update Process', verbose);
+    logger.section(isMigration ? 'Migration Process (v2.x → v3.0)' : 'Update Process', verbose);
     logger.info(`From: ${fromVersion}`, verbose);
     logger.info(`To: ${toVersion}`, verbose);
     logger.info(`Target: ${targetDirectory}`, verbose);
+    if (isMigration) {
+      logger.info('Mode: Migration (all framework files will be updated)', verbose);
+    }
 
     // Check for downgrade
     if (isDowngrade(fromVersion, toVersion)) {

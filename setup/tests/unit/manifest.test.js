@@ -48,13 +48,12 @@ describe('Manifest Module', () => {
       const manifest = getManifest();
       const componentNames = manifest.components.map(c => c.name);
 
+      // v3.0.0 components (skills-only architecture)
+      expect(componentNames).toContain('config');  // NEW: Core configuration files
       expect(componentNames).toContain('hooks');
-      expect(componentNames).toContain('templates');
-      expect(componentNames).toContain('personas');
-      expect(componentNames).toContain('context');
-      expect(componentNames).toContain('configs');
       expect(componentNames).toContain('commands');
       expect(componentNames).toContain('agents');
+      expect(componentNames).toContain('skills');
     });
   });
 
@@ -382,23 +381,32 @@ describe('Manifest Module', () => {
       expect(Array.isArray(hooks.affectedFeatures)).toBe(true);
     });
 
-    it('should have proper component structure for templates', () => {
+    it('should have proper component structure for skills', () => {
       const manifest = getManifest();
-      const templates = manifest.components.find(c => c.name === 'templates');
+      const skills = manifest.components.find(c => c.name === 'skills');
 
-      expect(templates).toBeDefined();
-      expect(templates.type).toBe('required');
-      expect(templates.dependencies).toHaveLength(0);
-      expect(templates.filePatterns).toContain('**/*.md');
+      expect(skills).toBeDefined();
+      expect(skills.type).toBe('required');
+      expect(skills.dependencies).toHaveLength(0);
+      expect(skills.filePatterns).toContain('**/*.md');
     });
 
-    it('should have proper component structure for personas', () => {
+    it('should have proper component structure for commands', () => {
       const manifest = getManifest();
-      const personas = manifest.components.find(c => c.name === 'personas');
+      const commands = manifest.components.find(c => c.name === 'commands');
 
-      expect(personas).toBeDefined();
-      expect(personas.type).toBe('required');
-      expect(personas.dependencies).toHaveLength(0);
+      expect(commands).toBeDefined();
+      expect(commands.type).toBe('required');
+      expect(commands.dependencies).toHaveLength(0);
+    });
+
+    it('should have proper component structure for agents', () => {
+      const manifest = getManifest();
+      const agents = manifest.components.find(c => c.name === 'agents');
+
+      expect(agents).toBeDefined();
+      expect(agents.type).toBe('required');
+      expect(agents.dependencies).toHaveLength(0);
     });
   });
 
@@ -407,7 +415,7 @@ describe('Manifest Module', () => {
       const manifest = getManifest();
       const dirPaths = manifest.directories.map(d => d.path);
 
-      expect(dirPaths).toContain('.claude-buddy');
+      // v3.0.0: Only .claude directory (no more .claude-buddy)
       expect(dirPaths).toContain('.claude');
     });
 

@@ -74,14 +74,15 @@ describe('Fresh Installation Performance', () => {
 
       const duration = Date.now() - startTime;
 
-      // Verify all required directories were created
+      // Verify all required directories were created (v3.0.0: skills-only)
       const requiredDirs = [
-        '.claude-buddy',
-        '.claude-buddy/personas',
-        '.claude-buddy/templates',
         '.claude',
         '.claude/commands',
-        '.claude/agents'
+        '.claude/agents',
+        '.claude/skills',
+        '.claude/skills/personas',
+        '.claude/skills/domains',
+        '.claude/skills/generators'
       ];
 
       for (const dir of requiredDirs) {
@@ -90,8 +91,8 @@ describe('Fresh Installation Performance', () => {
         expect(exists).toBe(true);
       }
 
-      // Verify metadata was created
-      const metadataPath = path.join(testDir, '.claude-buddy', 'install-metadata.json');
+      // Verify metadata was created (v3.0.0: in .claude directory)
+      const metadataPath = path.join(testDir, '.claude', 'install-metadata.json');
       const metadataExists = await fs.access(metadataPath).then(() => true).catch(() => false);
       expect(metadataExists).toBe(true);
 

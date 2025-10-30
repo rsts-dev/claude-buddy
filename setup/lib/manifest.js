@@ -16,13 +16,28 @@ const INSTALLATION_MANIFEST = {
   version: '3.0.0',
   components: [
     {
+      name: 'config',
+      displayName: 'Configuration Files',
+      type: 'required',
+      source: 'dist/.claude/',
+      target: '.claude/',
+      dependencies: [],
+      filePatterns: ['hooks.json', 'CLAUDE.md', 'settings.json'],
+      description: 'Core configuration files for Claude Buddy',
+      affectedFeatures: [
+        'Project configuration',
+        'User settings',
+        'Hook configuration'
+      ]
+    },
+    {
       name: 'hooks',
       displayName: 'Python Safety Hooks',
       type: 'optional',
       source: 'dist/.claude/hooks/',
       target: '.claude/hooks/',
       dependencies: ['uv', 'python'],
-      filePatterns: ['*.py', '*.json'],
+      filePatterns: ['*.py'],
       description: 'Pre-execution validation hooks for safe AI automation',
       affectedFeatures: [
         'Command validation',

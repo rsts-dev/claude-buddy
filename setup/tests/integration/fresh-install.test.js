@@ -41,7 +41,7 @@ describe('Fresh Installation', () => {
       // When: Run installation script
       const manifest = getManifest();
       const environment = await detectEnvironment(testProjectDir);
-      const components = manifest.components.filter(c => c.id !== 'hooks'); // Skip hooks for test
+      const components = manifest.components.filter(c => c.name !== 'hooks'); // Skip hooks for test
 
       const result = await performInstallation({
         targetDirectory: testProjectDir,
@@ -51,9 +51,8 @@ describe('Fresh Installation', () => {
         verbose: false
       });
 
-      // Then: All framework directories exist
+      // Then: All framework directories exist (v3.0.0: only .claude, no .claude-buddy)
       expect(result.success).toBe(true);
-      expect(await fileExists(path.join(testProjectDir, '.claude-buddy'))).toBe(true);
       expect(await fileExists(path.join(testProjectDir, '.claude'))).toBe(true);
     });
 
@@ -61,7 +60,7 @@ describe('Fresh Installation', () => {
       // Given: Empty project directory
       const manifest = getManifest();
       const environment = await detectEnvironment(testProjectDir);
-      const components = manifest.components.filter(c => c.id !== 'hooks');
+      const components = manifest.components.filter(c => c.name !== 'hooks');
 
       // When: Run installation script
       const result = await performInstallation({
@@ -71,9 +70,9 @@ describe('Fresh Installation', () => {
         environment
       });
 
-      // Then: All framework files are present
+      // Then: All framework files are present (v3.0.0: metadata in .claude)
       expect(result.success).toBe(true);
-      expect(await fileExists(path.join(testProjectDir, '.claude-buddy', 'install-metadata.json'))).toBe(true);
+      expect(await fileExists(path.join(testProjectDir, '.claude', 'install-metadata.json'))).toBe(true);
       expect(result.installedComponents.length).toBeGreaterThan(0);
     });
 
@@ -81,7 +80,7 @@ describe('Fresh Installation', () => {
       // Given: Empty project directory
       const manifest = getManifest();
       const environment = await detectEnvironment(testProjectDir);
-      const components = manifest.components.filter(c => c.id !== 'hooks');
+      const components = manifest.components.filter(c => c.name !== 'hooks');
 
       // When: Run installation script
       await performInstallation({
@@ -91,8 +90,8 @@ describe('Fresh Installation', () => {
         environment
       });
 
-      // Then: Version metadata is created
-      const metadataPath = path.join(testProjectDir, '.claude-buddy', 'install-metadata.json');
+      // Then: Version metadata is created (v3.0.0: in .claude directory)
+      const metadataPath = path.join(testProjectDir, '.claude', 'install-metadata.json');
       expect(await fileExists(metadataPath)).toBe(true);
 
       // Then: Metadata has correct structure
@@ -108,7 +107,7 @@ describe('Fresh Installation', () => {
       // Given: Empty project directory with all dependencies available
       const manifest = getManifest();
       const environment = await detectEnvironment(testProjectDir);
-      const components = manifest.components.filter(c => c.id !== 'hooks');
+      const components = manifest.components.filter(c => c.name !== 'hooks');
 
       // When: Run installation script
       await performInstallation({
@@ -119,7 +118,7 @@ describe('Fresh Installation', () => {
       });
 
       // Then: All required components are installed
-      const metadataPath = path.join(testProjectDir, '.claude-buddy', 'install-metadata.json');
+      const metadataPath = path.join(testProjectDir, '.claude', 'install-metadata.json');
       const metadata = await readJson(metadataPath);
 
       expect(metadata.installedComponents).toBeTruthy();
@@ -130,7 +129,7 @@ describe('Fresh Installation', () => {
       // Given: Empty project directory
       const manifest = getManifest();
       const environment = await detectEnvironment(testProjectDir);
-      const components = manifest.components.filter(c => c.id !== 'hooks');
+      const components = manifest.components.filter(c => c.name !== 'hooks');
 
       // When: Run installation script with timing
       const startTime = Date.now();
@@ -151,7 +150,7 @@ describe('Fresh Installation', () => {
       // Given: Empty project directory
       const manifest = getManifest();
       const environment = await detectEnvironment(testProjectDir);
-      const components = manifest.components.filter(c => c.id !== 'hooks');
+      const components = manifest.components.filter(c => c.name !== 'hooks');
 
       // When: Run installation script
       await performInstallation({
@@ -162,7 +161,7 @@ describe('Fresh Installation', () => {
       });
 
       // Then: Transaction history is recorded in metadata
-      const metadataPath = path.join(testProjectDir, '.claude-buddy', 'install-metadata.json');
+      const metadataPath = path.join(testProjectDir, '.claude', 'install-metadata.json');
       const metadata = await readJson(metadataPath);
 
       expect(metadata.transactionHistory).toBeTruthy();
@@ -176,7 +175,7 @@ describe('Fresh Installation', () => {
       // Given: Empty project directory
       const manifest = getManifest();
       const environment = await detectEnvironment(testProjectDir);
-      const components = manifest.components.filter(c => c.id !== 'hooks');
+      const components = manifest.components.filter(c => c.name !== 'hooks');
 
       // When: Run installation script
       await performInstallation({
@@ -187,7 +186,7 @@ describe('Fresh Installation', () => {
       });
 
       // Then: Dependency status is recorded
-      const metadataPath = path.join(testProjectDir, '.claude-buddy', 'install-metadata.json');
+      const metadataPath = path.join(testProjectDir, '.claude', 'install-metadata.json');
       const metadata = await readJson(metadataPath);
 
       expect(metadata.dependencies).toHaveProperty('node');

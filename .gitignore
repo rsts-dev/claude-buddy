@@ -3,6 +3,7 @@
 /tmp
 
 .env
+.task
 
 # Node.js dependencies
 node_modules/

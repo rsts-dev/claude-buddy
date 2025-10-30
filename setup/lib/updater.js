@@ -163,6 +163,7 @@ async function performUpdate(options) {
     const customizations = await detectUserCustomizations(
       targetDirectory,
       existingMetadata,
+      isMigration,
       verbose
     );
 
@@ -394,11 +395,20 @@ async function performUpdate(options) {
  *
  * @param {string} targetDirectory - Base directory
  * @param {Object} metadata - Existing installation metadata
+ * @param {boolean} isMigration - Whether this is a v2.x to v3.0 migration
  * @param {boolean} verbose - Verbose logging
  * @returns {Promise<Array>} User customizations
  */
-async function detectUserCustomizations(targetDirectory, metadata, verbose) {
+async function detectUserCustomizations(targetDirectory, metadata, isMigration, verbose) {
   const customizations = [];
+
+  // During migration from v2.x to v3.0, skip framework file preservation
+  // We need to update ALL framework files to the new structure
+  if (isMigration) {
+    logger.info('Migration mode: updating all framework files to v3.0 structure', verbose);
+    // Don't mark any files for preservation during migration
+    return customizations;
+  }
 
   if (!metadata || !metadata.installDate) {
     logger.warn('No installation metadata found, assuming no customizations', verbose);
@@ -412,21 +422,21 @@ async function detectUserCustomizations(targetDirectory, metadata, verbose) {
     customizations.push(...metadata.userCustomizations);
   }
 
-  // Check for custom personas
-  const personasDir = path.join(targetDirectory, '.claude-buddy', 'personas');
+  // Check for custom skills in v3.0 structure
+  const skillsDir = path.join(targetDirectory, '.claude', 'skills', 'personas');
   try {
-    const files = await fs.readdir(personasDir);
+    const files = await fs.readdir(skillsDir);
     for (const file of files) {
       if (file.startsWith('custom-') || file.includes('user-')) {
-        const filePath = path.join(personasDir, file);
+        const filePath = path.join(skillsDir, file);
         const stats = await fs.stat(filePath);
 
         if (stats.mtime > installTime) {
           customizations.push({
-            file: path.join('.claude-buddy', 'personas', file),
+            file: path.join('.claude', 'skills', 'personas', file),
             createdDate: stats.birthtime?.toISOString() || stats.mtime.toISOString(),
             lastModified: stats.mtime.toISOString(),
-            description: 'Custom persona',
+            description: 'Custom skill',
             preserveOnUpdate: true
           });
         }
@@ -434,13 +444,13 @@ async function detectUserCustomizations(targetDirectory, metadata, verbose) {
     }
   } catch (error) {
     // Directory doesn't exist or not accessible
-    logger.debug(`Could not scan personas directory: ${error.message}`, verbose);
+    logger.debug(`Could not scan skills directory: ${error.message}`, verbose);
   }
 
-  // Check for modified framework files
+  // Check for modified framework files (v3.0 paths only)
   const frameworkFiles = [
-    '.claude-buddy/buddy-config.json',
-    '.claude/hooks.json'
+    '.claude/hooks.json',
+    '.claude/CLAUDE.md'
   ];
 
   for (const file of frameworkFiles) {
@@ -705,8 +715,8 @@ async function updateComponent(component, targetDirectory, customizations, trans
   };
 
   const { glob } = require('glob');
-  const setupDir = path.join(__dirname, '..');
-  const sourcePath = path.join(setupDir, '..', component.source);
+  const setupDir = path.join(__dirname, '..'); // setup/lib/.. = setup/
+  const sourcePath = path.join(setupDir, component.source); // setup/ + dist/.claude/ = setup/dist/.claude/
   const targetPath = path.join(targetDirectory, component.target);
 
   // Find files in component
@@ -795,14 +805,14 @@ async function updateMetadata(targetDirectory, toVersion, existingMetadata, cust
     status: 'completed'
   });
 
-  // Write metadata
-  const metadataPath = path.join(targetDirectory, '.claude-buddy', 'install-metadata.json');
+  // Write metadata (v3.0: moved to .claude directory)
+  const metadataPath = path.join(targetDirectory, '.claude', 'install-metadata.json');
   await fs.writeFile(metadataPath, JSON.stringify(metadata, null, 2), 'utf8');
 
   if (transaction) {
     await executeAction(transaction, {
       type: 'update',
-      path: '.claude-buddy/install-metadata.json',
+      path: '.claude/install-metadata.json',
       reason: 'Update installation metadata'
     });
   }

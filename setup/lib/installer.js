@@ -13,6 +13,7 @@ const { glob } = require('glob');
 const { createLogger } = require('./logger');
 const { createTransaction, executeAction, commitTransaction } = require('./transaction');
 const { checkPermissions } = require('./environment');
+const { promptConfiguration, getDefaultConfig } = require('./config-prompts');
 
 const logger = createLogger('installer');
 
@@ -38,6 +39,8 @@ class InstallationError extends Error {
  * @param {Object} options.environment - Environment detection result
  * @param {boolean} options.dryRun - Dry-run mode (default: false)
  * @param {boolean} options.verbose - Verbose logging (default: false)
+ * @param {boolean} options.nonInteractive - Non-interactive mode (default: false)
+ * @param {boolean} options.skipConfigPrompts - Skip config prompts (default: false)
  * @returns {Promise<Object>} Installation result
  */
 async function performInstallation(options) {
@@ -47,7 +50,9 @@ async function performInstallation(options) {
     components,
     environment,
     dryRun = false,
-    verbose = false
+    verbose = false,
+    nonInteractive = false,
+    skipConfigPrompts = false
   } = options;
 
   const startTime = Date.now();
@@ -162,6 +167,48 @@ async function performInstallation(options) {
           logger.warn(`Skipped optional component ${component.name}: ${error.message}`, verbose);
         }
       }
+    }
+
+    // Phase 4.5: Configure hooks.json (interactive mode only)
+    if (!dryRun && !nonInteractive && !skipConfigPrompts && result.installedComponents.includes('config')) {
+      logger.progress('Configuring Claude Buddy', verbose);
+
+      try {
+        const hooksJsonPath = path.join(targetDirectory, '.claude', 'hooks.json');
+
+        // Prompt user for configuration
+        const userConfig = await promptConfiguration('install', null);
+
+        // Read existing hooks.json (distributed with config component)
+        const existingHooks = await fs.readJson(hooksJsonPath);
+
+        // Merge user config into hooks.json config section
+        existingHooks.config = userConfig;
+
+        // Write updated hooks.json
+        await fs.writeJson(hooksJsonPath, existingHooks, { spaces: 2 });
+
+        // Log the configuration action in transaction
+        if (transaction) {
+          await executeAction(transaction, {
+            type: 'update',
+            path: '.claude/hooks.json',
+            reason: 'Apply user configuration'
+          });
+        }
+
+        logger.success('Configuration applied', verbose);
+      } catch (error) {
+        result.warnings.push({
+          type: 'configuration_failed',
+          message: `Failed to configure hooks.json: ${error.message}`
+        });
+        logger.warn(`Configuration skipped: ${error.message}`, verbose);
+      }
+    } else if (!dryRun && (nonInteractive || skipConfigPrompts)) {
+      logger.info('Configuration prompts skipped (using defaults)', verbose);
+    } else if (dryRun) {
+      logger.info('Would prompt for configuration', verbose);
     }
 
     // Phase 5: Create default configuration

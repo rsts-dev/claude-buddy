@@ -62,6 +62,52 @@ async function copyDirWithExclusions(src, dest) {
 }
 
 /**
+ * Transform absolute paths to relative paths in hooks.json
+ */
+async function transformHooksJson(hooksPath) {
+  const content = await fs.readFile(hooksPath, 'utf8');
+  const hooks = JSON.parse(content);
+
+  // Regex to match absolute paths to .claude/hooks/ while preserving the command prefix
+  // Matches: command prefix + space + absolute path starting with / + .claude/hooks/ + filename
+  // Captures: everything before the path starting with / (group 1) and the filename (group 2)
+  const absolutePathRegex = /^(.*\s)\/[^/]+.*\/\.claude\/hooks\/(.+)$/;
+
+  let transformedCount = 0;
+
+  // Transform paths in PreToolUse hooks
+  if (hooks.hooks?.PreToolUse) {
+    for (const matcher of hooks.hooks.PreToolUse) {
+      for (const hook of matcher.hooks || []) {
+        if (hook.command && absolutePathRegex.test(hook.command)) {
+          hook.command = hook.command.replace(absolutePathRegex, '$1.claude/hooks/$2');
+          transformedCount++;
+        }
+      }
+    }
+  }
+
+  // Transform paths in PostToolUse hooks
+  if (hooks.hooks?.PostToolUse) {
+    for (const matcher of hooks.hooks.PostToolUse) {
+      for (const hook of matcher.hooks || []) {
+        if (hook.command && absolutePathRegex.test(hook.command)) {
+          hook.command = hook.command.replace(absolutePathRegex, '$1.claude/hooks/$2');
+          transformedCount++;
+        }
+      }
+    }
+  }
+
+  if (transformedCount > 0) {
+    await fs.writeFile(hooksPath, JSON.stringify(hooks, null, 2) + '\n', 'utf8');
+    console.log(`  ✓ Transformed ${transformedCount} absolute paths to relative`);
+  }
+
+  return transformedCount;
+}
+
+/**
  * Main bundling process
  */
 async function bundle() {
@@ -84,6 +130,16 @@ async function bundle() {
     if (await fs.pathExists(claudeSrc)) {
       const claudeCount = await copyDirWithExclusions(claudeSrc, claudeDest);
       console.log(`  ✓ Bundled ${claudeCount} files from .claude/\n`);
+
+      // Transform hooks.json paths to relative
+      console.log('🔄 Transforming paths in hooks.json...');
+      const hooksJsonPath = path.join(claudeDest, 'hooks.json');
+      if (await fs.pathExists(hooksJsonPath)) {
+        await transformHooksJson(hooksJsonPath);
+      } else {
+        console.log('  ⊗ hooks.json not found, skipping transformation');
+      }
+      console.log('');
     } else {
       console.error(`  ✗ Source not found: ${claudeSrc}`);
       process.exit(1);

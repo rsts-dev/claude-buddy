@@ -12,6 +12,7 @@ const path = require('path');
 const { createLogger } = require('./logger');
 const { createTransaction, executeAction, commitTransaction } = require('./transaction');
 const { checkPermissions } = require('./environment');
+const { promptConfiguration } = require('./config-prompts');
 
 const logger = createLogger('updater');
 
@@ -100,7 +101,9 @@ async function performUpdate(options) {
     mergeConfig = true,
     isMigration = false,
     dryRun = false,
-    verbose = false
+    verbose = false,
+    nonInteractive = false,
+    skipConfigPrompts = false
   } = options;
 
   const startTime = Date.now();
@@ -254,6 +257,49 @@ async function performUpdate(options) {
           logger.warn(`Skipped ${component.name}: ${error.message}`, verbose);
         }
       }
+    }
+
+    // Phase 5.5: Update hooks.json configuration (interactive mode only)
+    if (!dryRun && !nonInteractive && !skipConfigPrompts && result.updatedComponents.includes('config')) {
+      logger.progress('Updating Claude Buddy configuration', verbose);
+
+      try {
+        const hooksJsonPath = path.join(targetDirectory, '.claude', 'hooks.json');
+
+        // Read existing hooks.json to get current config as defaults
+        const existingHooks = await fs.readJson(hooksJsonPath);
+        const existingConfig = existingHooks.config || null;
+
+        // Prompt user for configuration with existing values as defaults
+        const userConfig = await promptConfiguration('update', existingConfig);
+
+        // Merge user config into hooks.json config section
+        existingHooks.config = userConfig;
+
+        // Write updated hooks.json
+        await fs.writeJson(hooksJsonPath, existingHooks, { spaces: 2 });
+
+        // Log the configuration action in transaction
+        if (transaction) {
+          await executeAction(transaction, {
+            type: 'update',
+            path: '.claude/hooks.json',
+            reason: 'Update user configuration'
+          });
+        }
+
+        logger.success('Configuration updated', verbose);
+      } catch (error) {
+        result.warnings.push({
+          type: 'configuration_update_failed',
+          message: `Failed to update hooks.json configuration: ${error.message}`
+        });
+        logger.warn(`Configuration update skipped: ${error.message}`, verbose);
+      }
+    } else if (!dryRun && (nonInteractive || skipConfigPrompts)) {
+      logger.info('Configuration prompts skipped (preserving existing)', verbose);
+    } else if (dryRun) {
+      logger.info('Would prompt for configuration update', verbose);
     }
 
     // Phase 6: Merge configurations

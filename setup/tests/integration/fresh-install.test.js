@@ -48,7 +48,8 @@ describe('Fresh Installation', () => {
         manifest,
         components,
         environment,
-        verbose: false
+        verbose: false,
+        skipConfigPrompts: true
       });
 
       // Then: All framework directories exist (v3.0.0: only .claude, no .claude-buddy)
@@ -67,7 +68,8 @@ describe('Fresh Installation', () => {
         targetDirectory: testProjectDir,
         manifest,
         components,
-        environment
+        environment,
+        skipConfigPrompts: true
       });
 
       // Then: All framework files are present (v3.0.0: metadata in .claude)
@@ -87,7 +89,8 @@ describe('Fresh Installation', () => {
         targetDirectory: testProjectDir,
         manifest,
         components,
-        environment
+        environment,
+        skipConfigPrompts: true
       });
 
       // Then: Version metadata is created (v3.0.0: in .claude directory)
@@ -114,7 +117,8 @@ describe('Fresh Installation', () => {
         targetDirectory: testProjectDir,
         manifest,
         components,
-        environment
+        environment,
+        skipConfigPrompts: true
       });
 
       // Then: All required components are installed
@@ -137,7 +141,8 @@ describe('Fresh Installation', () => {
         targetDirectory: testProjectDir,
         manifest,
         components,
-        environment
+        environment,
+        skipConfigPrompts: true
       });
       const endTime = Date.now();
       const duration = endTime - startTime;
@@ -157,7 +162,8 @@ describe('Fresh Installation', () => {
         targetDirectory: testProjectDir,
         manifest,
         components,
-        environment
+        environment,
+        skipConfigPrompts: true
       });
 
       // Then: Transaction history is recorded in metadata
@@ -182,7 +188,8 @@ describe('Fresh Installation', () => {
         targetDirectory: testProjectDir,
         manifest,
         components,
-        environment
+        environment,
+        skipConfigPrompts: true
       });
 
       // Then: Dependency status is recorded

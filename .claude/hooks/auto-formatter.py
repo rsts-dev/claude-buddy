@@ -277,34 +277,80 @@ def create_response(success: bool, message: str) -> Dict[str, Any]:
         "message": message if not success else ""
     }
 
-def log_formatting_event(file_path: str, result: Dict[str, Any]):
+def log_formatting_event(file_path: str, result: Dict[str, Any], config: Dict[str, Any]):
     """Log formatting events for audit trail."""
-    log_dir = ".claude-buddy"
+    logging_config = config.get("logging", {})
+
+    # Check if logging is enabled
+    if not logging_config.get("enabled", True):
+        return
+
+    # Check if hook activities should be logged
+    if not logging_config.get("hook_activities", True):
+        return
+
+    log_dir = ".claude/logs"
     if not os.path.exists(log_dir):
         try:
             os.makedirs(log_dir)
         except OSError:
             return
-    
+
     log_file = os.path.join(log_dir, "formatting.log")
-    
+
     import datetime
     timestamp = datetime.datetime.now().isoformat()
-    
+
+    log_level = logging_config.get("level", "info")
+
     log_entry = {
         "timestamp": timestamp,
+        "level": "error" if not result.get("success", False) else "info",
         "file_path": file_path,
         "tool": result.get("tool", "unknown"),
         "success": result.get("success", False),
         "message": result.get("message", ""),
         "hook": "auto-formatter"
     }
-    
+
+    # Only log if level is appropriate
+    if log_level == "error" and result.get("success", False):
+        return  # Only log failures in error mode
+
     try:
         with open(log_file, "a") as f:
             f.write(json.dumps(log_entry) + "\n")
     except IOError:
         pass
+
+def send_notification(title: str, message: str, config: Dict[str, Any]):
+    """Send desktop notification if enabled."""
+    notifications_config = config.get("notifications", {})
+
+    # Check if notifications are enabled
+    if not notifications_config.get("desktop_alerts", False):
+        return
+
+    # Check if formatting results should trigger notifications
+    if not notifications_config.get("formatting_results", False):
+        return
+
+    try:
+        import platform
+        system = platform.system()
+
+        if system == "Darwin":  # macOS
+            # Use osascript for macOS notifications
+            import subprocess
+            script = f'display notification "{message}" with title "{title}"'
+            subprocess.run(["osascript", "-e", script], capture_output=True, timeout=2)
+        elif system == "Linux":
+            # Use notify-send for Linux
+            import subprocess
+            subprocess.run(["notify-send", title, message], capture_output=True, timeout=2)
+        # Windows notifications could be added here if needed
+    except Exception:
+        pass  # Notification failed, but don't block the operation
 
 def main():
     """Main hook execution function."""
@@ -339,7 +385,12 @@ def main():
     
     # Load configuration
     config = load_config()
-    
+
+    # Check if auto_formatting feature is enabled (master switch)
+    if not config.get("features", {}).get("auto_formatting", True):
+        print(json.dumps(create_response(True, "")))
+        sys.exit(0)
+
     # Check if file should be formatted
     if not should_format_file(file_path, config):
         print(json.dumps(create_response(True, "")))
@@ -361,14 +412,22 @@ def main():
     
     # Format the file
     result = format_file(file_path, formatter_config)
-    
+
     # Log the formatting event
-    log_formatting_event(file_path, result)
-    
+    log_formatting_event(file_path, result, config)
+
+    # Send notification if successful and enabled
+    if result["success"]:
+        send_notification(
+            "Code Formatted",
+            f"Formatted {os.path.basename(file_path)} with {result.get('tool', 'formatter')}",
+            config
+        )
+
     # Create response
     response = create_response(result["success"], result["message"])
     print(json.dumps(response))
-    
+
     sys.exit(0)
 
 if __name__ == "__main__":

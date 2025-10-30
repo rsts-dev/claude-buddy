@@ -215,34 +215,80 @@ def create_approve_response() -> Dict[str, Any]:
         "suppressOutput": True
     }
 
-def log_command_event(command: str, action: str, blocked: bool, warnings: List[str]):
+def log_command_event(command: str, action: str, blocked: bool, warnings: List[str], config: Dict[str, Any]):
     """Log command validation events for audit trail."""
-    log_dir = ".claude-buddy"
+    logging_config = config.get("logging", {})
+
+    # Check if logging is enabled
+    if not logging_config.get("enabled", True):
+        return
+
+    # Check if command executions should be logged
+    if not logging_config.get("command_executions", True):
+        return
+
+    log_dir = ".claude/logs"
     if not os.path.exists(log_dir):
         try:
             os.makedirs(log_dir)
         except OSError:
             return
-    
+
     log_file = os.path.join(log_dir, "commands.log")
-    
+
     import datetime
     timestamp = datetime.datetime.now().isoformat()
-    
+
+    log_level = logging_config.get("level", "info")
+
     log_entry = {
         "timestamp": timestamp,
+        "level": "warn" if blocked else "info",
         "command": command,
         "action": action,
         "blocked": blocked,
         "warnings": warnings,
         "tool": "command-validator"
     }
-    
+
+    # Only log if level is appropriate
+    if log_level == "error" and not blocked:
+        return  # Only log blocks in error mode
+
     try:
         with open(log_file, "a") as f:
             f.write(json.dumps(log_entry) + "\n")
     except IOError:
         pass
+
+def send_notification(title: str, message: str, config: Dict[str, Any]):
+    """Send desktop notification if enabled."""
+    notifications_config = config.get("notifications", {})
+
+    # Check if notifications are enabled
+    if not notifications_config.get("desktop_alerts", False):
+        return
+
+    # Check if protection events should trigger notifications
+    if not notifications_config.get("protection_events", True):
+        return
+
+    try:
+        import platform
+        system = platform.system()
+
+        if system == "Darwin":  # macOS
+            # Use osascript for macOS notifications
+            import subprocess
+            script = f'display notification "{message}" with title "{title}"'
+            subprocess.run(["osascript", "-e", script], capture_output=True, timeout=2)
+        elif system == "Linux":
+            # Use notify-send for Linux
+            import subprocess
+            subprocess.run(["notify-send", title, message], capture_output=True, timeout=2)
+        # Windows notifications could be added here if needed
+    except Exception:
+        pass  # Notification failed, but don't block the operation
 
 def main():
     """Main hook execution function."""
@@ -271,7 +317,12 @@ def main():
     
     # Load configuration
     config = load_config()
-    
+
+    # Check if safety hooks feature is enabled (master switch)
+    if not config.get("features", {}).get("safety_hooks", True):
+        print(json.dumps(create_approve_response()))
+        sys.exit(0)
+
     # Check if command validation is enabled
     if not config.get("command_validation", {}).get("enabled", True):
         print(json.dumps(create_approve_response()))
@@ -282,26 +333,33 @@ def main():
     
     if is_dangerous:
         alternative = get_safer_alternative(command)
-        log_command_event(command, "blocked", True, [danger_reason])
-        
+        log_command_event(command, "blocked", True, [danger_reason], config)
+
+        # Send notification if enabled
+        send_notification(
+            "Dangerous Command Blocked",
+            f"Blocked: {command[:50]}{'...' if len(command) > 50 else ''}",
+            config
+        )
+
         response = create_block_response(command, danger_reason, alternative)
         print(json.dumps(response))
         sys.exit(2)  # Exit code 2 indicates blocking
-    
+
     # Check for performance issues and best practice violations
     performance_warnings = check_performance_issues(command, config)
     best_practice_suggestions = check_best_practices(command, config)
-    
+
     all_warnings = performance_warnings + best_practice_suggestions
-    
+
     if all_warnings:
-        log_command_event(command, "warned", False, all_warnings)
+        log_command_event(command, "warned", False, all_warnings, config)
         response = create_warning_response(command, performance_warnings, best_practice_suggestions)
         print(json.dumps(response))
         sys.exit(0)
-    
+
     # Command is safe, log and approve
-    log_command_event(command, "approved", False, [])
+    log_command_event(command, "approved", False, [], config)
     print(json.dumps(create_approve_response()))
     sys.exit(0)
 

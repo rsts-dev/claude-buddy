@@ -321,10 +321,14 @@ Parse user input for persona flags:
 
 Check `.claude/hooks.json` (config section) for:
 - `config.features.auto_commit`: If true, default to auto-yes mode
+- `config.features.commit_templates`: Determines commit message format ("conventional", "simple", "detailed")
+- `config.features.code_review`: If true, run automated code review before commit
 - `config.git.auto_push`: If true, automatically push after commit
 - `config.git.branch_protection`: List of branches that require confirmation
 - `config.git.conventional_commits`: If true, enforce conventional commit format
 - `config.git.commit_validation`: If true, validate commit message format before committing
+- `config.git.sign_commits`: If true, add -S flag to git commit for GPG signing
+- `config.notifications.commit_summaries`: If true, show desktop notification after successful commit
 
 ## Completion Reporting
 

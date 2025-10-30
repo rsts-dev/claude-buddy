@@ -45,7 +45,8 @@ describe('Dry-Run Mode', () => {
         manifest,
         components,
         environment,
-        dryRun: true
+        dryRun: true,
+        skipConfigPrompts: true
       });
 
       // Then: Operation reports success in dry-run mode

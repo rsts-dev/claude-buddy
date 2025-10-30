@@ -47,6 +47,7 @@ describe('Installation to Existing Project', () => {
         environment,
         dryRun: false,
         verbose: false,
+        skipConfigPrompts: true,
         logger
       });
 
@@ -79,6 +80,7 @@ describe('Installation to Existing Project', () => {
         environment,
         dryRun: false,
         verbose: false,
+        skipConfigPrompts: true,
         logger
       });
 
@@ -116,6 +118,7 @@ describe('Installation to Existing Project', () => {
         environment,
         dryRun: false,
         verbose: false,
+        skipConfigPrompts: true,
         logger
       });
 
@@ -155,6 +158,7 @@ describe('Installation to Existing Project', () => {
         environment,
         dryRun: false,
         verbose: false,
+        skipConfigPrompts: true,
         logger
       });
 
@@ -187,6 +191,7 @@ describe('Installation to Existing Project', () => {
         environment,
         dryRun: false,
         verbose: false,
+        skipConfigPrompts: true,
         logger
       });
 
@@ -245,6 +250,7 @@ describe('Installation to Existing Project', () => {
         environment,
         dryRun: false,
         verbose: false,
+        skipConfigPrompts: true,
         logger
       });
 
@@ -294,6 +300,7 @@ describe('Installation to Existing Project', () => {
         environment,
         dryRun: false,
         verbose: false,
+        skipConfigPrompts: true,
         logger
       });
 

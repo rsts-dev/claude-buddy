@@ -74,6 +74,7 @@ function parseArguments(args) {
     // Installation-specific flags
     force: false,
     skipHooks: false,
+    skipConfigPrompts: false,
 
     // Update-specific flags
     preserveAll: false,
@@ -123,6 +124,9 @@ function parseArguments(args) {
         break;
       case 'skip-hooks':
         options.skipHooks = true;
+        break;
+      case 'skip-config-prompts':
+        options.skipConfigPrompts = true;
         break;
       case 'target':
         // Next argument is the target directory
@@ -455,6 +459,8 @@ async function handleInstallCommand(options, logger) {
         preserveAll: options.preserveAll,
         mergeConfig: options.mergeConfig,
         isMigration,
+        nonInteractive: options.nonInteractive,
+        skipConfigPrompts: options.skipConfigPrompts,
         logger
       });
     } else {
@@ -470,6 +476,8 @@ async function handleInstallCommand(options, logger) {
         environment,
         dryRun: options.dryRun,
         verbose: options.verbose,
+        nonInteractive: options.nonInteractive,
+        skipConfigPrompts: options.skipConfigPrompts,
         logger
       });
     }
@@ -526,6 +534,8 @@ async function handleUpdateCommand(options, logger) {
       verbose: options.verbose,
       preserveAll: options.preserveAll,
       mergeConfig: options.mergeConfig,
+      nonInteractive: options.nonInteractive,
+      skipConfigPrompts: options.skipConfigPrompts,
       logger
     });
   } catch (error) {

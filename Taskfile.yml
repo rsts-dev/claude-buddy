@@ -6,7 +6,7 @@ vars:
     sh: node -p "require('./setup/package.json').version"
   NODE_VERSION:
     sh: node --version
-  DIST_DIR: dist
+  DIST_DIR: setup/dist
 
 env:
   NODE_ENV: development
@@ -60,11 +60,7 @@ tasks:
     deps: ["clean:build"]
     cmds:
       - echo "Building Claude Buddy..."
-      - mkdir -p {{.DIST_DIR}}
-      - cp setup/install.js {{.DIST_DIR}}/
-      - cp setup/package.json {{.DIST_DIR}}/
-      - cp -r setup/lib {{.DIST_DIR}}/
-      - cp README.md {{.DIST_DIR}}/ 2>/dev/null || true
+      - cd setup && npm run build
       - echo "Build completed in {{.DIST_DIR}}/"
 
   "clean:build":

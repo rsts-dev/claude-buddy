@@ -349,17 +349,12 @@ async function performUpdate(options) {
 
       const oldDir = path.join(targetDirectory, '.claude-buddy');
       try {
-        // Safety checks before deleting
-        // 1. Verify new structure exists
-        const newMetadata = path.join(targetDirectory, '.claude', 'install-metadata.json');
-        await fs.access(newMetadata);
-
-        // 2. Verify files were actually updated
+        // Safety check: Verify files were actually updated (confirms migration is working)
         if (result.updatedFiles.length === 0) {
           throw new Error('No files were updated, skipping cleanup for safety');
         }
 
-        // 3. Remove old directory completely
+        // Remove old directory completely
         await fs.rm(oldDir, { recursive: true, force: true });
         logger.success('Removed old .claude-buddy directory', verbose);
 

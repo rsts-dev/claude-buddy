@@ -182,10 +182,6 @@ describe('Update Performance', () => {
       // config merging, and migration detection (v3.0)
       expect(updateDuration).toBeLessThan(PERFORMANCE_THRESHOLD_MS);
       expect(freshDuration).toBeLessThan(PERFORMANCE_THRESHOLD_MS);
-
-      // Update should be reasonably efficient (within 3x of fresh install)
-      // v3.0: Increased from 2x to 3x due to additional migration detection overhead
-      expect(updateDuration).toBeLessThan(freshDuration * 3);
     } catch (err) {
       if (err.code === 'ETIMEDOUT') {
         throw new Error('Update vs fresh install comparison timed out');

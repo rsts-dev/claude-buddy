@@ -1,6 +1,6 @@
 {
   "name": "claude-buddy",
-  "version": "3.0.0",
+  "version": "3.0.1",
   "description": "Claude Buddy installation and setup script",
   "main": "install.js",
   "bin": {
